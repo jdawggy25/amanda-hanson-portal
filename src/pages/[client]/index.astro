@@ -21,15 +21,19 @@ const metricsData = metricsModule.default;
 
 // Get all docs for this client
 const allDocs = await getCollection('docs');
-const clientDocs = allDocs.filter(doc => doc.slug.startsWith(`${client}/`));
+
+// Separate docs by directory (docs/ vs dev/)
+const clientCategoryDocs = allDocs.filter(doc => doc.slug.startsWith(`${client}/docs/`));
+const developerCategoryDocs = allDocs.filter(doc => doc.slug.startsWith(`${client}/dev/`));
 
 // Sort docs alphabetically by slug
-const sortedDocs = clientDocs.sort((a, b) => a.slug.localeCompare(b.slug));
+const sortedClientDocs = clientCategoryDocs.sort((a, b) => a.slug.localeCompare(b.slug));
+const sortedDeveloperDocs = developerCategoryDocs.sort((a, b) => a.slug.localeCompare(b.slug));
 
 // Helper to extract title from slug
 function formatTitle(slug: string): string {
-  // Remove client prefix from slug
-  const withoutClient = slug.replace(`${client}/`, '');
+  // Remove client prefix and docs/dev directory from slug
+  const withoutClient = slug.replace(`${client}/docs/`, '').replace(`${client}/dev/`, '');
   return withoutClient
     .replace(/_/g, ' ')
     .replace(/-/g, ' ')
@@ -103,8 +107,46 @@ const clientName = metricsData.client.name;
       <div class="section-header">
         <span class="label-mono-accent">Available Reports</span>
       </div>
-      <div class="doc-grid">
-        {sortedDocs.map((doc) => (
+
+      <!-- Category Tabs -->
+      <div class="tabs-container">
+        <div class="tabs">
+          <button class="tab active" data-tab="client">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+            Client Reports
+            <span class="tab-count">{sortedClientDocs.length}</span>
+          </button>
+          <button class="tab" data-tab="developer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="16 18 22 12 16 6"></polyline>
+              <polyline points="8 6 2 12 8 18"></polyline>
+            </svg>
+            Developer Docs
+            <span class="tab-count">{sortedDeveloperDocs.length}</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Client Reports Grid -->
+      <div class="doc-grid" data-category="client">
+        {sortedClientDocs.map((doc) => (
+          <DocCard
+            title={doc.data.title || formatTitle(doc.slug)}
+            slug={doc.slug}
+            description={doc.data.description}
+            client={client}
+          />
+        ))}
+      </div>
+
+      <!-- Developer Reports Grid -->
+      <div class="doc-grid hidden" data-category="developer">
+        {sortedDeveloperDocs.map((doc) => (
           <DocCard
             title={doc.data.title || formatTitle(doc.slug)}
             slug={doc.slug}
@@ -233,7 +275,7 @@ const clientName = metricsData.client.name;
   }
 
   .section-header {
-    margin-bottom: var(--space-4);
+    margin-bottom: var(--space-6);
     padding-bottom: var(--space-2);
     border-bottom: 1px solid var(--color-border);
     opacity: 0;
@@ -241,3 +283,129 @@ const clientName = metricsData.client.name;
     animation-delay: 800ms;
   }
 
+  .tabs-container {
+    margin-bottom: var(--space-6);
+    opacity: 0;
+    animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    animation-delay: 850ms;
+  }
+
+  .tabs {
+    display: flex;
+    gap: var(--space-2);
+    padding: var(--space-1);
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    width: fit-content;
+  }
+
+  .tab {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-4);
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-md);
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    position: relative;
+  }
+
+  .tab svg {
+    width: 16px;
+    height: 16px;
+    transition: all var(--transition-base);
+  }
+
+  .tab:hover {
+    color: var(--color-text-secondary);
+    background: var(--color-bg-deep);
+  }
+
+  .tab.active {
+    background: var(--color-bg-deep);
+    color: var(--color-text);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .tab.active svg {
+    color: var(--color-primary);
+  }
+
+  .tab-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 var(--space-2);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    transition: all var(--transition-base);
+  }
+
+  .tab.active .tab-count {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: white;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  @media (max-width: 640px) {
+    .tabs {
+      width: 100%;
+    }
+
+    .tab {
+      flex: 1;
+      justify-content: center;
+      font-size: 0.8125rem;
+      padding: var(--space-2) var(--space-3);
+    }
+
+    .tab svg {
+      width: 14px;
+      height: 14px;
+    }
+  }
+</style>
+
+<script>
+  // Tab switching functionality
+  document.addEventListener('DOMContentLoaded', () => {
+    const tabs = document.querySelectorAll('.tab');
+    const docGrids = document.querySelectorAll('.doc-grid');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const targetCategory = tab.getAttribute('data-tab');
+
+        // Update active tab
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        // Show/hide corresponding doc grids
+        docGrids.forEach(grid => {
+          const gridCategory = grid.getAttribute('data-category');
+          if (gridCategory === targetCategory) {
+            grid.classList.remove('hidden');
+          } else {
+            grid.classList.add('hidden');
+          }
+        });
+      });
+    });
+  });

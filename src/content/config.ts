@@ -11,7 +11,6 @@ const docsCollection = defineCollection({
     client: z.string().optional(),
     reportDate: z.string().optional(),
     reportType: z.enum(['audit', 'monthly', 'quarterly', 'strategy', 'technical', 'content']).optional(),
-    category: z.string().optional(),
     tags: z.array(z.string()).optional(),
 
     // Legacy support

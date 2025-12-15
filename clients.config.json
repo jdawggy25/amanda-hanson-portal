@@ -2,25 +2,61 @@
   "clients": [
     {
       "id": "v3",
-      "name": "V3",
+      "name": "V3 Biomedical",
       "password": "v3",
-      "website": "v3.com",
-      "enabled": true
+      "website": "v3biomedical.com",
+      "enabled": true,
+      "seoMetrics": {
+        "lastUpdated": "2025-12-15",
+        "domainRating": 24.0,
+        "ahrefsRank": 6052731,
+        "organicKeywords": 0,
+        "organicTraffic": 0,
+        "organicTrafficValue": "N/A",
+        "liveBacklinks": 145,
+        "referringDomains": 70,
+        "trackedKeywords": 46,
+        "paidKeywords": 0,
+        "paidTraffic": 0
+      }
     },
     {
       "id": "casita",
       "name": "Casita",
       "password": "casita",
       "website": "casita.com",
-      "enabled": true
+      "enabled": true,
+      "seoMetrics": {
+        "lastUpdated": "2025-12-15",
+        "domainRating": 55.0,
+        "ahrefsRank": 400833,
+        "organicKeywords": 9763,
+        "organicTraffic": 54091,
+        "organicTrafficValue": "$30,527.10",
+        "liveBacklinks": 48282,
+        "referringDomains": 1488,
+        "paidKeywords": 0,
+        "paidTraffic": 0
+      }
     },
     {
       "id": "bnc-builders",
       "name": "BNC Builders Inc.",
       "password": "bnc-builders",
       "website": "bncbuildersinc.com",
-      "enabled": true
+      "enabled": true,
+      "seoMetrics": {
+        "lastUpdated": "2025-12-15",
+        "domainRating": 29.0,
+        "ahrefsRank": 3949210,
+        "organicKeywords": 24,
+        "organicTraffic": 91,
+        "organicTrafficValue": "$510.51",
+        "liveBacklinks": 361,
+        "referringDomains": 97,
+        "paidKeywords": 1,
+        "paidTraffic": 5
+      }
     }
   ]
 }
-

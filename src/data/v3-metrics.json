@@ -2,150 +2,160 @@
   "client": {
     "name": "V3 Biomedical",
     "reportDate": "December 2025",
-    "website": "v3biomed.com"
+    "website": "v3biomedical.com",
+    "ahrefsProjectId": 9107469
   },
   "overview": {
-    "performanceScore": "N/A",
-    "seoScore": "N/A",
-    "accessibilityScore": "N/A",
-    "bestPracticesScore": "N/A"
+    "domainRating": 24,
+    "ahrefsRank": 6052731,
+    "organicKeywords": 0,
+    "organicTraffic": 0,
+    "trackedKeywords": 46,
+    "status": "Pre-ranking phase"
   },
   "keywords": {
-    "total": "N/A",
-    "change": "N/A",
-    "changePercent": "N/A",
-    "topPositions": "N/A",
-    "avgPosition": "N/A",
+    "total": 0,
+    "tracked": 46,
+    "topPositions": 0,
+    "avgPosition": null,
     "ranking": [
-      { "keyword": "wound expert", "position": "N/A", "change": "N/A", "volume": 6900, "difficulty": 12, "priority": "GOLDMINE - P0" },
-      { "keyword": "stages of wound healing", "position": "N/A", "change": "N/A", "volume": 3700, "difficulty": 43, "priority": "P0" },
-      { "keyword": "healthcare software", "position": "N/A", "change": "N/A", "volume": 8000, "difficulty": 92, "priority": "Long-term" },
-      { "keyword": "medical software", "position": "N/A", "change": "N/A", "volume": 6300, "difficulty": 91, "priority": "Long-term" },
-      { "keyword": "wound care software", "position": "N/A", "change": "N/A", "volume": 200, "difficulty": 32, "priority": "P0" },
-      { "keyword": "wound assessment", "position": "N/A", "change": "N/A", "volume": 450, "difficulty": 3, "priority": "P1" },
-      { "keyword": "wound care solutions", "position": "N/A", "change": "N/A", "volume": 300, "difficulty": 3, "priority": "P1" },
-      { "keyword": "wound care billing", "position": "N/A", "change": "N/A", "volume": 200, "difficulty": 0, "priority": "P1" }
+      { "keyword": "wound care products", "position": null, "volume": 6300, "difficulty": 1, "priority": "P0 - Quick Win" },
+      { "keyword": "advanced wound care", "position": null, "volume": 1200, "difficulty": 7, "priority": "P1" },
+      { "keyword": "wound care management", "position": null, "volume": 900, "difficulty": 20, "priority": "P2" },
+      { "keyword": "mobile wound care", "position": null, "volume": 450, "difficulty": 25, "priority": "P2" },
+      { "keyword": "wound care companies", "position": null, "volume": 400, "difficulty": 15, "priority": "P1" },
+      { "keyword": "wound manager", "position": null, "volume": 350, "difficulty": 12, "priority": "P1" },
+      { "keyword": "emr examples", "position": null, "volume": 300, "difficulty": 14, "priority": "P1" },
+      { "keyword": "wound care product", "position": null, "volume": 200, "difficulty": 6, "priority": "P1" },
+      { "keyword": "wound care software", "position": null, "volume": 200, "difficulty": 28, "priority": "P2" },
+      { "keyword": "best wound care products", "position": null, "volume": 150, "difficulty": 2, "priority": "P0 - Quick Win" },
+      { "keyword": "wound care emr", "position": null, "volume": 150, "difficulty": 1, "priority": "P0 - Quick Win" },
+      { "keyword": "advanced wound care products", "position": null, "volume": 100, "difficulty": 7, "priority": "P1" },
+      { "keyword": "wound assessment tool", "position": null, "volume": 100, "difficulty": 4, "priority": "P0 - Quick Win" },
+      { "keyword": "wound care ehr", "position": null, "volume": 90, "difficulty": 17, "priority": "P2" },
+      { "keyword": "wound management software", "position": null, "volume": 30, "difficulty": 28, "priority": "P2" },
+      { "keyword": "telehealth wound care", "position": null, "volume": 20, "difficulty": 0, "priority": "P0 - Quick Win" },
+      { "keyword": "telemedicine wound care", "position": null, "volume": 20, "difficulty": 0, "priority": "P0 - Quick Win" },
+      { "keyword": "wound assessment software", "position": null, "volume": 10, "difficulty": 30, "priority": "P2" },
+      { "keyword": "wound care charting software", "position": null, "volume": 10, "difficulty": 28, "priority": "P2" }
     ]
   },
   "traffic": {
-    "monthly": "N/A",
-    "change": "N/A",
-    "changePercent": "N/A",
+    "monthly": 0,
+    "organicValue": null,
     "trend": [],
     "sources": {
-      "organic": "N/A",
-      "direct": "N/A",
-      "referral": "N/A",
-      "social": "N/A"
+      "organic": 0,
+      "direct": null,
+      "referral": null,
+      "social": null
     },
     "topPages": [],
     "targets": {
-      "month1": "+15%",
-      "month2": "+30%",
-      "month3": "+50%"
+      "month1": "First ranking",
+      "month3": "200 monthly visits",
+      "month6": "500 monthly visits"
     }
   },
   "backlinks": {
-    "total": "N/A",
-    "change": "N/A",
-    "changePercent": "N/A",
-    "domainAuthority": "N/A",
-    "referringDomains": "N/A",
-    "newLinks": [],
+    "total": 145,
+    "allTime": 430,
+    "domainRating": 24,
+    "referringDomains": 70,
+    "allTimeReferringDomains": 100,
+    "topReferringDomains": [
+      { "domain": "crunchbase.com", "dr": 90, "links": 1, "firstSeen": "2025-09-23" },
+      { "domain": "za.com", "dr": 87, "links": 12, "firstSeen": "2024-07-06" },
+      { "domain": "itxoft.com", "dr": 81, "links": 14, "firstSeen": "2024-12-12" },
+      { "domain": "seoagency.sale", "dr": 77, "links": 2, "firstSeen": "2025-10-31" },
+      { "domain": "mex.com", "dr": 76, "links": 12, "firstSeen": "2025-05-18" },
+      { "domain": "cience.com", "dr": 75, "links": 2, "firstSeen": "2024-07-25" },
+      { "domain": "rank-your.site", "dr": 73, "links": 1, "firstSeen": "2025-04-16" },
+      { "domain": "exlinko.net", "dr": 72, "links": 3, "firstSeen": "2025-01-29" },
+      { "domain": "seoflx.net", "dr": 72, "links": 3, "firstSeen": "2025-01-24" },
+      { "domain": "sparltech.com", "dr": 67, "links": 6, "firstSeen": "2024-11-27" }
+    ],
     "targets": {
-      "month1": "+15 domains",
-      "month2": "+25 domains",
-      "month3": "+40 domains",
-      "daIncrease": "+6 points by month 3"
+      "month1": "80 referring domains",
+      "month3": "100 referring domains",
+      "month6": "150 referring domains",
+      "drTarget": "30+ by month 6"
     },
-    "plannedDirectories": [
-      { "name": "HIMSS Marketplace", "tier": "Tier 1", "priority": "CRITICAL", "type": "Healthcare" },
-      { "name": "WoundSource", "tier": "Tier 1", "priority": "CRITICAL", "type": "Healthcare" },
-      { "name": "Health IT Answers", "tier": "Tier 1", "priority": "HIGH", "type": "Healthcare" },
-      { "name": "Medigy", "tier": "Tier 1", "priority": "HIGH", "type": "Healthcare" },
-      { "name": "G2", "tier": "Tier 2", "priority": "CRITICAL", "type": "SaaS" },
-      { "name": "Capterra", "tier": "Tier 2", "priority": "CRITICAL", "type": "SaaS" },
-      { "name": "GetApp", "tier": "Tier 2", "priority": "HIGH", "type": "SaaS" },
-      { "name": "Software Advice", "tier": "Tier 2", "priority": "HIGH", "type": "SaaS" }
+    "targetDirectories": [
+      { "name": "G2", "tier": "Tier 1", "priority": "HIGH", "type": "SaaS" },
+      { "name": "Capterra", "tier": "Tier 1", "priority": "HIGH", "type": "SaaS" },
+      { "name": "GetApp", "tier": "Tier 1", "priority": "MEDIUM", "type": "SaaS" },
+      { "name": "Software Advice", "tier": "Tier 1", "priority": "MEDIUM", "type": "SaaS" },
+      { "name": "HIMSS Marketplace", "tier": "Tier 2", "priority": "MEDIUM", "type": "Healthcare" },
+      { "name": "WoundSource", "tier": "Tier 2", "priority": "MEDIUM", "type": "Healthcare" }
     ]
   },
-  "issues": {
-    "total": "N/A",
-    "critical": "N/A",
-    "warnings": "N/A",
-    "notices": "N/A",
-    "details": [],
-    "plannedFixes": [
-      { "type": "critical", "issue": "Implement canonical tags site-wide", "sprint": "Sprint 1" },
-      { "type": "critical", "issue": "Create/optimize XML sitemap", "sprint": "Sprint 1" },
-      { "type": "critical", "issue": "Configure robots.txt", "sprint": "Sprint 1" },
-      { "type": "critical", "issue": "Implement Organization schema", "sprint": "Sprint 1" },
-      { "type": "warning", "issue": "Optimize Core Web Vitals", "sprint": "Sprint 2" },
-      { "type": "warning", "issue": "Setup Google Analytics 4", "sprint": "Sprint 2" },
-      { "type": "warning", "issue": "Setup Google Search Console", "sprint": "Sprint 2" }
+  "technicalSeo": {
+    "issues": {
+      "total": null,
+      "critical": null,
+      "warnings": null,
+      "notices": null
+    },
+    "checklist": [
+      { "task": "Verify XML sitemap submission", "status": "pending", "priority": "HIGH" },
+      { "task": "Configure robots.txt", "status": "pending", "priority": "HIGH" },
+      { "task": "Implement canonical tags", "status": "pending", "priority": "HIGH" },
+      { "task": "Add Organization schema", "status": "pending", "priority": "MEDIUM" },
+      { "task": "Add Product schema", "status": "pending", "priority": "MEDIUM" },
+      { "task": "Setup Google Search Console", "status": "pending", "priority": "HIGH" },
+      { "task": "Setup Google Analytics 4", "status": "pending", "priority": "HIGH" },
+      { "task": "Mobile responsiveness audit", "status": "pending", "priority": "MEDIUM" },
+      { "task": "Core Web Vitals optimization", "status": "pending", "priority": "MEDIUM" }
     ]
   },
   "coreWebVitals": {
-    "lcp": { "value": "N/A", "unit": "s", "status": "N/A", "threshold": 2.5, "target": "< 2.5s" },
-    "fid": { "value": "N/A", "unit": "ms", "status": "N/A", "threshold": 100, "target": "< 100ms" },
-    "cls": { "value": "N/A", "unit": "", "status": "N/A", "threshold": 0.1, "target": "< 0.1" },
-    "fcp": { "value": "N/A", "unit": "s", "status": "N/A", "threshold": 1.8, "target": "< 1.8s" },
-    "ttfb": { "value": "N/A", "unit": "s", "status": "N/A", "threshold": 0.8, "target": "< 0.8s" }
+    "lcp": { "value": null, "unit": "s", "status": "unknown", "threshold": 2.5 },
+    "fid": { "value": null, "unit": "ms", "status": "unknown", "threshold": 100 },
+    "cls": { "value": null, "unit": "", "status": "unknown", "threshold": 0.1 },
+    "fcp": { "value": null, "unit": "s", "status": "unknown", "threshold": 1.8 },
+    "ttfb": { "value": null, "unit": "s", "status": "unknown", "threshold": 0.8 }
   },
-  "competitors": {
-    "avgPosition": "N/A",
-    "comparison": [
-      { "name": "WoundZoom", "visibility": "N/A", "keywords": "N/A", "strategy": "Patient-oriented keywords", "focus": "Patients seeking care" },
-      { "name": "Intellicure", "visibility": "N/A", "keywords": "N/A", "strategy": "Provider/clinical keywords", "focus": "Doctors, clinicians" },
-      { "name": "eKare.ai", "visibility": "N/A", "keywords": "N/A", "strategy": "Hybrid approach", "focus": "Both audiences" }
-    ]
-  },
-  "conversions": {
-    "total": "N/A",
-    "change": "N/A",
-    "changePercent": "N/A",
-    "rate": "N/A",
-    "trend": [],
-    "targets": {
-      "demoRequests": "+25% by month 3",
-      "contactForms": "+30% by month 3",
-      "resourceDownloads": "+40% by month 3",
-      "timeOnSite": "+20% by month 3",
-      "pagesPerSession": "+15% by month 3"
-    }
-  },
-  "initiative": {
-    "name": "V3 Biomedical SEO/GEO Initiative",
-    "duration": "12 Weeks (6 Sprints)",
-    "sprintLength": "2 Weeks",
-    "totalStoryPoints": 270,
-    "startDate": "TBD",
-    "targetCompletion": "End of Q1 2026",
-    "epics": [
-      { "id": "EPIC-01", "name": "Technical SEO Foundation", "points": 40, "sprint": "1-2", "priority": "P0" },
-      { "id": "EPIC-02", "name": "Content Foundation & Quick Wins", "points": 55, "sprint": "1-2", "priority": "P0" },
-      { "id": "EPIC-03", "name": "Backlink & Authority Foundation", "points": 30, "sprint": "1-2", "priority": "P0" },
-      { "id": "EPIC-04", "name": "Content Expansion & Authority", "points": 75, "sprint": "3-4", "priority": "P1" },
-      { "id": "EPIC-05", "name": "Hub Pages & Conversion Optimization", "points": 50, "sprint": "5-6", "priority": "P1" },
-      { "id": "EPIC-06", "name": "Video & Multimedia Content", "points": 20, "sprint": "3-6", "priority": "P1" }
+  "strategy": {
+    "phase": "Foundation Building",
+    "priorities": [
+      "Create content targeting KD 0-5 keywords",
+      "Build internal linking structure",
+      "Acquire healthcare industry backlinks",
+      "Complete technical SEO implementation"
     ],
-    "contentDeliverables": {
-      "pillarPages": 4,
-      "blogPosts": "15+",
-      "comparisonPages": 4,
-      "caseStudies": 4,
-      "youtubeVideos": "6+"
+    "contentPlan": {
+      "pillarPages": [
+        { "topic": "Wound Care EMR Guide", "targetKeywords": ["wound care emr", "wound care ehr"], "status": "planned" },
+        { "topic": "Wound Care Products Overview", "targetKeywords": ["wound care products", "best wound care products"], "status": "planned" },
+        { "topic": "Advanced Wound Care Technology", "targetKeywords": ["advanced wound care", "advanced wound care products"], "status": "planned" }
+      ],
+      "blogPosts": 8,
+      "targetWordCount": "1,500-2,000 per post"
     },
     "successMetrics": {
-      "organicTrafficIncrease": "100%",
-      "page1Rankings": "5+ keywords",
-      "page2Rankings": "15+ keywords",
-      "newReferringDomains": "50+",
-      "domainAuthorityIncrease": "+5 points",
-      "reviews": "10+ on G2/Capterra",
-      "demoRequestIncrease": "+25%",
-      "bounceRateReduction": "-10%"
+      "month1": {
+        "goal": "First organic ranking",
+        "drTarget": 26,
+        "referringDomainsTarget": 80
+      },
+      "month3": {
+        "goal": "50+ organic keywords",
+        "drTarget": 30,
+        "trafficTarget": 200,
+        "referringDomainsTarget": 100
+      },
+      "month6": {
+        "goal": "10+ page 1 rankings",
+        "drTarget": 35,
+        "trafficTarget": 500,
+        "referringDomainsTarget": 150
+      }
     }
+  },
+  "dataSource": {
+    "provider": "Ahrefs",
+    "lastUpdated": "2025-12-15",
+    "projectId": 9107469
   }
 }
-

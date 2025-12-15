@@ -32,6 +32,7 @@ export async function getStaticPaths() {
 }
 
 const { doc } = Astro.props;
+const { client } = Astro.params;
 const { Content, headings } = await doc.render();
 
 // Extract title from first h1 heading or format from slug
@@ -47,7 +48,7 @@ const title = doc.data.title
   || formatTitle(doc.slug);
 ---
 
-<DocLayout title={title}>
+<DocLayout title={title} client={client}>
   <Content />
 </DocLayout>
 

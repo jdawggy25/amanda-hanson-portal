@@ -1,92 +1,175 @@
 {
   "client": {
-    "name": "Casita",
+    "name": "Casita Azul",
     "reportDate": "December 2025",
-    "website": "casita.com"
+    "website": "casitaazul.com"
   },
   "overview": {
-    "performanceScore": 88,
-    "seoScore": 91,
-    "accessibilityScore": 85,
-    "bestPracticesScore": 92
+    "performanceScore": "N/A",
+    "seoScore": "N/A",
+    "accessibilityScore": "N/A",
+    "bestPracticesScore": "N/A"
   },
   "keywords": {
-    "total": 189,
-    "change": 36,
-    "changePercent": "+24%",
-    "topPositions": 48,
-    "avgPosition": 6.8,
+    "total": "N/A",
+    "change": "N/A",
+    "changePercent": "N/A",
+    "topPositions": "N/A",
+    "avgPosition": "N/A",
     "ranking": [
-      { "keyword": "vacation rentals san diego", "position": 2, "change": 3, "volume": 5400 },
-      { "keyword": "beach house rental", "position": 1, "change": 2, "volume": 3200 },
-      { "keyword": "family vacation homes", "position": 4, "change": 1, "volume": 2800 },
-      { "keyword": "pet friendly rentals", "position": 3, "change": 5, "volume": 1900 },
-      { "keyword": "luxury vacation properties", "position": 6, "change": 2, "volume": 4100 }
+      { "keyword": "spanish immersion preschool", "position": "N/A", "change": "N/A", "volume": 480, "difficulty": 45, "priority": "HIGH" },
+      { "keyword": "bilingual preschool", "position": "N/A", "change": "N/A", "volume": 720, "difficulty": 42, "priority": "HIGH" },
+      { "keyword": "spanish classes for toddlers", "position": "N/A", "change": "N/A", "volume": 590, "difficulty": 35, "priority": "HIGH" },
+      { "keyword": "spanish daycare", "position": "N/A", "change": "N/A", "volume": 320, "difficulty": 33, "priority": "HIGH" },
+      { "keyword": "spanish preschool near me", "position": "N/A", "change": "N/A", "volume": 260, "difficulty": 38, "priority": "HIGH" },
+      { "keyword": "spanish classes portland", "position": "N/A", "change": "N/A", "volume": 140, "difficulty": "N/A", "priority": "LOCAL - CRITICAL" },
+      { "keyword": "spanish preschool portland", "position": "N/A", "change": "N/A", "volume": 70, "difficulty": "N/A", "priority": "LOCAL - CRITICAL" },
+      { "keyword": "spanish daycare beaverton", "position": "N/A", "change": "N/A", "volume": 20, "difficulty": "N/A", "priority": "LOCAL" },
+      { "keyword": "spanish preschool hillsboro", "position": "N/A", "change": "N/A", "volume": 30, "difficulty": "N/A", "priority": "LOCAL" }
     ]
   },
   "traffic": {
-    "monthly": 32400,
-    "change": 7100,
-    "changePercent": "+28%",
-    "trend": [15200, 18400, 21800, 24900, 27600, 30100, 32400],
+    "monthly": "N/A",
+    "change": "N/A",
+    "changePercent": "N/A",
+    "trend": [],
     "sources": {
-      "organic": 68,
-      "direct": 15,
-      "referral": 10,
-      "social": 7
+      "organic": "N/A",
+      "direct": "N/A",
+      "referral": "N/A",
+      "social": "N/A"
     },
-    "topPages": [
-      { "page": "/properties/beach-house", "views": 8900, "change": "+32%" },
-      { "page": "/locations/downtown", "views": 6400, "change": "+28%" },
-      { "page": "/amenities", "views": 4800, "change": "+18%" },
-      { "page": "/blog/vacation-guide", "views": 3200, "change": "+45%" }
-    ]
+    "topPages": [],
+    "targets": {
+      "month3": "Ranking for local terms",
+      "month6": "50%+ increase in organic traffic"
+    }
   },
   "backlinks": {
-    "total": 892,
-    "change": 98,
-    "changePercent": "+12%",
-    "domainAuthority": 52,
-    "referringDomains": 267,
-    "newLinks": [
-      { "domain": "tripadvisor.com", "da": 93, "type": "dofollow" },
-      { "domain": "timeout.com", "da": 88, "type": "dofollow" },
-      { "domain": "sandiego.com", "da": 72, "type": "dofollow" }
+    "total": "N/A",
+    "change": "N/A",
+    "changePercent": "N/A",
+    "domainAuthority": "N/A",
+    "referringDomains": "N/A",
+    "newLinks": [],
+    "plannedStrategy": [
+      { "type": "Portland parenting blogs", "priority": "HIGH" },
+      { "type": "Local directories", "priority": "MEDIUM" },
+      { "type": "Local PR opportunities", "priority": "MEDIUM" }
     ]
   },
   "issues": {
-    "total": 8,
-    "critical": 1,
-    "warnings": 4,
-    "notices": 3,
+    "total": 6,
+    "critical": 6,
+    "warnings": 0,
+    "notices": 0,
     "details": [
-      { "type": "critical", "issue": "Slow mobile page speed on 2 pages", "pages": 2 },
-      { "type": "warning", "issue": "Missing schema markup", "pages": 5 },
-      { "type": "warning", "issue": "Thin content on location pages", "pages": 3 },
-      { "type": "warning", "issue": "Duplicate meta descriptions", "pages": 4 }
+      { "type": "critical", "issue": "Zero keyword optimization - all generic headings", "pages": 6 },
+      { "type": "critical", "issue": "Missing LocalBusiness schema markup", "pages": 6 },
+      { "type": "critical", "issue": "Google Business Profile needs optimization", "pages": "N/A" },
+      { "type": "critical", "issue": "No individual location pages", "pages": 0 },
+      { "type": "critical", "issue": "Programs page needs to be split by age group", "pages": 1 },
+      { "type": "critical", "issue": "Missing service pages for key keywords", "pages": 0 }
     ]
   },
   "coreWebVitals": {
-    "lcp": { "value": 2.1, "unit": "s", "status": "pass", "threshold": 2.5 },
-    "fid": { "value": 68, "unit": "ms", "status": "pass", "threshold": 100 },
-    "cls": { "value": 0.06, "unit": "", "status": "pass", "threshold": 0.1 },
-    "fcp": { "value": 1.4, "unit": "s", "status": "pass", "threshold": 1.8 },
-    "ttfb": { "value": 0.58, "unit": "s", "status": "pass", "threshold": 0.8 }
+    "lcp": { "value": "N/A", "unit": "s", "status": "N/A", "threshold": 2.5 },
+    "fid": { "value": "N/A", "unit": "ms", "status": "N/A", "threshold": 100 },
+    "cls": { "value": "N/A", "unit": "", "status": "N/A", "threshold": 0.1 },
+    "fcp": { "value": "N/A", "unit": "s", "status": "N/A", "threshold": 1.8 },
+    "ttfb": { "value": "N/A", "unit": "s", "status": "N/A", "threshold": 0.8 }
   },
   "competitors": {
-    "avgPosition": 9.2,
-    "comparison": [
-      { "name": "Coastal Rentals", "visibility": 72, "keywords": 245 },
-      { "name": "Beach Escapes", "visibility": 68, "keywords": 198 },
-      { "name": "Sunset Properties", "visibility": 61, "keywords": 223 }
-    ]
+    "avgPosition": "N/A",
+    "comparison": []
   },
   "conversions": {
-    "total": 624,
-    "change": 98,
-    "changePercent": "+19%",
-    "rate": 1.93,
-    "trend": [380, 425, 468, 512, 558, 592, 624]
+    "total": "N/A",
+    "change": "N/A",
+    "changePercent": "N/A",
+    "rate": "N/A",
+    "trend": [],
+    "trackingMetrics": [
+      "Organic search traffic (Google Analytics)",
+      "Keyword rankings",
+      "Google Business Profile views/clicks",
+      "Tour request form submissions"
+    ]
+  },
+  "initiative": {
+    "name": "Casita Azul SEO Strategy",
+    "businessType": "Spanish Immersion Preschool & Daycare",
+    "location": "Portland, Oregon (Multiple Locations)",
+    "phases": [
+      {
+        "name": "Phase 1: Quick Wins",
+        "timeline": "Week 1-2",
+        "impact": "HIGH",
+        "effort": "LOW",
+        "tasks": [
+          "Update all H1s and H2s across 6 main pages",
+          "Update all title tags and meta descriptions",
+          "Add LocalBusiness schema markup",
+          "Claim/optimize Google Business Profile for each location"
+        ]
+      },
+      {
+        "name": "Phase 2: New Pages",
+        "timeline": "Week 2-4",
+        "impact": "HIGH",
+        "effort": "MEDIUM",
+        "tasks": [
+          "Create /spanish-classes-portland/ service page",
+          "Create /spanish-immersion-preschool-portland/ service page",
+          "Create individual location pages for each campus",
+          "Split Programs into 3 separate age-group pages"
+        ]
+      },
+      {
+        "name": "Phase 3: Content & Links",
+        "timeline": "Ongoing",
+        "impact": "MEDIUM-HIGH",
+        "effort": "HIGH",
+        "tasks": [
+          "Launch blog with 2 posts/month",
+          "Build backlinks from Portland parenting blogs",
+          "Get listed in local directories",
+          "Pursue local PR opportunities"
+        ]
+      }
+    ],
+    "currentIssues": [
+      {
+        "page": "Homepage",
+        "currentH1": "Welcome to Casita Azul!",
+        "optimizedH1": "Spanish Immersion Preschool & Daycare in Portland, Oregon"
+      },
+      {
+        "page": "Our Story",
+        "currentH1": "Discover Our Journey!",
+        "optimizedH1": "About Casita Azul: Portland's Latina-Owned Spanish Immersion School"
+      },
+      {
+        "page": "Programs",
+        "currentH1": "Discover Our Programs!",
+        "optimizedH1": "Spanish Immersion Programs for Infants, Toddlers & Preschoolers"
+      },
+      {
+        "page": "Locations",
+        "currentH1": "Welcome to Our Casitas!",
+        "optimizedH1": "Spanish Immersion Preschool & Daycare Locations in Portland Metro"
+      },
+      {
+        "page": "Admissions",
+        "currentH1": "Getting Started",
+        "optimizedH1": "Enroll in Spanish Immersion Preschool & Daycare at Casita Azul"
+      },
+      {
+        "page": "Contact",
+        "currentH1": "Contact Us!",
+        "optimizedH1": "Contact Casita Azul Spanish Immersion School"
+      }
+    ]
   }
 }
 

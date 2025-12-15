@@ -22,19 +22,19 @@
     },
     {
       "id": "casita",
-      "name": "Casita",
+      "name": "Casita Azul",
       "password": "casita",
-      "website": "casita.com",
+      "website": "casitaazulpdx.com",
       "enabled": true,
       "seoMetrics": {
         "lastUpdated": "2025-12-15",
-        "domainRating": 55.0,
-        "ahrefsRank": 400833,
-        "organicKeywords": 9763,
-        "organicTraffic": 54091,
-        "organicTrafficValue": "$30,527.10",
-        "liveBacklinks": 48282,
-        "referringDomains": 1488,
+        "domainRating": 22.0,
+        "ahrefsRank": 6863132,
+        "organicKeywords": 4,
+        "organicTraffic": 96,
+        "organicTrafficValue": "$21.58",
+        "liveBacklinks": 100,
+        "referringDomains": 38,
         "paidKeywords": 0,
         "paidTraffic": 0
       }

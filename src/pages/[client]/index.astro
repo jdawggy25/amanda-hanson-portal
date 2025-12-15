@@ -40,7 +40,9 @@ function formatTitle(slug: string): string {
     .replace(/\b\w/g, c => c.toUpperCase());
 }
 
-const { keywords, traffic, backlinks, issues } = metricsData;
+const { keywords, traffic, backlinks } = metricsData;
+// Handle issues being at root level or nested under technicalSeo
+const issues = metricsData.issues || metricsData.technicalSeo?.issues || { total: 0, critical: 0, warnings: 0, notices: 0 };
 const clientName = metricsData.client.name;
 ---
 

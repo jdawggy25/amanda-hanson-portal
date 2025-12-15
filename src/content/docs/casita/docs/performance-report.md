@@ -113,10 +113,27 @@ Casita Azul is in the early stages of SEO development. The site currently ranks 
 | Admissions | Getting Started | Enroll in Spanish Immersion Preschool & Daycare at Casita Azul |
 | Contact | Contact Us! | Contact Casita Azul Spanish Immersion School |
 
-### Core Web Vitals
-- **LCP (Largest Contentful Paint):** To be measured
-- **FID (First Input Delay):** To be measured
-- **CLS (Cumulative Layout Shift):** To be measured
+### Core Web Vitals (Mobile - December 2025)
+
+| Metric | Value | Target | Status |
+|--------|-------|--------|--------|
+| LCP (Largest Contentful Paint) | 15.7s | < 2.5s | Poor |
+| FCP (First Contentful Paint) | 3.8s | < 1.8s | Poor |
+| CLS (Cumulative Layout Shift) | 0.053 | < 0.1 | Good |
+| TBT (Total Blocking Time) | 2ms | < 200ms | Good |
+
+> **Critical Issue:** LCP of 15.7s is severely impacting user experience and SEO. This is likely caused by large unoptimized images or slow server response. Recommend immediate investigation.
+
+### Lighthouse Scores
+
+| Category | Score |
+|----------|-------|
+| Performance | 60 |
+| SEO | 100 |
+| Accessibility | 81 |
+| Best Practices | 75 |
+
+*Audit Date: 2025-12-15 | Device: Mobile*
 
 ## Key Insights
 

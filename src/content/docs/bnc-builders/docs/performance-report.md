@@ -125,10 +125,27 @@ BNC Builders has a foundation for local SEO in San Diego County's home remodelin
 | Core Web Vitals need improvement | User experience | MEDIUM |
 | Internal linking opportunities | Crawl efficiency | MEDIUM |
 
-### Core Web Vitals (Estimated)
-- **LCP (Largest Contentful Paint):** ~3.2s (Needs Improvement)
-- **FID (First Input Delay):** ~85ms (Good)
-- **CLS (Cumulative Layout Shift):** ~0.15 (Needs Improvement)
+### Core Web Vitals (Mobile - December 2025)
+
+| Metric | Value | Target | Status |
+|--------|-------|--------|--------|
+| LCP (Largest Contentful Paint) | 10.0s | < 2.5s | Poor |
+| FCP (First Contentful Paint) | 3.4s | < 1.8s | Poor |
+| CLS (Cumulative Layout Shift) | 0 | < 0.1 | Good |
+| TBT (Total Blocking Time) | 5ms | < 200ms | Good |
+
+> **Critical Issue:** LCP of 10.0s is severely impacting user experience and SEO. The Scorpion platform may be contributing to slow load times.
+
+### Lighthouse Scores
+
+| Category | Score |
+|----------|-------|
+| Performance | 60 |
+| SEO | 92 |
+| Accessibility | 71 |
+| Best Practices | 82 |
+
+*Audit Date: 2025-12-15 | Device: Mobile*
 
 ## Key Insights
 

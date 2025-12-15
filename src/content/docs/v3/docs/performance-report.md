@@ -94,10 +94,25 @@ We are tracking 46 wound care-related keywords. Below are the highest-volume opp
 
 ## Technical SEO Health
 
-### Core Web Vitals
-- **LCP (Largest Contentful Paint):** To be measured
-- **FID (First Input Delay):** To be measured
-- **CLS (Cumulative Layout Shift):** To be measured
+### Core Web Vitals (Mobile - December 2025)
+
+| Metric | Value | Target | Status |
+|--------|-------|--------|--------|
+| LCP (Largest Contentful Paint) | 3.6s | < 2.5s | Needs Improvement |
+| FCP (First Contentful Paint) | 2.4s | < 1.8s | Needs Improvement |
+| CLS (Cumulative Layout Shift) | 0 | < 0.1 | Good |
+| TBT (Total Blocking Time) | 12ms | < 200ms | Good |
+
+### Lighthouse Scores
+
+| Category | Score |
+|----------|-------|
+| Performance | 87 |
+| SEO | 100 |
+| Accessibility | 100 |
+| Best Practices | 100 |
+
+*Audit Date: 2025-12-15 | Device: Mobile*
 
 ### Site Health
 - **Pages Indexed:** To be verified in GSC

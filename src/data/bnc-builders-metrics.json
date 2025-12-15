@@ -157,11 +157,19 @@
     "platformNote": "Platform lock-in (Scorpion) may limit SEO flexibility"
   },
   "coreWebVitals": {
-    "lcp": { "value": 3.2, "unit": "s", "status": "needs-improvement", "threshold": 2.5 },
-    "fid": { "value": 85, "unit": "ms", "status": "pass", "threshold": 100 },
-    "cls": { "value": 0.15, "unit": "", "status": "needs-improvement", "threshold": 0.1 },
-    "fcp": { "value": 2.1, "unit": "s", "status": "needs-improvement", "threshold": 1.8 },
-    "ttfb": { "value": 0.95, "unit": "s", "status": "needs-improvement", "threshold": 0.8 }
+    "lcp": { "value": 10.0, "unit": "s", "status": "fail", "threshold": 2.5 },
+    "fid": { "value": 5, "unit": "ms", "status": "pass", "threshold": 100 },
+    "cls": { "value": 0, "unit": "", "status": "pass", "threshold": 0.1 },
+    "fcp": { "value": 3.4, "unit": "s", "status": "fail", "threshold": 1.8 },
+    "ttfb": { "value": null, "unit": "s", "status": "unknown", "threshold": 0.8 }
+  },
+  "lighthouse": {
+    "performance": 60,
+    "accessibility": 71,
+    "bestPractices": 82,
+    "seo": 92,
+    "device": "mobile",
+    "lastAudit": "2025-12-15"
   },
   "competitors": {
     "organic": [

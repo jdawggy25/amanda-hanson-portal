@@ -110,11 +110,19 @@
     ]
   },
   "coreWebVitals": {
-    "lcp": { "value": null, "unit": "s", "status": "unknown", "threshold": 2.5 },
-    "fid": { "value": null, "unit": "ms", "status": "unknown", "threshold": 100 },
-    "cls": { "value": null, "unit": "", "status": "unknown", "threshold": 0.1 },
-    "fcp": { "value": null, "unit": "s", "status": "unknown", "threshold": 1.8 },
+    "lcp": { "value": 3.6, "unit": "s", "status": "needs-improvement", "threshold": 2.5 },
+    "fid": { "value": 12, "unit": "ms", "status": "pass", "threshold": 100 },
+    "cls": { "value": 0, "unit": "", "status": "pass", "threshold": 0.1 },
+    "fcp": { "value": 2.4, "unit": "s", "status": "needs-improvement", "threshold": 1.8 },
     "ttfb": { "value": null, "unit": "s", "status": "unknown", "threshold": 0.8 }
+  },
+  "lighthouse": {
+    "performance": 87,
+    "accessibility": 100,
+    "bestPractices": 100,
+    "seo": 100,
+    "device": "mobile",
+    "lastAudit": "2025-12-15"
   },
   "strategy": {
     "phase": "Foundation Building",

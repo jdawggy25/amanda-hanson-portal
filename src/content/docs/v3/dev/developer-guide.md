@@ -13,6 +13,7 @@ This guide consolidates all technical requirements for developers working on the
 
 ### Your Responsibilities
 
+
 As a developer on this project, you'll be responsible for:
 
 1. **Technical SEO Foundation** (Sprint 1-2)

@@ -1,26 +1,55 @@
-# Comcreate SEO Report Template
+# Comcreate Multi-Client SEO Report Platform
 
-A beautiful, professional SEO report template powered by Astro. Simply add your markdown files and deploy to Vercel to share polished SEO reports with clients.
+A beautiful, professional multi-client SEO report platform powered by Astro. Host SEO reports for multiple clients on a single domain with isolated content and metrics for each client.
 
 ## Features
 
-- Modern, professional dark theme with Comcreate branding
-- Fully responsive design
-- Lightning-fast static site generation
-- Card grid layout for easy navigation
-- Custom markdown styling for beautiful reports
-- SEO-optimized metadata
-- Easy deployment to Vercel
+- **Password-Protected Access** - Secure landing page with client-specific access codes
+- **Multi-Client Architecture** - Host unlimited clients on one domain
+- **Client Isolation** - Each client has their own homepage and documentation
+- **Dynamic Routing** - Clean URLs like `comcreate.org/client-name`
+- **Client-Specific Metrics** - Unique SEO metrics and charts for each client
+- **Modern Dark Theme** - Professional Comcreate branding
+- **Fully Responsive** - Perfect on all devices
+- **Lightning-Fast** - Static site generation with Astro
+- **Interactive Charts** - ApexCharts for data visualization
+- **Easy Content Management** - Just add markdown files
+- **One-Click Deployment** - Deploy to Vercel instantly
+
+## Platform Structure
+
+### URL Patterns
+
+- `comcreate.org/` → Password-protected landing page
+- `comcreate.org/v3` → V3 client homepage (access code: `v3`)
+- `comcreate.org/v3/technical-audit` → V3 technical audit report
+- `comcreate.org/casita` → Casita client homepage (access code: `casita`)
+- `comcreate.org/casita/local-seo` → Casita local SEO report
+
+### Directory Organization
+
+```
+src/
+├── content/docs/
+│   ├── v3/              # V3 client reports
+│   └── casita/          # Casita client reports
+├── data/
+│   ├── v3-metrics.json      # V3 metrics
+│   └── casita-metrics.json  # Casita metrics
+└── pages/
+    ├── index.astro          # Client directory
+    └── [client]/
+        ├── index.astro      # Client homepage
+        └── [...slug].astro  # Client docs
+```
 
 ## Quick Start
 
-### 1. Use This Template
-
-Click "Use this template" on GitHub to create your own repository, or clone it:
+### 1. Clone the Repository
 
 ```bash
-git clone [repository-url] client-name-seo-report
-cd client-name-seo-report
+git clone [repository-url] seo-report-platform
+cd seo-report-platform
 ```
 
 ### 2. Install Dependencies
@@ -29,206 +58,195 @@ cd client-name-seo-report
 npm install
 ```
 
-### 3. Add Your SEO Report Content
-
-Add your markdown files to `src/content/docs/`. Each file will automatically appear as a card on the homepage.
-
-**Example file:** `src/content/docs/executive-summary.md`
-
-```markdown
----
-title: "Executive Summary"
-description: "Overview of SEO strategy and recommendations"
-client: "Client Name"
-reportDate: "2025-12-10"
-reportType: "audit"
----
-
-# Executive Summary
-
-Your content here...
-```
-
-### 4. Preview Locally
+### 3. Start Development Server
 
 ```bash
 npm run dev
 ```
 
-Visit `http://localhost:4321` to see your report.
+Visit `http://localhost:4321` to see the platform.
 
-### 5. Deploy to Vercel
+## Adding a New Client
 
-```bash
-npm run build
-```
+See [MULTI-CLIENT-GUIDE.md](./MULTI-CLIENT-GUIDE.md) for detailed instructions.
 
-Then push to GitHub and connect to Vercel (see DEPLOYMENT.md for details).
+### Quick Steps:
 
-## Project Structure
+1. **Create content folder**: `src/content/docs/new-client/`
+2. **Add markdown files**: Create report pages in the folder
+3. **Create metrics file**: `src/data/new-client-metrics.json`
+4. **Register client**: Add to CLIENTS arrays in routing files
+5. **Update directory**: Add to client list in `src/pages/index.astro`
 
-```
-/
-├── public/              # Static assets (logos, favicons)
-│   ├── logo.png        # Comcreate logo (appears in header)
-│   ├── wide-logo.png   # Wide logo (appears in footer)
-│   └── favicon.ico
-├── src/
-│   ├── components/      # Reusable components
-│   ├── content/
-│   │   └── docs/       # ADD YOUR MARKDOWN FILES HERE
-│   ├── layouts/         # Page layouts
-│   ├── pages/          # Route pages
-│   └── styles/
-│       └── global.css   # Comcreate brand styling
-└── README.md
-```
+### Example Content File
 
-## Adding Content
-
-### Basic Markdown File
-
-Create a new `.md` file in `src/content/docs/`:
+**File:** `src/content/docs/new-client/getting-started.md`
 
 ```markdown
 ---
-title: "Technical SEO Audit"
-description: "Comprehensive technical analysis"
+title: "Getting Started"
+description: "Introduction to New Client SEO report"
 ---
 
-# Technical SEO Audit
+# Welcome to New Client SEO Report
 
-## Section 1
-
-Your content...
+Your content here...
 ```
-
-### Optional Frontmatter Fields
-
-```yaml
----
-title: "Page Title"                    # Required for card display
-description: "Short description"       # Shows on homepage card
-client: "Client Name"                  # Optional: Client identifier
-reportDate: "2025-12-10"              # Optional: Report date
-reportType: "audit"                    # Optional: audit, monthly, quarterly, strategy, technical, content
-category: "Technical"                  # Optional: For organization
-tags: ["seo", "technical", "audit"]   # Optional: For filtering
----
-```
-
-### Supported Markdown Features
-
-- **Headings**: `#`, `##`, `###`, etc.
-- **Lists**: Bulleted and numbered
-- **Tables**: Full markdown table support
-- **Code blocks**: Syntax highlighting
-- **Blockquotes**: For callouts
-- **Images**: `![alt](image-url)`
-- **Links**: Internal and external
-
-### Example Content Structure
-
-```markdown
-# Technical Audit
-
-## Core Web Vitals
-
-| Metric | Score | Status |
-|--------|-------|--------|
-| LCP    | 2.1s  | Pass   |
-| FID    | 45ms  | Pass   |
-| CLS    | 0.05  | Pass   |
-
-## Action Items
-
-- [ ] Fix mobile usability issues
-- [ ] Optimize images
-- [ ] Add schema markup
-
-## Code Example
-
-```json
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "Company Name"
-}
-```
-```
-
-## Customization
-
-### Update Client Information
-
-Edit `src/components/Footer.astro` to update contact information:
-
-```astro
-<p class="footer-contact">
-  <a href="tel:+16199550105">(619) 955-0105</a>
-  <a href="mailto:sales@comcreate.org">sales@comcreate.org</a>
-</p>
-```
-
-### Customize Colors
-
-Edit `src/styles/global.css` to change brand colors:
-
-```css
-:root {
-  --color-primary: #3b82f6;       /* Main brand color */
-  --color-accent-cyan: #06b6d4;   /* Cyan accent */
-  --color-accent-purple: #a855f7; /* Purple accent */
-}
-```
-
-### Replace Logos
-
-Replace these files in the `public/` folder:
-- `logo.png` - Square logo (shows in header)
-- `wide-logo.png` - Wide logo (shows in footer)
-- `favicon.ico` - Browser tab icon
 
 ## Development Commands
 
-| Command | Action |
-|---------|--------|
-| `npm install` | Install dependencies |
-| `npm run dev` | Start dev server at `localhost:4321` |
-| `npm run build` | Build for production to `dist/` |
-| `npm run preview` | Preview production build locally |
+```bash
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+```
 
 ## Deployment
 
-See [DEPLOYMENT.md](DEPLOYMENT.md) for detailed deployment instructions to Vercel.
+Push to GitHub and deploy to Vercel. See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed instructions.
 
-### Quick Deploy
+The platform will be available at your custom domain (e.g., `comcreate.org`).
 
-1. Push your repository to GitHub
-2. Go to [vercel.com](https://vercel.com)
-3. Import your GitHub repository
-4. Vercel auto-detects Astro and deploys
-5. Share the generated URL with your client
+## Managing Content
 
-## Template Workflow
+### Adding Pages to a Client
 
-### For Each New Client Report:
+Create markdown files in the client's content directory:
 
-1. Clone this repository or create from template
-2. Update repository name to `client-name-seo-report`
-3. Clear `src/content/docs/` folder
-4. Add your client's SEO report markdown files
-5. Test locally with `npm run dev`
-6. Build with `npm run build`
-7. Deploy to Vercel
-8. Share the live URL with client
+```bash
+# src/content/docs/v3/keyword-strategy.md
+---
+title: "Keyword Strategy"
+description: "Keyword analysis and recommendations"
+---
+
+# Keyword Strategy
+
+Your content here...
+```
+
+The page will automatically be available at `/v3/keyword-strategy`.
+
+### Updating Client Metrics
+
+Edit the client's metrics JSON file:
+
+```bash
+# src/data/v3-metrics.json
+{
+  "keywords": {
+    "total": 250,
+    "change": 40,
+    "changePercent": "+19%"
+  },
+  ...
+}
+```
+
+Metrics appear on the client's homepage with interactive charts.
+
+### Frontmatter Fields
+
+```yaml
+---
+title: "Page Title"           # Required - appears as page heading
+description: "Description"    # Optional - shows in client homepage card
+---
+```
+
+## Example Clients
+
+The platform includes two example clients:
+
+### V3 Client
+- **URL**: `/v3`
+- **Content**: Enterprise software SEO reports
+- **Pages**: Getting Started, Technical Audit
+- **Metrics**: 247 keywords, 48.7K monthly traffic
+
+### Casita Client
+- **URL**: `/casita`
+- **Content**: Vacation rental SEO reports
+- **Pages**: Getting Started, Local SEO
+- **Metrics**: 189 keywords, 32.4K monthly traffic
+
+## Customization
+
+### Update Branding
+
+**Logos**: Replace files in `public/`:
+- `logo.png` - Header logo
+- `wide-logo.png` - Footer logo
+- `favicon.ico` - Browser icon
+
+**Colors**: Edit `src/styles/global.css`:
+
+```css
+:root {
+  --color-primary: #3b82f6;      /* Primary blue */
+  --color-primary-soft: #60a5fa; /* Lighter blue */
+  --color-bg: #0a0d14;           /* Dark background */
+}
+```
+
+### Update Contact Information
+
+Edit `src/components/Footer.astro`:
+
+```astro
+<a href="tel:+16199550105">(619) 955-0105</a>
+<a href="mailto:sales@comcreate.org">sales@comcreate.org</a>
+```
+
+## Tech Stack
+
+- **[Astro 5](https://astro.build)** - Static site generator
+- **[ApexCharts](https://apexcharts.com)** - Interactive charts
+- **[TypeScript](https://www.typescriptlang.org)** - Type safety
+- **[Vercel](https://vercel.com)** - Hosting platform
+
+## Documentation
+
+- **[PASSWORD-REDIRECT-GUIDE.md](./PASSWORD-REDIRECT-GUIDE.md)** - Password system and access codes
+- **[MULTI-CLIENT-GUIDE.md](./MULTI-CLIENT-GUIDE.md)** - Complete guide for managing multiple clients
+- **[DEPLOYMENT.md](./DEPLOYMENT.md)** - Deployment instructions for Vercel
+
+## Platform Benefits
+
+### For Agencies
+- **Password Protection** - Secure access with client-specific codes
+- **Single Deployment** - Host all client reports on one domain
+- **Consistent Branding** - Unified Comcreate branding across all clients
+- **Easy Maintenance** - Update platform features once, applies to all clients
+- **Cost Effective** - One hosting account for unlimited clients
+
+### For Clients
+- **Secure Access** - Private access codes for their reports
+- **Professional Reports** - Beautiful, interactive SEO dashboards
+- **Easy Access** - Simple password like their company name
+- **Real-Time Updates** - Reports update instantly when you push changes
+- **Mobile Friendly** - Perfect experience on all devices
+
+## Workflow
+
+1. **Add Client** - Create content folder, metrics file, and access code
+2. **Write Reports** - Add markdown files with SEO analysis
+3. **Update Metrics** - Edit JSON file with latest data
+4. **Deploy** - Push to GitHub, auto-deploys to Vercel
+5. **Share** - Send client their access code and URL
 
 ## Support
 
-For issues or questions about this template:
-- Email: sales@comcreate.org
-- Phone: (619) 955-0105
+**Comcreate - San Diego, CA**
+- Email: [sales@comcreate.org](mailto:sales@comcreate.org)
+- Phone: [(619) 955-0105](tel:+16199550105)
+- Website: [comcreate.org](https://comcreate.org)
 
 ## License
 
-© Comcreate - San Diego, CA
+© 2025 Comcreate. All rights reserved.

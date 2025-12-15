@@ -1,5 +1,13 @@
 ---
-import metricsData from '../data/seo-metrics.json';
+interface Props {
+  client: string;
+}
+
+const { client } = Astro.props;
+
+// Load client-specific metrics
+const metricsModule = await import(`../data/${client}-metrics.json`);
+const metricsData = metricsModule.default;
 
 const { traffic, keywords, coreWebVitals, overview } = metricsData;
 ---

@@ -1,108 +1,143 @@
 ---
-import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import DocCard from '../components/DocCard.astro';
-import Charts from '../components/Charts.astro';
-import metricsData from '../data/seo-metrics.json';
-
-const docs = await getCollection('docs');
-const { client, keywords, traffic, backlinks, issues } = metricsData;
-
-// Sort docs alphabetically by slug
-const sortedDocs = docs.sort((a, b) => a.slug.localeCompare(b.slug));
-
-// Helper to extract title from slug
-function formatTitle(slug: string): string {
-  return slug
-    .replace(/_/g, ' ')
-    .replace(/-/g, ' ')
-    .replace(/\b\w/g, c => c.toUpperCase());
-}
 ---
 
-<BaseLayout title="SEO Reports">
+<BaseLayout title="Comcreate SEO Reports - Client Access">
   <main class="main">
     <div class="container">
-      <header class="hero">
-        <div class="hero-content">
-          <div class="brand-badge">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10"></circle>
-              <path d="M12 16v-4"></path>
-              <path d="M12 8h.01"></path>
-            </svg>
-            Powered by Comcreate
+      <div class="access-wrapper">
+        <header class="hero">
+          <div class="hero-content">
+            <div class="brand-badge">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M12 16v-4"></path>
+                <path d="M12 8h.01"></path>
+              </svg>
+              Comcreate
+            </div>
+            <h1 class="page-title">SEO Report Access</h1>
+            <div class="hero-divider"></div>
+            <p class="page-description">
+              Enter your client access code to view your personalized SEO report dashboard.
+            </p>
           </div>
-          <h1 class="page-title">SEO Reports</h1>
-          <div class="hero-divider"></div>
-          <p class="page-tagline">
-            Data-driven insights. Actionable strategies. Real results.
-          </p>
-          <p class="page-description">
-            Comprehensive SEO analysis and recommendations designed to ignite your digital growth.
-          </p>
-        </div>
-      </header>
+        </header>
 
-      <!-- Stats Grid -->
-      <div class="stats-grid">
-        <div class="stat-card animate-fade-in">
-          <div class="stat-label">Keywords Tracked</div>
-          <div class="stat-value">{keywords.total}</div>
-          <div class={`stat-change ${keywords.change >= 0 ? 'positive' : 'negative'}`}>
-            {keywords.changePercent} from last month
-          </div>
-        </div>
-        <div class="stat-card animate-fade-in" style="animation-delay: 50ms">
-          <div class="stat-label">Monthly Traffic</div>
-          <div class="stat-value">{(traffic.monthly / 1000).toFixed(1)}k</div>
-          <div class={`stat-change ${traffic.change >= 0 ? 'positive' : 'negative'}`}>
-            {traffic.changePercent} from last month
-          </div>
-        </div>
-        <div class="stat-card animate-fade-in" style="animation-delay: 100ms">
-          <div class="stat-label">Backlinks</div>
-          <div class="stat-value">{backlinks.total}</div>
-          <div class={`stat-change ${backlinks.change >= 0 ? 'positive' : 'negative'}`}>
-            {backlinks.changePercent} from last month
-          </div>
-        </div>
-        <div class="stat-card animate-fade-in" style="animation-delay: 150ms">
-          <div class="stat-label">Issues Found</div>
-          <div class="stat-value">{issues.total}</div>
-          <div class="stat-change">
-            {issues.critical} critical · {issues.warnings} warnings
-          </div>
-        </div>
-      </div>
+        <div class="access-card">
+          <div class="card-glow"></div>
+          <div class="card-content">
+            <div class="lock-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+            </div>
 
-      <!-- Charts Section -->
-      <Charts />
+            <form id="accessForm" class="access-form">
+              <div class="form-group">
+                <label for="accessCode" class="form-label">Access Code</label>
+                <input
+                  type="password"
+                  id="accessCode"
+                  name="accessCode"
+                  class="form-input"
+                  placeholder="Enter your access code"
+                  autocomplete="off"
+                  required
+                />
+              </div>
 
-      <!-- Reports Section -->
-      <div class="section-header">
-        <span class="label-mono-accent">Available Reports</span>
-      </div>
-      <div class="doc-grid">
-        {sortedDocs.map((doc) => (
-          <DocCard
-            title={doc.data.title || formatTitle(doc.slug)}
-            slug={doc.slug}
-            description={doc.data.description}
-          />
-        ))}
+              <div id="errorMessage" class="error-message"></div>
+
+              <button type="submit" class="submit-button">
+                <span class="button-text">Access Report</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14"></path>
+                  <path d="m12 5 7 7-7 7"></path>
+                </svg>
+              </button>
+            </form>
+
+            <div class="help-text">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M12 16v-4"></path>
+                <path d="M12 8h.01"></path>
+              </svg>
+              <span>Don't have an access code? Contact <a href="mailto:sales@comcreate.org">sales@comcreate.org</a></span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </main>
 </BaseLayout>
 
+<script>
+  // Client password mapping
+  const clientPasswords: Record<string, string> = {
+    'v3': '/v3',
+    'casita': '/casita',
+  };
+
+  const form = document.getElementById('accessForm') as HTMLFormElement;
+  const input = document.getElementById('accessCode') as HTMLInputElement;
+  const errorMessage = document.getElementById('errorMessage') as HTMLDivElement;
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const code = input.value.trim().toLowerCase();
+    const redirectPath = clientPasswords[code];
+
+    if (redirectPath) {
+      // Success - show loading state and redirect
+      errorMessage.textContent = '';
+      input.classList.remove('error');
+
+      // Add success animation
+      const button = form.querySelector('.submit-button') as HTMLButtonElement;
+      button.classList.add('loading');
+      button.querySelector('.button-text')!.textContent = 'Redirecting...';
+
+      // Redirect after brief delay for UX
+      setTimeout(() => {
+        window.location.href = redirectPath;
+      }, 600);
+    } else {
+      // Error - show error message
+      input.classList.add('error');
+      errorMessage.textContent = 'Invalid access code. Please try again.';
+
+      // Shake animation
+      input.classList.add('shake');
+      setTimeout(() => {
+        input.classList.remove('shake');
+      }, 500);
+    }
+  });
+
+  // Clear error on input
+  input?.addEventListener('input', () => {
+    input.classList.remove('error');
+    errorMessage.textContent = '';
+  });
+</script>
+
 <style>
   .main {
     flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 200px);
   }
 
-  .hero {
-    margin-bottom: var(--space-12);
+  .access-wrapper {
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto;
   }
 
   @keyframes slideUp {
@@ -125,8 +160,19 @@ function formatTitle(slug: string): string {
     }
   }
 
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+  }
+
+  .hero {
+    margin-bottom: var(--space-8);
+    text-align: center;
+  }
+
   .hero-content {
-    max-width: 720px;
+    max-width: 100%;
   }
 
   .brand-badge {
@@ -137,7 +183,7 @@ function formatTitle(slug: string): string {
     background: var(--color-bg-secondary);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
-    margin-bottom: var(--space-8);
+    margin-bottom: var(--space-6);
     font-size: 0.8125rem;
     font-weight: 500;
     color: var(--color-text-secondary);
@@ -152,7 +198,7 @@ function formatTitle(slug: string): string {
   }
 
   .page-title {
-    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-size: clamp(2rem, 5vw, 3rem);
     margin-bottom: var(--space-6);
     color: var(--color-text);
     line-height: 1.1;
@@ -165,58 +211,210 @@ function formatTitle(slug: string): string {
     width: 60px;
     height: 4px;
     background: var(--color-primary);
-    margin-bottom: var(--space-6);
+    margin: 0 auto var(--space-6);
     animation: expandWidth 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
     animation-delay: 200ms;
     width: 0;
     box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
   }
 
-  .page-tagline {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--color-text);
-    margin-bottom: var(--space-4);
-    line-height: 1.4;
+  .page-description {
+    color: var(--color-text-secondary);
+    font-size: 1rem;
+    line-height: 1.6;
     opacity: 0;
     animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
     animation-delay: 300ms;
   }
 
-  .page-description {
-    color: var(--color-text-secondary);
-    font-size: 1.125rem;
-    line-height: 1.6;
+  /* Access Card */
+  .access-card {
+    position: relative;
+    background: var(--color-bg-deep);
+    border: 1px solid var(--color-border);
+    overflow: hidden;
     opacity: 0;
     animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
     animation-delay: 400ms;
   }
 
+  .card-glow {
+    position: absolute;
+    inset: 0;
+    opacity: 0.5;
+    background: radial-gradient(
+      ellipse 80% 50% at 50% 0%,
+      rgba(59, 130, 246, 0.08) 0%,
+      transparent 70%
+    );
+    pointer-events: none;
+  }
+
+  .card-content {
+    padding: var(--space-10);
+    position: relative;
+    z-index: 1;
+  }
+
+  .lock-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto var(--space-6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-bg-elevated);
+    border: 2px solid var(--color-border);
+    border-radius: 50%;
+    color: var(--color-primary);
+  }
+
+  /* Form Styles */
+  .access-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .form-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-family: var(--font-mono);
+  }
+
+  .form-input {
+    width: 100%;
+    padding: var(--space-4);
+    background: var(--color-bg);
+    border: 2px solid var(--color-border);
+    color: var(--color-text);
+    font-size: 1rem;
+    border-radius: var(--radius-md);
+    transition: all var(--transition-base);
+    font-family: var(--font-mono);
+    letter-spacing: 0.05em;
+  }
+
+  .form-input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+
+  .form-input.error {
+    border-color: #ef4444;
+    animation: shake 0.5s ease-in-out;
+  }
+
+  .form-input.shake {
+    animation: shake 0.5s ease-in-out;
+  }
+
+  .error-message {
+    min-height: 20px;
+    color: #ef4444;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-align: center;
+  }
+
+  .submit-button {
+    width: 100%;
+    padding: var(--space-4);
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-base);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .submit-button:hover {
+    background: var(--color-primary-soft);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+  }
+
+  .submit-button:active {
+    transform: translateY(0);
+  }
+
+  .submit-button.loading {
+    opacity: 0.8;
+    cursor: wait;
+  }
+
+  .submit-button svg {
+    transition: transform var(--transition-fast);
+  }
+
+  .submit-button:hover svg {
+    transform: translateX(4px);
+  }
+
+  .help-text {
+    margin-top: var(--space-6);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    text-align: center;
+  }
+
+  .help-text svg {
+    flex-shrink: 0;
+    color: var(--color-primary);
+  }
+
+  .help-text a {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .help-text a:hover {
+    color: var(--color-primary-soft);
+    text-decoration: underline;
+  }
+
   @media (max-width: 640px) {
-    .page-tagline {
-      font-size: 1.125rem;
+    .card-content {
+      padding: var(--space-6);
     }
 
-    .page-description {
-      font-size: 1rem;
+    .page-title {
+      font-size: 2rem;
     }
 
-    .brand-badge {
-      font-size: 0.75rem;
+    .lock-icon {
+      width: 56px;
+      height: 56px;
     }
 
-    .hero-divider {
-      width: 48px;
-      height: 3px;
+    .lock-icon svg {
+      width: 28px;
+      height: 28px;
     }
   }
-
-  .section-header {
-    margin-bottom: var(--space-4);
-    padding-bottom: var(--space-2);
-    border-bottom: 1px solid var(--color-border);
-    opacity: 0;
-    animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-    animation-delay: 800ms;
-  }
-</style>

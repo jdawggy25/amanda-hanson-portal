@@ -3,12 +3,23 @@ interface Props {
   title: string;
   slug: string;
   description?: string;
+  client?: string;
 }
 
-const { title, slug, description } = Astro.props;
+const { title, slug, description, client } = Astro.props;
+
+// Generate the correct URL based on whether client is provided
+let href: string;
+if (client) {
+  // Remove client prefix from slug if present
+  const slugWithoutClient = slug.replace(`${client}/`, '');
+  href = `/${client}/${slugWithoutClient}`;
+} else {
+  href = `/docs/${slug}`;
+}
 ---
 
-<a href={`/docs/${slug}`} class="doc-card animate-fade-in">
+<a href={href} class="doc-card animate-fade-in">
   <div class="card-content">
     <div class="card-header">
       <span class="card-label">Report</span>

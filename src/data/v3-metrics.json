@@ -1,8 +1,8 @@
 {
   "client": {
-    "name": "Acme Corporation",
+    "name": "V3",
     "reportDate": "December 2025",
-    "website": "acmecorp.com"
+    "website": "v3.com"
   },
   "overview": {
     "performanceScore": 92,
@@ -68,36 +68,11 @@
     ]
   },
   "coreWebVitals": {
-    "lcp": {
-      "value": 1.8,
-      "unit": "s",
-      "status": "pass",
-      "threshold": 2.5
-    },
-    "fid": {
-      "value": 45,
-      "unit": "ms",
-      "status": "pass",
-      "threshold": 100
-    },
-    "cls": {
-      "value": 0.08,
-      "unit": "",
-      "status": "pass",
-      "threshold": 0.1
-    },
-    "fcp": {
-      "value": 1.2,
-      "unit": "s",
-      "status": "pass",
-      "threshold": 1.8
-    },
-    "ttfb": {
-      "value": 0.42,
-      "unit": "s",
-      "status": "pass",
-      "threshold": 0.8
-    }
+    "lcp": { "value": 1.8, "unit": "s", "status": "pass", "threshold": 2.5 },
+    "fid": { "value": 45, "unit": "ms", "status": "pass", "threshold": 100 },
+    "cls": { "value": 0.08, "unit": "", "status": "pass", "threshold": 0.1 },
+    "fcp": { "value": 1.2, "unit": "s", "status": "pass", "threshold": 1.8 },
+    "ttfb": { "value": 0.42, "unit": "s", "status": "pass", "threshold": 0.8 }
   },
   "competitors": {
     "avgPosition": 12.4,
@@ -115,3 +90,4 @@
     "trend": [620, 685, 720, 758, 812, 856, 892]
   }
 }
+

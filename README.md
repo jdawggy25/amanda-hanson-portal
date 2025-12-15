@@ -66,17 +66,46 @@ npm run dev
 
 Visit `http://localhost:4321` to see the platform.
 
+## 📚 Documentation
+
+**→ [Complete Documentation in `docs/` folder](./docs/README.md) ←**
+
+### Quick Links
+
+- **[Quick Start Guide](./docs/quick-start.md)** - Get started in 2 minutes ⭐
+- **[Adding Clients](./docs/adding-clients.md)** - Add new clients (automated & manual)
+- **[Adding Content](./docs/adding-content.md)** - Add and organize documentation
+- **[Managing Clients](./docs/managing-clients.md)** - Edit, disable, organize clients
+- **[Deployment](./docs/deployment.md)** - Deploy to production
+- **[Troubleshooting](./docs/troubleshooting.md)** - Common issues and solutions
+
 ## Adding a New Client
 
-See [MULTI-CLIENT-GUIDE.md](./MULTI-CLIENT-GUIDE.md) for detailed instructions.
+### ⚡ Super Easy - Automated Method (30 seconds)
 
-### Quick Steps:
+```bash
+# Add a new client with one command
+npm run add-client acme-corp "Acme Corporation" acme acme.com
 
-1. **Create content folder**: `src/content/docs/new-client/`
-2. **Add markdown files**: Create report pages in the folder
-3. **Create metrics file**: `src/data/new-client-metrics.json`
-4. **Register client**: Add to CLIENTS arrays in routing files
-5. **Update directory**: Add to client list in `src/pages/index.astro`
+# Sync configuration
+npm run sync-clients
+
+# Start dev server
+npm run dev
+```
+
+**Done!** Visit `http://localhost:4321/acme-corp` (password: `acme`)
+
+**→ [Full guide: Adding Clients](./docs/adding-clients.md)**
+
+### 📁 Alternative - Drag & Drop Method
+
+1. **Drag template folders** to `src/content/docs/your-client-id/`
+2. **Drag metrics file** to `src/data/your-client-id-metrics.json`
+3. **Edit** `clients.config.json` to add your client
+4. **Run** `npm run sync-clients`
+
+**→ [Full guide: Drag & Drop](./DRAG-AND-DROP-GUIDE.md)**
 
 ### Example Content File
 
@@ -209,12 +238,6 @@ Edit `src/components/Footer.astro`:
 - **[ApexCharts](https://apexcharts.com)** - Interactive charts
 - **[TypeScript](https://www.typescriptlang.org)** - Type safety
 - **[Vercel](https://vercel.com)** - Hosting platform
-
-## Documentation
-
-- **[PASSWORD-REDIRECT-GUIDE.md](./PASSWORD-REDIRECT-GUIDE.md)** - Password system and access codes
-- **[MULTI-CLIENT-GUIDE.md](./MULTI-CLIENT-GUIDE.md)** - Complete guide for managing multiple clients
-- **[DEPLOYMENT.md](./DEPLOYMENT.md)** - Deployment instructions for Vercel
 
 ## Platform Benefits
 

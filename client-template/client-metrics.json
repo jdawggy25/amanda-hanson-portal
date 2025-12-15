@@ -1,0 +1,76 @@
+{
+  "client": {
+    "name": "CLIENT_NAME",
+    "reportDate": "December 2025",
+    "website": "example.com"
+  },
+  "overview": {
+    "performanceScore": 85,
+    "seoScore": 78,
+    "accessibilityScore": 82,
+    "bestPracticesScore": 90
+  },
+  "keywords": {
+    "total": 150,
+    "change": 25,
+    "changePercent": "+20%",
+    "topPositions": 35,
+    "avgPosition": 12.5,
+    "ranking": [
+      { "keyword": "example keyword 1", "position": 5, "change": 2, "volume": 5000 },
+      { "keyword": "example keyword 2", "position": 8, "change": -1, "volume": 3200 },
+      { "keyword": "example keyword 3", "position": 12, "change": 3, "volume": 2100 }
+    ]
+  },
+  "traffic": {
+    "monthly": 25000,
+    "change": 4500,
+    "changePercent": "+22%",
+    "trend": [12000, 14500, 17200, 19800, 22100, 23800, 25000],
+    "sources": {
+      "organic": 65,
+      "direct": 20,
+      "referral": 10,
+      "social": 5
+    },
+    "topPages": [
+      { "page": "/homepage", "views": 8000, "change": "+18%" },
+      { "page": "/services", "views": 5500, "change": "+25%" },
+      { "page": "/about", "views": 3200, "change": "+12%" }
+    ]
+  },
+  "backlinks": {
+    "total": 450,
+    "change": 85,
+    "changePercent": "+23%",
+    "domains": 125,
+    "quality": {
+      "high": 45,
+      "medium": 180,
+      "low": 225
+    }
+  },
+  "coreWebVitals": {
+    "lcp": { "value": 2.1, "unit": "s", "status": "pass", "threshold": 2.5 },
+    "fid": { "value": 65, "unit": "ms", "status": "pass", "threshold": 100 },
+    "cls": { "value": 0.09, "unit": "", "status": "pass", "threshold": 0.1 },
+    "fcp": { "value": 1.5, "unit": "s", "status": "pass", "threshold": 1.8 },
+    "ttfb": { "value": 0.55, "unit": "s", "status": "pass", "threshold": 0.8 }
+  },
+  "competitors": {
+    "avgPosition": 15.2,
+    "comparison": [
+      { "name": "Competitor A", "visibility": 72, "keywords": 280 },
+      { "name": "Competitor B", "visibility": 58, "keywords": 215 },
+      { "name": "Competitor C", "visibility": 45, "keywords": 165 }
+    ]
+  },
+  "conversions": {
+    "total": 450,
+    "change": 75,
+    "changePercent": "+20%",
+    "rate": 1.8,
+    "trend": [280, 310, 345, 375, 405, 430, 450]
+  }
+}
+

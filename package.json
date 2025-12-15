@@ -9,7 +9,9 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "add-client": "node scripts/add-client.js",
+    "sync-clients": "node scripts/sync-clients.js"
   },
   "dependencies": {
     "apexcharts": "^5.3.6",

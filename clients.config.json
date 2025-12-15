@@ -1,0 +1,26 @@
+{
+  "clients": [
+    {
+      "id": "v3",
+      "name": "V3",
+      "password": "v3",
+      "website": "v3.com",
+      "enabled": true
+    },
+    {
+      "id": "casita",
+      "name": "Casita",
+      "password": "casita",
+      "website": "casita.com",
+      "enabled": true
+    },
+    {
+      "id": "bnc-builders",
+      "name": "BNC Builders Inc.",
+      "password": "bnc-builders",
+      "website": "bncbuildersinc.com",
+      "enabled": true
+    }
+  ]
+}
+

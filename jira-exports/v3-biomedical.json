@@ -1,0 +1,336 @@
+{
+  "project": {
+    "key": "V3BIO",
+    "name": "V3 Biomedical - SEO",
+    "description": "SEO optimization for V3 Biomedical, a wound care EMR software company. This is a greenfield SEO opportunity - the domain has DR 24 authority but zero organic visibility. Focus on content creation, technical SEO foundation, and broken backlink reclamation.",
+    "url": "https://v3biomedical.com"
+  },
+  "metadata": {
+    "domain_rating": 24,
+    "organic_traffic": 0,
+    "organic_keywords": 0,
+    "traffic_value": "$0/mo",
+    "referring_domains": 70,
+    "live_backlinks": 145,
+    "sprint_period": "December 16, 2025 - January 15, 2026",
+    "exported_at": "2025-12-16",
+    "key_insight": "DR 24 with 0 traffic means content is the critical bottleneck. The domain has link equity but needs content to rank."
+  },
+  "epics": [
+    {
+      "key": "V3BIO-EPIC-1",
+      "type": "Epic",
+      "summary": "Technical SEO Foundation",
+      "description": "Establish technical SEO foundation for crawlability and indexation. Currently the site may have issues with sitemap, robots.txt, and basic on-page elements.\n\n**Business Impact:** CRITICAL - Without proper technical foundation, content cannot rank.\n\n**Blockers:** May need GSC access verification.",
+      "priority": "Highest",
+      "labels": ["technical-seo", "foundation", "critical"],
+      "stories": [
+        {
+          "key": "V3BIO-1",
+          "type": "Story",
+          "summary": "Verify and configure XML sitemap",
+          "description": "Ensure XML sitemap exists at /sitemap.xml and is properly configured.\n\n**Acceptance Criteria:**\n- Sitemap exists and is accessible\n- All public pages included\n- Sitemap submitted to Google Search Console",
+          "priority": "Highest",
+          "story_points": 2,
+          "tasks": [
+            {
+              "key": "V3BIO-1-1",
+              "type": "Task",
+              "summary": "Check if sitemap exists at /sitemap.xml",
+              "description": "Navigate to https://v3biomedical.com/sitemap.xml\n\nIf exists:\n- Document number of URLs\n- Check last modified date\n- Verify all pages included\n\nIf not exists:\n- Document this as blocker\n- Determine how to generate (CMS feature, plugin, or manual)",
+              "priority": "Highest",
+              "time_estimate": "15m"
+            },
+            {
+              "key": "V3BIO-1-2",
+              "type": "Task",
+              "summary": "Submit sitemap to Google Search Console",
+              "description": "In GSC:\n1. Navigate to Sitemaps section\n2. Add sitemap URL\n3. Submit\n4. Monitor for errors\n\n**Note:** Requires verified GSC access. If not set up, this is a blocker.",
+              "priority": "Highest",
+              "time_estimate": "15m"
+            }
+          ]
+        },
+        {
+          "key": "V3BIO-2",
+          "type": "Story",
+          "summary": "Audit and configure robots.txt",
+          "description": "Verify robots.txt allows proper crawling and references sitemap.\n\n**Recommended robots.txt:**\n```\nUser-agent: *\nAllow: /\n\nDisallow: /admin/\nDisallow: /api/\nDisallow: /private/\n\nSitemap: https://v3biomedical.com/sitemap.xml\n```\n\n**Acceptance Criteria:**\n- robots.txt accessible\n- Not blocking important pages\n- Sitemap reference included",
+          "priority": "High",
+          "story_points": 1,
+          "tasks": [
+            {
+              "key": "V3BIO-2-1",
+              "type": "Task",
+              "summary": "Audit current robots.txt",
+              "description": "Check https://v3biomedical.com/robots.txt\n\nDocument:\n- Current rules\n- Any blocked paths\n- Sitemap reference (if any)\n- Potential issues",
+              "priority": "High",
+              "time_estimate": "15m"
+            },
+            {
+              "key": "V3BIO-2-2",
+              "type": "Task",
+              "summary": "Update robots.txt if needed",
+              "description": "If modifications needed, update to include:\n- Allow: / for main crawler\n- Disallow admin/private areas\n- Sitemap reference\n\nTest with Google's robots.txt tester in GSC.",
+              "priority": "High",
+              "time_estimate": "30m"
+            }
+          ]
+        },
+        {
+          "key": "V3BIO-3",
+          "type": "Story",
+          "summary": "Optimize homepage and existing page title tags",
+          "description": "Update title tags to include primary keywords.\n\n**Title Tag Changes:**\n| Page | Current | Optimized |\n|------|---------|----------|\n| Homepage | V3 Biomedical | Wound Care EMR Software | V3 Biomedical |\n| Products | [Verify] | Wound Care Software Solutions | V3 Biomedical |\n| About | [Verify] | About V3 Biomedical | Wound Care Technology |\n| Contact | [Verify] | Contact V3 Biomedical | Request a Demo |",
+          "priority": "High",
+          "story_points": 2,
+          "tasks": [
+            {
+              "key": "V3BIO-3-1",
+              "type": "Task",
+              "summary": "Audit all current title tags",
+              "description": "Run Screaming Frog or manually check all pages:\n- Document current title tags\n- Note character counts\n- Identify keyword opportunities",
+              "priority": "High",
+              "time_estimate": "30m"
+            },
+            {
+              "key": "V3BIO-3-2",
+              "type": "Task",
+              "summary": "Update homepage title tag",
+              "description": "Change from 'V3 Biomedical' to 'Wound Care EMR Software | V3 Biomedical'\n\nTarget keyword: wound care emr software (90 searches/mo)",
+              "priority": "High",
+              "time_estimate": "15m"
+            },
+            {
+              "key": "V3BIO-3-3",
+              "type": "Task",
+              "summary": "Update all other page title tags",
+              "description": "Update remaining pages:\n- Products: 'Wound Care Software Solutions | V3 Biomedical'\n- About: 'About V3 Biomedical | Wound Care Technology'\n- Contact: 'Contact V3 Biomedical | Request a Demo'",
+              "priority": "High",
+              "time_estimate": "30m"
+            }
+          ]
+        },
+        {
+          "key": "V3BIO-4",
+          "type": "Story",
+          "summary": "Add meta descriptions to all pages",
+          "description": "Currently pages may be missing meta descriptions. Add keyword-rich descriptions to all pages.\n\n**Acceptance Criteria:**\n- All pages have meta descriptions\n- Each 150-160 characters\n- Include primary keyword and CTA",
+          "priority": "High",
+          "story_points": 2,
+          "tasks": [
+            {
+              "key": "V3BIO-4-1",
+              "type": "Task",
+              "summary": "Write and implement meta descriptions",
+              "description": "Add meta descriptions:\n\n**Homepage:**\n'V3 Biomedical provides advanced wound care EMR software for healthcare providers. Streamline wound assessment, documentation, and telehealth. Request a demo.'\n\n**Products:**\n'Comprehensive wound care EMR software with documentation tools, telehealth capabilities, and EMR integration. Designed for wound care specialists.'\n\n**Resources:**\n'Expert wound care resources including documentation guides, assessment tools, and best practices for healthcare providers.'",
+              "priority": "High",
+              "time_estimate": "1h"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "V3BIO-EPIC-2",
+      "type": "Epic",
+      "summary": "Schema Markup Implementation",
+      "description": "Implement structured data for Organization and SoftwareApplication to establish entity and improve search visibility.\n\n**Business Impact:** MEDIUM - Establishes brand entity with Google and enables rich snippets for software product.",
+      "priority": "High",
+      "labels": ["technical-seo", "schema", "structured-data"],
+      "stories": [
+        {
+          "key": "V3BIO-5",
+          "type": "Story",
+          "summary": "Implement Organization schema on homepage",
+          "description": "Add Organization schema to establish brand entity with Google.\n\n**Acceptance Criteria:**\n- Schema validates in Rich Results Test\n- Includes logo, contact, and sameAs links\n- Applied to homepage",
+          "priority": "High",
+          "story_points": 2,
+          "tasks": [
+            {
+              "key": "V3BIO-5-1",
+              "type": "Task",
+              "summary": "Gather organization information",
+              "description": "Collect:\n- Official company name: V3 Biomedical\n- Logo URL\n- Website URL\n- Contact email\n- LinkedIn company page URL\n- Crunchbase profile URL (already exists - DR 90 link)\n- Description",
+              "priority": "High",
+              "time_estimate": "15m"
+            },
+            {
+              "key": "V3BIO-5-2",
+              "type": "Task",
+              "summary": "Implement Organization schema JSON-LD",
+              "description": "Add to homepage <head>:\n\n```json\n{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"Organization\",\n  \"name\": \"V3 Biomedical\",\n  \"url\": \"https://v3biomedical.com\",\n  \"logo\": \"https://v3biomedical.com/logo.png\",\n  \"description\": \"Wound care EMR software and healthcare technology solutions\",\n  \"sameAs\": [\n    \"https://www.crunchbase.com/organization/v3-biomedical\",\n    \"https://www.linkedin.com/company/v3biomedical\"\n  ],\n  \"contactPoint\": {\n    \"@type\": \"ContactPoint\",\n    \"contactType\": \"sales\",\n    \"email\": \"contact@v3biomedical.com\"\n  }\n}\n```",
+              "priority": "High",
+              "time_estimate": "45m"
+            },
+            {
+              "key": "V3BIO-5-3",
+              "type": "Task",
+              "summary": "Test Organization schema",
+              "description": "Validate at https://search.google.com/test/rich-results\nFix any errors. Screenshot results.",
+              "priority": "Medium",
+              "time_estimate": "15m"
+            }
+          ]
+        },
+        {
+          "key": "V3BIO-6",
+          "type": "Story",
+          "summary": "Implement SoftwareApplication schema on product pages",
+          "description": "Add SoftwareApplication schema to product pages to describe the software product.\n\n**Acceptance Criteria:**\n- Schema validates\n- Applied to all product/software pages\n- Includes proper applicationCategory",
+          "priority": "Medium",
+          "story_points": 2,
+          "tasks": [
+            {
+              "key": "V3BIO-6-1",
+              "type": "Task",
+              "summary": "Implement SoftwareApplication schema",
+              "description": "Add to product pages:\n\n```json\n{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"SoftwareApplication\",\n  \"name\": \"V3 Biomedical Wound Care EMR\",\n  \"applicationCategory\": \"HealthApplication\",\n  \"operatingSystem\": \"Web-based\",\n  \"offers\": {\n    \"@type\": \"Offer\",\n    \"price\": \"0\",\n    \"priceCurrency\": \"USD\",\n    \"availability\": \"https://schema.org/ContactForPrice\"\n  },\n  \"description\": \"Wound care EMR software for healthcare providers\"\n}\n```",
+              "priority": "Medium",
+              "time_estimate": "45m"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "V3BIO-EPIC-3",
+      "type": "Epic",
+      "summary": "Priority Content Creation",
+      "description": "Create new pages targeting high-value keywords. This is the MOST CRITICAL epic - without content, the site cannot rank despite having DR 24 authority.\n\n**Target Keywords:**\n- wound care emr (90/mo) - Commercial intent\n- wound care software (170/mo) - Commercial intent\n- wound care documentation (110/mo) - Informational intent\n\n**Business Impact:** HIGHEST - Content is the only bottleneck preventing organic traffic.",
+      "priority": "Highest",
+      "labels": ["content", "critical", "commercial-intent"],
+      "stories": [
+        {
+          "key": "V3BIO-7",
+          "type": "Story",
+          "summary": "Create Wound Care EMR Software product page",
+          "description": "Create comprehensive product page at /products/wound-care-emr/ targeting 'wound care emr software' (90 searches/mo).\n\n**Page Requirements:**\n- Word count: 2,000+\n- Primary keyword: wound care emr software\n- Include: Features, benefits, integrations, demo CTA\n- FAQ section for schema\n- Internal links to resources\n\n**Acceptance Criteria:**\n- Page published at /products/wound-care-emr/\n- 2,000+ words\n- All content requirements met\n- Schema implemented",
+          "priority": "Highest",
+          "story_points": 8,
+          "tasks": [
+            {
+              "key": "V3BIO-7-1",
+              "type": "Task",
+              "summary": "Research competitor product pages",
+              "description": "Analyze top-ranking pages for 'wound care emr software':\n\nCompetitors to analyze:\n- WoundRounds\n- Net Health\n- Tissue Analytics\n- Swift Medical\n\nDocument:\n- Word counts\n- H2/H3 structure\n- Key features highlighted\n- CTAs used\n- FAQs included",
+              "priority": "High",
+              "time_estimate": "2h"
+            },
+            {
+              "key": "V3BIO-7-2",
+              "type": "Task",
+              "summary": "Create page outline and structure",
+              "description": "Create detailed outline:\n\n**H1:** Wound Care EMR Software | V3 Biomedical\n\n**Sections:**\n1. Introduction (what is wound care EMR software)\n2. Key Features\n   - Wound documentation\n   - Wound measurement/imaging\n   - Treatment tracking\n   - Reporting/analytics\n3. Benefits for Healthcare Providers\n4. Integrations\n5. Use Cases\n6. FAQ (5+ questions)\n7. Demo CTA",
+              "priority": "High",
+              "time_estimate": "1h"
+            },
+            {
+              "key": "V3BIO-7-3",
+              "type": "Task",
+              "summary": "Write Wound Care EMR product page content",
+              "description": "Write 2,000+ word product page following outline.\n\n**SEO Requirements:**\n- Primary keyword in H1, first paragraph, H2s\n- Secondary keywords: wound care software, wound emr, wound documentation\n- Include keyword variations naturally\n- Compelling meta description\n- Alt text for any images",
+              "priority": "Highest",
+              "time_estimate": "6h"
+            },
+            {
+              "key": "V3BIO-7-4",
+              "type": "Task",
+              "summary": "Publish page and implement schema",
+              "description": "Publish at /products/wound-care-emr/\n\nImplement:\n- SoftwareApplication schema\n- FAQ schema (if FAQs included)\n- Add to navigation\n- Add to sitemap\n- Create internal links from homepage",
+              "priority": "High",
+              "time_estimate": "1h"
+            }
+          ]
+        },
+        {
+          "key": "V3BIO-8",
+          "type": "Story",
+          "summary": "Create Wound Care Documentation guide",
+          "description": "Create comprehensive resource at /resources/wound-care-documentation/ targeting 'wound care documentation' (110 searches/mo).\n\n**Page Requirements:**\n- Word count: 2,500+\n- Primary keyword: wound care documentation\n- Include: Best practices, compliance info, templates, checklists\n- Educational/informational intent\n\n**Note:** This page will also be the redirect target for the broken backlink.",
+          "priority": "Highest",
+          "story_points": 8,
+          "tasks": [
+            {
+              "key": "V3BIO-8-1",
+              "type": "Task",
+              "summary": "Research wound care documentation requirements",
+              "description": "Research:\n- Regulatory requirements (CMS, Joint Commission)\n- Best practices for wound documentation\n- Common documentation errors\n- Required elements in wound assessments\n- Compliance considerations",
+              "priority": "High",
+              "time_estimate": "3h"
+            },
+            {
+              "key": "V3BIO-8-2",
+              "type": "Task",
+              "summary": "Create page outline",
+              "description": "Outline for 2,500+ word guide:\n\n**H1:** Wound Care Documentation: Complete Guide for Healthcare Providers\n\n**Sections:**\n1. Introduction to wound care documentation\n2. Why proper documentation matters\n3. Required elements in wound documentation\n4. Wound assessment documentation\n5. Treatment documentation\n6. Compliance requirements\n7. Common documentation errors to avoid\n8. Documentation templates/checklists\n9. Technology solutions\n10. FAQ",
+              "priority": "High",
+              "time_estimate": "1h"
+            },
+            {
+              "key": "V3BIO-8-3",
+              "type": "Task",
+              "summary": "Write Wound Care Documentation guide",
+              "description": "Write 2,500+ word educational guide.\n\n**Content Requirements:**\n- Comprehensive coverage of topic\n- Actionable best practices\n- Compliance information\n- Link to product page where relevant (soft sell)\n- Downloadable checklist/template if possible",
+              "priority": "Highest",
+              "time_estimate": "8h"
+            },
+            {
+              "key": "V3BIO-8-4",
+              "type": "Task",
+              "summary": "Publish documentation guide",
+              "description": "Publish at /resources/wound-care-documentation/\n\nImplement:\n- FAQ schema\n- Add to resources section\n- Internal link from homepage\n- Internal link from product page",
+              "priority": "High",
+              "time_estimate": "1h"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "V3BIO-EPIC-4",
+      "type": "Epic",
+      "summary": "Broken Backlink Reclamation",
+      "description": "Reclaim link equity from broken backlink pointing to deleted blog post.\n\n**Broken Link Details:**\n- Source: westhollywoodweekly.com (DR 31)\n- Target: /post/understanding-patient-centered-care-in-wound-care\n- Anchor: 'patient-centric wound care'\n- Status: 404\n\n**Business Impact:** MEDIUM - Healthcare-relevant link with good anchor text from DR 31 site.",
+      "priority": "High",
+      "labels": ["technical-seo", "backlinks", "redirects"],
+      "stories": [
+        {
+          "key": "V3BIO-9",
+          "type": "Story",
+          "summary": "Implement redirect for broken backlink URL",
+          "description": "Create 301 redirect from broken URL to relevant existing page (wound care documentation guide once created).\n\n**Acceptance Criteria:**\n- Redirect implemented and tested\n- Returns 301 status code\n- Redirects to relevant content page",
+          "priority": "High",
+          "story_points": 1,
+          "tasks": [
+            {
+              "key": "V3BIO-9-1",
+              "type": "Task",
+              "summary": "Implement 301 redirect",
+              "description": "Add redirect rule:\n\n**Apache (.htaccess):**\n```apache\nRedirect 301 /post/understanding-patient-centered-care-in-wound-care /resources/wound-care-documentation/\n```\n\n**Nginx:**\n```nginx\nlocation = /post/understanding-patient-centered-care-in-wound-care {\n    return 301 /resources/wound-care-documentation/;\n}\n```\n\n**Note:** Wait until /resources/wound-care-documentation/ is published before implementing.",
+              "priority": "High",
+              "time_estimate": "30m"
+            },
+            {
+              "key": "V3BIO-9-2",
+              "type": "Task",
+              "summary": "Test redirect with cURL",
+              "description": "Test redirect:\n\n```bash\ncurl -I https://v3biomedical.com/post/understanding-patient-centered-care-in-wound-care\n```\n\nVerify:\n- HTTP/1.1 301 Moved Permanently\n- Location header points to /resources/wound-care-documentation/",
+              "priority": "Medium",
+              "time_estimate": "15m"
+            },
+            {
+              "key": "V3BIO-9-3",
+              "type": "Task",
+              "summary": "Monitor backlink status in Ahrefs",
+              "description": "After 2-4 weeks, check Ahrefs backlinks report:\n- Verify backlink from westhollywoodweekly.com shows as live\n- Document status change",
+              "priority": "Medium",
+              "time_estimate": "15m"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+

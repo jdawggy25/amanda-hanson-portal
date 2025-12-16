@@ -1,0 +1,392 @@
+{
+  "project": {
+    "key": "BNC",
+    "name": "BNC Builders Inc. - SEO",
+    "description": "SEO optimization for BNC Builders Inc., a home remodeling contractor in Escondido, CA. Focus on local SEO, broken backlink reclamation, and keyword ranking improvements.",
+    "url": "https://bncbuildersinc.com"
+  },
+  "metadata": {
+    "domain_rating": 29,
+    "organic_traffic": 91,
+    "organic_keywords": 24,
+    "traffic_value": "$510.51/mo",
+    "referring_domains": 97,
+    "sprint_period": "December 16, 2025 - January 15, 2026",
+    "exported_at": "2025-12-16"
+  },
+  "epics": [
+    {
+      "key": "BNC-EPIC-1",
+      "type": "Epic",
+      "summary": "Broken Backlink Reclamation",
+      "description": "Reclaim link equity from 10 broken backlinks originating from list.ly (DR 76). These URLs are returning 404 but have live backlinks pointing to them. Implementing 301 redirects will recover this valuable link equity.\n\n**Business Impact:** HIGH - DR 76 source with 10 links represents significant lost authority.\n\n**Success Metric:** All 10 backlinks showing as 'redirected' in Ahrefs within 30 days.",
+      "priority": "Highest",
+      "labels": ["technical-seo", "link-equity", "redirects"],
+      "stories": [
+        {
+          "key": "BNC-1",
+          "type": "Story",
+          "summary": "Audit and map broken backlink URLs to target pages",
+          "description": "Review all 10 broken URLs identified in Ahrefs and create a redirect mapping document. Each broken URL should be mapped to the most semantically relevant existing page.\n\n**Acceptance Criteria:**\n- All 10 broken URLs documented\n- Target redirect destination identified for each\n- Redirect map reviewed and approved",
+          "priority": "Highest",
+          "story_points": 2,
+          "tasks": [
+            {
+              "key": "BNC-1-1",
+              "type": "Task",
+              "summary": "Export broken backlink report from Ahrefs",
+              "description": "Pull full broken backlink report from Ahrefs Site Explorer > Backlinks > Broken. Export to CSV for documentation.",
+              "priority": "High",
+              "time_estimate": "30m"
+            },
+            {
+              "key": "BNC-1-2",
+              "type": "Task",
+              "summary": "Create redirect mapping spreadsheet",
+              "description": "Create spreadsheet with columns: Broken URL, Anchor Text, Source Domain, Source DR, Target URL, Redirect Type (301), Notes.\n\n**Redirect Map:**\n```\n/reasons-to-invest-in-a-bathroom-remodeling-services-infographic/ → /bathroom-remodeling/\n/kitchen-and-bathroom-remodeling-escondido/ → /bathroom-remodeling/\n/home-remodeling-contractor/ → /\n/tips-for-interior-home-remodeling/ → /\n/how-to-prepare-your-home-for-siding-remodeling/ → /siding/\n/reasons-to-install-patio-cover/ → /deck-patio/\n/how-much-does-an-outdoor-patio-cover-cost/ → /deck-patio/\n/ultimate-guide-on-winter-home-maintenance/ → /\n/what-is-included-in-hardscaping-services/ → /landscaping/\n/know-the-gas-fire-pit-installation-cost/ → /outdoor-living/\n```",
+              "priority": "High",
+              "time_estimate": "1h"
+            }
+          ]
+        },
+        {
+          "key": "BNC-2",
+          "type": "Story",
+          "summary": "Implement 301 redirects for all broken URLs",
+          "description": "Add 301 redirects to .htaccess or CMS redirect manager. All 10 broken URLs must redirect to their mapped target pages.\n\n**Note:** Platform is Scorpion - may need to contact platform support if redirect control is limited.\n\n**Acceptance Criteria:**\n- All 10 redirects implemented\n- Each redirect tested and confirmed working\n- No redirect chains or loops",
+          "priority": "Highest",
+          "story_points": 3,
+          "tasks": [
+            {
+              "key": "BNC-2-1",
+              "type": "Task",
+              "summary": "Check platform redirect capabilities",
+              "description": "Verify if Scorpion platform allows .htaccess access or has built-in redirect manager. Document available options.\n\n**Blocker Risk:** Platform lock-in may limit redirect control.",
+              "priority": "High",
+              "time_estimate": "30m"
+            },
+            {
+              "key": "BNC-2-2",
+              "type": "Task",
+              "summary": "Implement all 10 redirects",
+              "description": "Add the following redirect rules:\n\n```apache\nRedirect 301 /reasons-to-invest-in-a-bathroom-remodeling-services-infographic/ /bathroom-remodeling/\nRedirect 301 /kitchen-and-bathroom-remodeling-escondido/ /bathroom-remodeling/\nRedirect 301 /home-remodeling-contractor/ /\nRedirect 301 /tips-for-interior-home-remodeling/ /\nRedirect 301 /how-to-prepare-your-home-for-siding-remodeling/ /siding/\nRedirect 301 /reasons-to-install-patio-cover/ /deck-patio/\nRedirect 301 /how-much-does-an-outdoor-patio-cover-cost/ /deck-patio/\nRedirect 301 /ultimate-guide-on-winter-home-maintenance/ /\nRedirect 301 /what-is-included-in-hardscaping-services/ /landscaping/\nRedirect 301 /know-the-gas-fire-pit-installation-cost/ /outdoor-living/\n```",
+              "priority": "Highest",
+              "time_estimate": "1h"
+            },
+            {
+              "key": "BNC-2-3",
+              "type": "Task",
+              "summary": "Test all redirects with cURL",
+              "description": "Test each redirect using cURL to verify 301 status code and correct destination:\n\n```bash\ncurl -I https://bncbuildersinc.com/reasons-to-invest-in-a-bathroom-remodeling-services-infographic/\n```\n\nDocument results for each URL.",
+              "priority": "High",
+              "time_estimate": "30m"
+            },
+            {
+              "key": "BNC-2-4",
+              "type": "Task",
+              "summary": "Monitor backlink status in Ahrefs",
+              "description": "After 2 weeks, check Ahrefs to verify backlinks are now showing redirected status. Document any that haven't updated.",
+              "priority": "Medium",
+              "time_estimate": "30m"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "BNC-EPIC-2",
+      "type": "Epic",
+      "summary": "Schema Markup Implementation",
+      "description": "Implement structured data markup across the site to improve rich snippet eligibility and search visibility. Focus on LocalBusiness, FAQ, and Service schemas.\n\n**Business Impact:** MEDIUM-HIGH - Schema markup can improve CTR by 20-30% through rich snippets.\n\n**Target:** All service pages with appropriate schema types.",
+      "priority": "High",
+      "labels": ["technical-seo", "schema", "structured-data"],
+      "stories": [
+        {
+          "key": "BNC-3",
+          "type": "Story",
+          "summary": "Implement LocalBusiness schema on all pages",
+          "description": "Add HomeAndConstructionBusiness schema markup to the site header/footer to appear on all pages. This establishes local business entity for Google.\n\n**Acceptance Criteria:**\n- Schema validates in Google Rich Results Test\n- All required fields populated (name, address, phone, areaServed)\n- AggregateRating included if reviews available",
+          "priority": "High",
+          "story_points": 3,
+          "tasks": [
+            {
+              "key": "BNC-3-1",
+              "type": "Task",
+              "summary": "Gather business information for schema",
+              "description": "Collect all required business details:\n- Full business name: BNC Builders Inc.\n- Street address\n- City: Escondido, CA\n- ZIP code\n- Phone number\n- Geo coordinates (lat/long)\n- Price range: $$$$\n- Areas served: Escondido, Oceanside, Poway, Encinitas, Carlsbad, Chula Vista\n- Aggregate rating and review count (if available)",
+              "priority": "High",
+              "time_estimate": "30m"
+            },
+            {
+              "key": "BNC-3-2",
+              "type": "Task",
+              "summary": "Create and implement LocalBusiness schema JSON-LD",
+              "description": "Create HomeAndConstructionBusiness schema:\n\n```json\n{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"HomeAndConstructionBusiness\",\n  \"name\": \"BNC Builders Inc.\",\n  \"image\": \"https://bncbuildersinc.com/logo.png\",\n  \"url\": \"https://bncbuildersinc.com\",\n  \"telephone\": \"[PHONE]\",\n  \"address\": {\n    \"@type\": \"PostalAddress\",\n    \"streetAddress\": \"[ADDRESS]\",\n    \"addressLocality\": \"Escondido\",\n    \"addressRegion\": \"CA\",\n    \"postalCode\": \"[ZIP]\",\n    \"addressCountry\": \"US\"\n  },\n  \"areaServed\": [\"Escondido\", \"Oceanside\", \"Poway\", \"Encinitas\", \"Carlsbad\", \"Chula Vista\"],\n  \"priceRange\": \"$$$$\"\n}\n```\n\nAdd to site header template.",
+              "priority": "High",
+              "time_estimate": "1h"
+            },
+            {
+              "key": "BNC-3-3",
+              "type": "Task",
+              "summary": "Test LocalBusiness schema validation",
+              "description": "Test schema at https://search.google.com/test/rich-results\nVerify no errors or warnings. Screenshot results for documentation.",
+              "priority": "Medium",
+              "time_estimate": "15m"
+            }
+          ]
+        },
+        {
+          "key": "BNC-4",
+          "type": "Story",
+          "summary": "Add FAQ schema to kitchen remodeling page",
+          "description": "Implement FAQPage schema on /kitchen-remodeling/ with 5+ relevant questions and answers. This can generate FAQ rich snippets in search results.\n\n**Acceptance Criteria:**\n- Minimum 5 FAQs added to page content\n- FAQPage schema implemented\n- Schema validates without errors",
+          "priority": "High",
+          "story_points": 2,
+          "tasks": [
+            {
+              "key": "BNC-4-1",
+              "type": "Task",
+              "summary": "Research and write FAQ content for kitchen remodeling",
+              "description": "Create 5+ FAQs based on common customer questions:\n\n1. How much does a kitchen remodel cost in Escondido?\n2. How long does a kitchen remodel take?\n3. Do I need permits for kitchen remodeling in Escondido?\n4. What is included in a full kitchen remodel?\n5. Do you offer financing for kitchen remodeling?\n6. Can I stay in my home during kitchen remodeling?\n\nWrite 50-150 word answers for each.",
+              "priority": "High",
+              "time_estimate": "2h"
+            },
+            {
+              "key": "BNC-4-2",
+              "type": "Task",
+              "summary": "Add FAQ content to kitchen remodeling page",
+              "description": "Add FAQ section to /kitchen-remodeling/ page with proper HTML structure (use h3 for questions, p for answers, or accordion component).",
+              "priority": "High",
+              "time_estimate": "1h"
+            },
+            {
+              "key": "BNC-4-3",
+              "type": "Task",
+              "summary": "Implement FAQPage schema JSON-LD",
+              "description": "Add FAQPage schema to /kitchen-remodeling/:\n\n```json\n{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"FAQPage\",\n  \"mainEntity\": [\n    {\n      \"@type\": \"Question\",\n      \"name\": \"How much does a kitchen remodel cost in Escondido?\",\n      \"acceptedAnswer\": {\n        \"@type\": \"Answer\",\n        \"text\": \"[ANSWER]\"\n      }\n    }\n  ]\n}\n```",
+              "priority": "High",
+              "time_estimate": "1h"
+            }
+          ]
+        },
+        {
+          "key": "BNC-5",
+          "type": "Story",
+          "summary": "Add FAQ schema to bathroom remodeling page",
+          "description": "Implement FAQPage schema on /bathroom-remodeling/ with 5+ relevant questions and answers.\n\n**Acceptance Criteria:**\n- Minimum 5 FAQs added to page content\n- FAQPage schema implemented\n- Schema validates without errors",
+          "priority": "High",
+          "story_points": 2,
+          "tasks": [
+            {
+              "key": "BNC-5-1",
+              "type": "Task",
+              "summary": "Research and write FAQ content for bathroom remodeling",
+              "description": "Create 5+ FAQs:\n\n1. How much does a bathroom remodel cost in Escondido?\n2. How long does a bathroom remodel take?\n3. Can you remodel a small bathroom?\n4. What's the ROI on bathroom remodeling?\n5. Do you handle plumbing during bathroom remodels?\n6. What bathroom fixtures do you recommend?",
+              "priority": "High",
+              "time_estimate": "2h"
+            },
+            {
+              "key": "BNC-5-2",
+              "type": "Task",
+              "summary": "Add FAQ content and schema to bathroom page",
+              "description": "Add FAQ section and FAQPage schema to /bathroom-remodeling/ following same pattern as kitchen page.",
+              "priority": "High",
+              "time_estimate": "1.5h"
+            }
+          ]
+        },
+        {
+          "key": "BNC-6",
+          "type": "Story",
+          "summary": "Add Service schema to all service pages",
+          "description": "Implement Service schema on each main service page to help Google understand service offerings.\n\n**Pages:** Kitchen Remodeling, Bathroom Remodeling, Siding, Deck/Patio, Landscaping, Outdoor Living\n\n**Acceptance Criteria:**\n- Service schema on all main service pages\n- Each schema references parent LocalBusiness\n- All schemas validate",
+          "priority": "Medium",
+          "story_points": 3,
+          "tasks": [
+            {
+              "key": "BNC-6-1",
+              "type": "Task",
+              "summary": "Create Service schema template",
+              "description": "Create reusable Service schema template:\n\n```json\n{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"Service\",\n  \"serviceType\": \"[SERVICE_NAME]\",\n  \"provider\": {\n    \"@type\": \"HomeAndConstructionBusiness\",\n    \"name\": \"BNC Builders Inc.\"\n  },\n  \"areaServed\": {\n    \"@type\": \"City\",\n    \"name\": \"Escondido\"\n  }\n}\n```",
+              "priority": "Medium",
+              "time_estimate": "30m"
+            },
+            {
+              "key": "BNC-6-2",
+              "type": "Task",
+              "summary": "Implement Service schema on all service pages",
+              "description": "Add Service schema to:\n- /kitchen-remodeling/ (serviceType: Kitchen Remodeling)\n- /bathroom-remodeling/ (serviceType: Bathroom Remodeling)\n- /siding/ (serviceType: Siding Installation)\n- /deck-patio/ (serviceType: Deck and Patio Construction)\n- /landscaping/ (serviceType: Landscaping)\n- /outdoor-living/ (serviceType: Outdoor Living Spaces)",
+              "priority": "Medium",
+              "time_estimate": "2h"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "BNC-EPIC-3",
+      "type": "Epic",
+      "summary": "Title Tag & Meta Description Optimization",
+      "description": "Optimize title tags and meta descriptions for all key pages to improve keyword targeting and click-through rates.\n\n**Current Issue:** Title tags are generic and don't include target keywords or location modifiers.\n\n**Business Impact:** MEDIUM - Better title tags can improve rankings for target keywords and increase CTR from SERPs.",
+      "priority": "High",
+      "labels": ["on-page-seo", "title-tags", "meta"],
+      "stories": [
+        {
+          "key": "BNC-7",
+          "type": "Story",
+          "summary": "Optimize title tags for top 5 pages",
+          "description": "Update title tags to include primary keywords and location.\n\n**Title Tag Changes:**\n| Page | Current | New |\n|------|---------|-----|\n| Homepage | BNC Builders Inc. | Kitchen & Bathroom Remodeling Escondido | BNC Builders |\n| Kitchen | Kitchen Remodeling - BNC Builders | Kitchen Remodel Escondido CA | Expert Contractors | BNC Builders |\n| Bathroom | Bathroom Remodeling - BNC Builders | Bathroom Remodel Escondido | Licensed Contractors | BNC Builders |\n| Oceanside | Oceanside Remodeling - BNC Builders | Contractors Oceanside CA | Kitchen & Bath Remodeling | BNC Builders |\n| Poway | Kitchen Remodeling Poway - BNC Builders | Kitchen Remodel Poway CA | Free Estimates | BNC Builders |\n\n**Acceptance Criteria:**\n- All 5 title tags updated\n- Each under 60 characters\n- Primary keyword in first half of title",
+          "priority": "High",
+          "story_points": 2,
+          "tasks": [
+            {
+              "key": "BNC-7-1",
+              "type": "Task",
+              "summary": "Update homepage title tag",
+              "description": "Change title from 'BNC Builders Inc.' to 'Kitchen & Bathroom Remodeling Escondido | BNC Builders'\n\nCharacter count: 54 (under 60 limit)",
+              "priority": "High",
+              "time_estimate": "15m"
+            },
+            {
+              "key": "BNC-7-2",
+              "type": "Task",
+              "summary": "Update kitchen remodeling page title tag",
+              "description": "Change to: 'Kitchen Remodel Escondido CA | Expert Contractors | BNC Builders'\n\nCharacter count: 58",
+              "priority": "High",
+              "time_estimate": "15m"
+            },
+            {
+              "key": "BNC-7-3",
+              "type": "Task",
+              "summary": "Update bathroom remodeling page title tag",
+              "description": "Change to: 'Bathroom Remodel Escondido | Licensed Contractors | BNC Builders'\n\nCharacter count: 60",
+              "priority": "High",
+              "time_estimate": "15m"
+            },
+            {
+              "key": "BNC-7-4",
+              "type": "Task",
+              "summary": "Update Oceanside and Poway page title tags",
+              "description": "Oceanside: 'Contractors Oceanside CA | Kitchen & Bath Remodeling | BNC Builders'\nPoway: 'Kitchen Remodel Poway CA | Free Estimates | BNC Builders'",
+              "priority": "High",
+              "time_estimate": "30m"
+            },
+            {
+              "key": "BNC-7-5",
+              "type": "Task",
+              "summary": "Verify title tags in browser and GSC",
+              "description": "After implementation:\n1. View page source to confirm title tags\n2. Check Google Search Console for any indexing issues\n3. Request re-indexing of updated pages",
+              "priority": "Medium",
+              "time_estimate": "30m"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "BNC-EPIC-4",
+      "type": "Epic",
+      "summary": "New Page Creation - Location Expansion",
+      "description": "Create new location-specific service pages to capture keyword opportunities in underserved areas.\n\n**Target Keywords:**\n- kitchen remodel oceanside (90/mo)\n- contractors escondido (200/mo)\n- home remodeling escondido (90/mo)\n\n**Business Impact:** HIGH - These keywords have commercial intent and good volume with moderate competition.",
+      "priority": "High",
+      "labels": ["content", "local-seo", "new-pages"],
+      "stories": [
+        {
+          "key": "BNC-8",
+          "type": "Story",
+          "summary": "Create Kitchen Remodeling Oceanside page",
+          "description": "Create new page at /kitchen-remodeling-oceanside/ targeting 'kitchen remodel oceanside' (90 searches/mo).\n\n**Page Requirements:**\n- Word count: 1,500+\n- Include local testimonials from Oceanside customers\n- Project gallery with Oceanside projects\n- Service details specific to Oceanside area\n- Internal links to main kitchen remodeling page\n- FAQ section with local questions\n\n**Acceptance Criteria:**\n- Page published at correct URL\n- All content requirements met\n- Schema markup implemented\n- Internal linking in place",
+          "priority": "High",
+          "story_points": 5,
+          "tasks": [
+            {
+              "key": "BNC-8-1",
+              "type": "Task",
+              "summary": "Research Oceanside-specific content angles",
+              "description": "Research:\n- Oceanside building permit requirements\n- Local design trends/preferences\n- Average costs in Oceanside area\n- Competitor pages for this keyword\n- Questions people ask about Oceanside kitchen remodeling",
+              "priority": "High",
+              "time_estimate": "2h"
+            },
+            {
+              "key": "BNC-8-2",
+              "type": "Task",
+              "summary": "Write Kitchen Remodeling Oceanside page content",
+              "description": "Write 1,500+ word page including:\n- H1: Kitchen Remodel Oceanside CA | [Company]\n- Introduction with keyword in first paragraph\n- Services offered section\n- Why choose us for Oceanside kitchen remodeling\n- Process/timeline section\n- Cost ranges for Oceanside\n- FAQ section (5+ questions)\n- Strong CTA for free estimate",
+              "priority": "High",
+              "time_estimate": "4h"
+            },
+            {
+              "key": "BNC-8-3",
+              "type": "Task",
+              "summary": "Gather Oceanside project photos for gallery",
+              "description": "Collect before/after photos from Oceanside kitchen projects. If none available, use best examples with note about area served.",
+              "priority": "Medium",
+              "time_estimate": "1h"
+            },
+            {
+              "key": "BNC-8-4",
+              "type": "Task",
+              "summary": "Publish page and implement schema",
+              "description": "Publish page at /kitchen-remodeling-oceanside/\nAdd Service schema and FAQ schema\nAdd to sitemap\nCreate internal links from other pages",
+              "priority": "High",
+              "time_estimate": "1h"
+            }
+          ]
+        },
+        {
+          "key": "BNC-9",
+          "type": "Story",
+          "summary": "Create Contractors Escondido page",
+          "description": "Create new page at /contractors-escondido/ targeting 'contractors escondido' (200 searches/mo).\n\n**Page Requirements:**\n- Word count: 1,500+\n- Services overview (all services offered)\n- Licensing and insurance information\n- Areas served section\n- Trust signals (years in business, reviews, certifications)\n\n**Note:** This keyword has highest volume (200/mo) in our target list.",
+          "priority": "High",
+          "story_points": 5,
+          "tasks": [
+            {
+              "key": "BNC-9-1",
+              "type": "Task",
+              "summary": "Write Contractors Escondido page content",
+              "description": "Write 1,500+ word page including:\n- H1: Contractors Escondido CA | Licensed Home Remodeling\n- Full services list\n- Licensing info (license number, bonded, insured)\n- Years in business\n- Customer reviews/testimonials\n- Areas served map or list\n- FAQ section",
+              "priority": "High",
+              "time_estimate": "4h"
+            },
+            {
+              "key": "BNC-9-2",
+              "type": "Task",
+              "summary": "Publish Contractors Escondido page",
+              "description": "Publish at /contractors-escondido/\nAdd LocalBusiness and Service schema\nAdd to navigation and sitemap\nInternal link from homepage",
+              "priority": "High",
+              "time_estimate": "1h"
+            }
+          ]
+        },
+        {
+          "key": "BNC-10",
+          "type": "Story",
+          "summary": "Create Home Remodeling Escondido page",
+          "description": "Create new page at /home-remodeling-escondido/ targeting 'home remodeling escondido' (90 searches/mo).\n\n**Page Requirements:**\n- Word count: 1,500+\n- Full service list\n- Process explanation\n- Cost guide\n- Before/after portfolio",
+          "priority": "Medium",
+          "story_points": 5,
+          "tasks": [
+            {
+              "key": "BNC-10-1",
+              "type": "Task",
+              "summary": "Write Home Remodeling Escondido page content",
+              "description": "Write 1,500+ word page covering:\n- All home remodeling services offered\n- Why whole-home remodeling vs room-by-room\n- Cost factors and ranges\n- Timeline expectations\n- Portfolio of completed projects",
+              "priority": "Medium",
+              "time_estimate": "4h"
+            },
+            {
+              "key": "BNC-10-2",
+              "type": "Task",
+              "summary": "Publish Home Remodeling Escondido page",
+              "description": "Publish and optimize with schema, internal links, and sitemap inclusion.",
+              "priority": "Medium",
+              "time_estimate": "1h"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+

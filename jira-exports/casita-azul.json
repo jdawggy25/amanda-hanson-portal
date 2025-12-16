@@ -1,0 +1,309 @@
+{
+  "project": {
+    "key": "CASITA",
+    "name": "Casita Azul - SEO",
+    "description": "SEO optimization for Casita Azul, a Spanish immersion preschool and daycare serving Portland, OR metro area. Focus on on-page SEO fixes, schema implementation, and local search optimization.",
+    "url": "https://casitaazulpdx.com"
+  },
+  "metadata": {
+    "domain_rating": 22,
+    "organic_traffic": 96,
+    "organic_keywords": 4,
+    "traffic_value": "$21.58/mo",
+    "referring_domains": 38,
+    "sprint_period": "December 16, 2025 - January 15, 2026",
+    "exported_at": "2025-12-16",
+    "competitive_advantage": "Very limited direct competition in Portland Spanish preschool niche"
+  },
+  "epics": [
+    {
+      "key": "CASITA-EPIC-1",
+      "type": "Epic",
+      "summary": "H1 Tag Optimization",
+      "description": "Fix critical H1 tag issues across all main pages. Current H1s are non-descriptive ('Welcome!', 'Discover!') and don't include target keywords.\n\n**Business Impact:** HIGH - H1 tags are a primary ranking factor. Fixing these is a quick win that can improve rankings for target keywords.\n\n**Pages Affected:** 6 (Homepage, Our Story, Programs, Locations, Admissions, Contact)",
+      "priority": "Highest",
+      "labels": ["on-page-seo", "h1-tags", "quick-win"],
+      "stories": [
+        {
+          "key": "CASITA-1",
+          "type": "Story",
+          "summary": "Update all page H1 tags with keyword-optimized content",
+          "description": "Replace generic H1 tags with keyword-rich, descriptive headings.\n\n**H1 Changes Required:**\n| Page | Current H1 | New H1 |\n|------|-----------|--------|\n| Homepage | Welcome to Casita Azul! | Spanish Immersion Preschool & Daycare in Portland, Oregon |\n| Our Story | Discover Our Journey! | About Casita Azul: Portland's Latina-Owned Spanish Immersion School |\n| Programs | Discover Our Programs! | Spanish Immersion Programs for Infants, Toddlers & Preschoolers |\n| Locations | Welcome to Our Casitas! | Spanish Immersion Preschool & Daycare Locations in Portland Metro |\n| Admissions | Getting Started | Enroll in Spanish Immersion Preschool & Daycare at Casita Azul |\n| Contact | Contact Us! | Contact Casita Azul Spanish Immersion School |\n\n**Acceptance Criteria:**\n- All 6 H1 tags updated\n- Each H1 contains primary keyword for that page\n- No duplicate H1s across site",
+          "priority": "Highest",
+          "story_points": 3,
+          "tasks": [
+            {
+              "key": "CASITA-1-1",
+              "type": "Task",
+              "summary": "Update Homepage H1 tag",
+              "description": "Change H1 from 'Welcome to Casita Azul!' to 'Spanish Immersion Preschool & Daycare in Portland, Oregon'\n\n**Technical Note:** Locate H1 in template/CMS. May be in hero section or page title field.\n\n**Target Keyword:** spanish immersion preschool portland",
+              "priority": "Highest",
+              "time_estimate": "15m"
+            },
+            {
+              "key": "CASITA-1-2",
+              "type": "Task",
+              "summary": "Update Our Story page H1 tag",
+              "description": "Change H1 from 'Discover Our Journey!' to 'About Casita Azul: Portland's Latina-Owned Spanish Immersion School'\n\n**Keywords:** Includes brand differentiation (Latina-owned) and location.",
+              "priority": "High",
+              "time_estimate": "15m"
+            },
+            {
+              "key": "CASITA-1-3",
+              "type": "Task",
+              "summary": "Update Programs page H1 tag",
+              "description": "Change H1 from 'Discover Our Programs!' to 'Spanish Immersion Programs for Infants, Toddlers & Preschoolers'\n\n**Keywords:** spanish immersion programs, preschoolers, toddlers",
+              "priority": "High",
+              "time_estimate": "15m"
+            },
+            {
+              "key": "CASITA-1-4",
+              "type": "Task",
+              "summary": "Update Locations page H1 tag",
+              "description": "Change H1 from 'Welcome to Our Casitas!' to 'Spanish Immersion Preschool & Daycare Locations in Portland Metro'\n\n**Areas Served:** Portland, Beaverton, Hillsboro, Lake Oswego",
+              "priority": "High",
+              "time_estimate": "15m"
+            },
+            {
+              "key": "CASITA-1-5",
+              "type": "Task",
+              "summary": "Update Admissions page H1 tag",
+              "description": "Change H1 from 'Getting Started' to 'Enroll in Spanish Immersion Preschool & Daycare at Casita Azul'",
+              "priority": "High",
+              "time_estimate": "15m"
+            },
+            {
+              "key": "CASITA-1-6",
+              "type": "Task",
+              "summary": "Update Contact page H1 tag",
+              "description": "Change H1 from 'Contact Us!' to 'Contact Casita Azul Spanish Immersion School'",
+              "priority": "Medium",
+              "time_estimate": "15m"
+            },
+            {
+              "key": "CASITA-1-7",
+              "type": "Task",
+              "summary": "Verify H1 changes and check for duplicates",
+              "description": "After all changes:\n1. View source on each page to confirm H1\n2. Run Screaming Frog or similar to check for duplicate H1s\n3. Document final H1s in spreadsheet",
+              "priority": "Medium",
+              "time_estimate": "30m"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "CASITA-EPIC-2",
+      "type": "Epic",
+      "summary": "Title Tag & Meta Description Optimization",
+      "description": "Optimize title tags and meta descriptions for all main pages. Current titles are too short and generic.\n\n**Business Impact:** MEDIUM-HIGH - Improved titles will help with keyword rankings and click-through rates.",
+      "priority": "High",
+      "labels": ["on-page-seo", "title-tags", "meta-descriptions"],
+      "stories": [
+        {
+          "key": "CASITA-2",
+          "type": "Story",
+          "summary": "Update title tags for all main pages",
+          "description": "Optimize title tags with primary keywords and location.\n\n**Title Tag Changes:**\n| Page | Current | New |\n|------|---------|-----|\n| Homepage | Casita Azul | Spanish Immersion Preschool Portland | Casita Azul |\n| Programs | Programs - Casita Azul | Spanish Classes for Kids Portland | Infant to Preschool | Casita Azul |\n| Locations | Locations - Casita Azul | Portland Spanish Preschool Locations | Beaverton, Hillsboro | Casita Azul |\n| Admissions | Admissions - Casita Azul | Enroll in Spanish Immersion Preschool Portland | Casita Azul |\n| Our Story | Our Story - Casita Azul | About Us - Latina-Owned Spanish Preschool Portland | Casita Azul |",
+          "priority": "High",
+          "story_points": 2,
+          "tasks": [
+            {
+              "key": "CASITA-2-1",
+              "type": "Task",
+              "summary": "Update all 5 title tags",
+              "description": "Update title tags in CMS or template files:\n\n1. Homepage: 'Spanish Immersion Preschool Portland | Casita Azul' (47 chars)\n2. Programs: 'Spanish Classes for Kids Portland | Infant to Preschool | Casita Azul' (65 chars - may truncate)\n3. Locations: 'Portland Spanish Preschool Locations | Beaverton, Hillsboro | Casita Azul' (68 chars)\n4. Admissions: 'Enroll in Spanish Immersion Preschool Portland | Casita Azul' (57 chars)\n5. Our Story: 'About Us - Latina-Owned Spanish Preschool Portland | Casita Azul' (61 chars)",
+              "priority": "High",
+              "time_estimate": "1h"
+            },
+            {
+              "key": "CASITA-2-2",
+              "type": "Task",
+              "summary": "Verify title tags in browser",
+              "description": "Check each page in browser, view source to confirm title tag implementation.",
+              "priority": "Medium",
+              "time_estimate": "15m"
+            }
+          ]
+        },
+        {
+          "key": "CASITA-3",
+          "type": "Story",
+          "summary": "Add meta descriptions to all pages",
+          "description": "Add compelling meta descriptions to all main pages. Currently missing.\n\n**Acceptance Criteria:**\n- All 5 pages have meta descriptions\n- Each 150-160 characters\n- Include primary keyword and CTA",
+          "priority": "High",
+          "story_points": 2,
+          "tasks": [
+            {
+              "key": "CASITA-3-1",
+              "type": "Task",
+              "summary": "Write and implement meta descriptions",
+              "description": "Add meta descriptions:\n\n**Homepage (155 chars):**\n'Casita Azul offers Spanish immersion preschool and daycare in Portland, OR. Infant through preschool programs. Latina-owned. Multiple locations. Enroll today!'\n\n**Programs (158 chars):**\n'Spanish immersion programs for infants, toddlers, and preschoolers at Casita Azul Portland. Full immersion curriculum. Native Spanish-speaking teachers.'\n\n**Locations (145 chars):**\n'Find a Casita Azul Spanish immersion preschool near you in Portland metro. Multiple locations. Schedule a tour today!'\n\n**Admissions (152 chars):**\n'Enroll your child in Spanish immersion preschool at Casita Azul Portland. Programs for ages 0-5. Schedule a tour and start the enrollment process.'\n\n**Our Story (156 chars):**\n'Learn about Casita Azul, Portland's Latina-owned Spanish immersion preschool. Our mission, values, and commitment to bilingual early childhood education.'",
+              "priority": "High",
+              "time_estimate": "1h"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "CASITA-EPIC-3",
+      "type": "Epic",
+      "summary": "Schema Markup Implementation",
+      "description": "Implement structured data to improve search visibility and rich snippet eligibility.\n\n**Schema Types:**\n- ChildCare (with Preschool additionalType)\n- EducationalOrganization\n- FAQPage\n\n**Business Impact:** MEDIUM - Can improve CTR and establish entity relationships with Google.",
+      "priority": "High",
+      "labels": ["technical-seo", "schema", "structured-data"],
+      "stories": [
+        {
+          "key": "CASITA-4",
+          "type": "Story",
+          "summary": "Implement ChildCare/Preschool schema on homepage",
+          "description": "Add comprehensive ChildCare schema with Preschool additionalType to establish business entity.\n\n**Acceptance Criteria:**\n- Schema validates in Rich Results Test\n- Includes all locations served\n- Includes program catalog\n- Includes contact information",
+          "priority": "High",
+          "story_points": 3,
+          "tasks": [
+            {
+              "key": "CASITA-4-1",
+              "type": "Task",
+              "summary": "Gather all business information for schema",
+              "description": "Collect:\n- Full business name: Casita Azul\n- Alternate name: Casita Azul Spanish Immersion Preschool\n- Phone number\n- Email address\n- All location addresses\n- Areas served: Portland, Beaverton, Hillsboro, Lake Oswego\n- Programs offered: Infant, Toddler, Preschool\n- Social media URLs (Facebook, Instagram)",
+              "priority": "High",
+              "time_estimate": "30m"
+            },
+            {
+              "key": "CASITA-4-2",
+              "type": "Task",
+              "summary": "Create and implement ChildCare schema",
+              "description": "Implement schema JSON-LD:\n\n```json\n{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"ChildCare\",\n  \"additionalType\": \"https://schema.org/Preschool\",\n  \"name\": \"Casita Azul\",\n  \"alternateName\": \"Casita Azul Spanish Immersion Preschool\",\n  \"url\": \"https://casitaazulpdx.com\",\n  \"telephone\": \"+1-503-XXX-XXXX\",\n  \"email\": \"info@casitaazulpdx.com\",\n  \"address\": {\n    \"@type\": \"PostalAddress\",\n    \"addressLocality\": \"Portland\",\n    \"addressRegion\": \"OR\",\n    \"addressCountry\": \"US\"\n  },\n  \"areaServed\": [\n    {\"@type\": \"City\", \"name\": \"Portland\"},\n    {\"@type\": \"City\", \"name\": \"Beaverton\"},\n    {\"@type\": \"City\", \"name\": \"Hillsboro\"},\n    {\"@type\": \"City\", \"name\": \"Lake Oswego\"}\n  ],\n  \"description\": \"Spanish immersion preschool and daycare serving Portland metro families.\",\n  \"priceRange\": \"$$\",\n  \"knowsLanguage\": [\"en\", \"es\"],\n  \"hasOfferCatalog\": {\n    \"@type\": \"OfferCatalog\",\n    \"name\": \"Programs\",\n    \"itemListElement\": [\n      {\"@type\": \"Offer\", \"itemOffered\": {\"@type\": \"Service\", \"name\": \"Infant Program\"}},\n      {\"@type\": \"Offer\", \"itemOffered\": {\"@type\": \"Service\", \"name\": \"Toddler Program\"}},\n      {\"@type\": \"Offer\", \"itemOffered\": {\"@type\": \"Service\", \"name\": \"Preschool Program\"}}\n    ]\n  }\n}\n```\n\nAdd to homepage <head> section.",
+              "priority": "High",
+              "time_estimate": "1h"
+            },
+            {
+              "key": "CASITA-4-3",
+              "type": "Task",
+              "summary": "Test schema in Rich Results Test",
+              "description": "Validate at https://search.google.com/test/rich-results\nScreenshot results. Fix any errors or warnings.",
+              "priority": "Medium",
+              "time_estimate": "15m"
+            }
+          ]
+        },
+        {
+          "key": "CASITA-5",
+          "type": "Story",
+          "summary": "Add EducationalOrganization schema site-wide",
+          "description": "Implement EducationalOrganization schema to establish educational institution entity.\n\n**Acceptance Criteria:**\n- Schema on all pages\n- Includes sameAs links to social profiles\n- Validates without errors",
+          "priority": "Medium",
+          "story_points": 2,
+          "tasks": [
+            {
+              "key": "CASITA-5-1",
+              "type": "Task",
+              "summary": "Implement EducationalOrganization schema",
+              "description": "Add to site template/header:\n\n```json\n{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"EducationalOrganization\",\n  \"name\": \"Casita Azul\",\n  \"url\": \"https://casitaazulpdx.com\",\n  \"logo\": \"https://casitaazulpdx.com/logo.png\",\n  \"description\": \"Spanish immersion preschool offering bilingual early childhood education for children ages 0-5 in Portland, Oregon.\",\n  \"sameAs\": [\n    \"https://www.facebook.com/casitaazulpdx\",\n    \"https://www.instagram.com/casitaazulpdx\"\n  ]\n}\n```",
+              "priority": "Medium",
+              "time_estimate": "45m"
+            }
+          ]
+        },
+        {
+          "key": "CASITA-6",
+          "type": "Story",
+          "summary": "Add FAQ schema to Programs page",
+          "description": "Implement FAQPage schema with 5 relevant questions about Spanish immersion programs.\n\n**Acceptance Criteria:**\n- 5+ FAQs visible on page\n- Matching FAQPage schema\n- Schema validates",
+          "priority": "Medium",
+          "story_points": 3,
+          "tasks": [
+            {
+              "key": "CASITA-6-1",
+              "type": "Task",
+              "summary": "Write FAQ content for Programs page",
+              "description": "Create 5 FAQs:\n\n1. **What age groups does Casita Azul serve?**\nCasita Azul offers Spanish immersion programs for infants (0-12 months), toddlers (1-2 years), and preschoolers (3-5 years). Each program is designed with age-appropriate curriculum.\n\n2. **Is Casita Azul a full Spanish immersion program?**\nYes, we provide full Spanish immersion with native Spanish-speaking teachers. Children are immersed in Spanish throughout the entire day.\n\n3. **Do children need to know Spanish before enrolling?**\nNo prior Spanish knowledge is required. Our immersion program is designed for all children, including those with no previous exposure to Spanish.\n\n4. **What locations does Casita Azul have in Portland?**\nCasita Azul has multiple locations serving the Portland metro area including Beaverton and Hillsboro. Visit our Locations page for specific addresses.\n\n5. **What is the tuition for Casita Azul programs?**\nTuition varies by program and schedule. Please visit our Admissions page or contact us directly for current rates.",
+              "priority": "Medium",
+              "time_estimate": "1.5h"
+            },
+            {
+              "key": "CASITA-6-2",
+              "type": "Task",
+              "summary": "Add FAQ section and schema to Programs page",
+              "description": "Add FAQ section HTML to Programs page and implement FAQPage schema JSON-LD matching the content.",
+              "priority": "Medium",
+              "time_estimate": "1h"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "CASITA-EPIC-4",
+      "type": "Epic",
+      "summary": "Google Business Profile Optimization",
+      "description": "Optimize Google Business Profile listings for all Casita Azul locations to improve local search visibility.\n\n**Business Impact:** HIGH - GBP is critical for local 'near me' searches and maps visibility.\n\n**Locations:** Multiple campuses in Portland metro area.",
+      "priority": "High",
+      "labels": ["local-seo", "google-business-profile", "citations"],
+      "stories": [
+        {
+          "key": "CASITA-7",
+          "type": "Story",
+          "summary": "Audit and claim all Google Business Profile listings",
+          "description": "Ensure all Casita Azul locations have claimed and verified GBP listings.\n\n**Acceptance Criteria:**\n- All locations audited\n- Unclaimed profiles claimed\n- All profiles verified",
+          "priority": "High",
+          "story_points": 3,
+          "tasks": [
+            {
+              "key": "CASITA-7-1",
+              "type": "Task",
+              "summary": "Audit existing GBP listings for all locations",
+              "description": "Search Google Maps for each Casita Azul location:\n1. Document all existing listings\n2. Note which are claimed/unclaimed\n3. Check for duplicate listings\n4. Screenshot current state of each",
+              "priority": "High",
+              "time_estimate": "1h"
+            },
+            {
+              "key": "CASITA-7-2",
+              "type": "Task",
+              "summary": "Claim and verify unclaimed profiles",
+              "description": "For any unclaimed listings:\n1. Initiate claim process\n2. Complete verification (postcard, phone, or video)\n3. Document verification status",
+              "priority": "High",
+              "time_estimate": "2h"
+            }
+          ]
+        },
+        {
+          "key": "CASITA-8",
+          "type": "Story",
+          "summary": "Optimize GBP categories and attributes",
+          "description": "Set optimal categories and complete all business attributes.\n\n**Primary Category:** Preschool or Spanish Immersion School (if available)\n**Secondary Categories:** Day Care, Language School\n\n**Acceptance Criteria:**\n- Optimal categories selected\n- All attributes completed\n- Hours of operation set",
+          "priority": "High",
+          "story_points": 2,
+          "tasks": [
+            {
+              "key": "CASITA-8-1",
+              "type": "Task",
+              "summary": "Set primary and secondary categories",
+              "description": "For each location's GBP:\n\n**Primary Category:** Preschool (or Spanish Immersion School if available)\n**Secondary Categories:**\n- Day Care Center\n- Language School\n- Child Care Agency\n\nNote: Categories vary by availability. Check each listing.",
+              "priority": "High",
+              "time_estimate": "30m"
+            },
+            {
+              "key": "CASITA-8-2",
+              "type": "Task",
+              "summary": "Complete all business information fields",
+              "description": "For each GBP listing, complete:\n- Business name (consistent: 'Casita Azul - [Location Name]')\n- Address (verify correct)\n- Phone number\n- Website URL\n- Hours of operation\n- Description (use keyword-rich description)\n- Services offered\n- Attributes (appointment required, wheelchair accessible, etc.)\n- Photos (upload 10+ high-quality photos per location)",
+              "priority": "High",
+              "time_estimate": "2h"
+            },
+            {
+              "key": "CASITA-8-3",
+              "type": "Task",
+              "summary": "Add services and menu items",
+              "description": "Add all programs as 'services' in GBP:\n- Infant Program (0-12 months)\n- Toddler Program (1-2 years)\n- Preschool Program (3-5 years)\n- Camp Alegria (summer program)",
+              "priority": "Medium",
+              "time_estimate": "30m"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+

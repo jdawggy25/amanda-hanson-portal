@@ -1,0 +1,101 @@
+---
+/**
+ * HealthScoreRing Component
+ *
+ * SVG circular gauge showing composite health score (0-100).
+ * Color coded: green (>=75), amber (>=50), red (<50)
+ */
+
+interface Props {
+  score: number;
+  status: 'healthy' | 'needs-attention' | 'critical';
+  size?: 'small' | 'medium' | 'large';
+  showLabel?: boolean;
+}
+
+const { score, status, size = 'medium', showLabel = true } = Astro.props;
+
+// Size configurations
+const sizes = {
+  small: { width: 48, strokeWidth: 4, fontSize: '0.75rem' },
+  medium: { width: 72, strokeWidth: 5, fontSize: '1rem' },
+  large: { width: 96, strokeWidth: 6, fontSize: '1.25rem' },
+};
+
+const config = sizes[size];
+const radius = (config.width - config.strokeWidth) / 2;
+const circumference = 2 * Math.PI * radius;
+const progress = (score / 100) * circumference;
+const offset = circumference - progress;
+
+// Color based on status
+const colors = {
+  healthy: '#10b981',      // Green
+  'needs-attention': '#f59e0b', // Amber
+  critical: '#ef4444',     // Red
+};
+
+const color = colors[status];
+const bgColor = 'rgba(255, 255, 255, 0.1)';
+---
+
+<div class="health-ring" style={`width: ${config.width}px; height: ${config.width}px;`}>
+  <svg
+    width={config.width}
+    height={config.width}
+    viewBox={`0 0 ${config.width} ${config.width}`}
+  >
+    <!-- Background circle -->
+    <circle
+      cx={config.width / 2}
+      cy={config.width / 2}
+      r={radius}
+      fill="none"
+      stroke={bgColor}
+      stroke-width={config.strokeWidth}
+    />
+    <!-- Progress circle -->
+    <circle
+      cx={config.width / 2}
+      cy={config.width / 2}
+      r={radius}
+      fill="none"
+      stroke={color}
+      stroke-width={config.strokeWidth}
+      stroke-linecap="round"
+      stroke-dasharray={circumference}
+      stroke-dashoffset={offset}
+      transform={`rotate(-90 ${config.width / 2} ${config.width / 2})`}
+      class="progress-ring"
+    />
+  </svg>
+  {showLabel && (
+    <div class="score-label" style={`font-size: ${config.fontSize}; color: ${color};`}>
+      {score}
+    </div>
+  )}
+</div>
+
+<style>
+  .health-ring {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .health-ring svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .progress-ring {
+    transition: stroke-dashoffset 0.5s ease-out;
+  }
+
+  .score-label {
+    font-weight: 700;
+    z-index: 1;
+  }
+</style>

@@ -1,51 +1,36 @@
 {
   "client": {
     "name": "V3 Biomedical",
-    "reportDate": "December 2025",
+    "reportDate": "2025-12-18",
     "website": "v3biomedical.com",
-    "ahrefsProjectId": 9107469
+    "ahrefsProjectId": null
   },
   "overview": {
     "domainRating": 24,
-    "ahrefsRank": 6052731,
+    "ahrefsRank": 6125549,
     "organicKeywords": 0,
     "organicTraffic": 0,
-    "trackedKeywords": 46,
+    "organicTrafficValue": 0,
+    "trackedKeywords": null,
     "status": "Pre-ranking phase",
-    "performanceScore": 87,
+    "performanceScore": 88,
     "seoScore": 100
   },
   "keywords": {
     "total": 0,
-    "tracked": 46,
+    "tracked": null,
     "topPositions": 0,
+    "top3Rankings": 0,
     "avgPosition": null,
-    "ranking": [
-      { "keyword": "wound care products", "position": null, "volume": 6300, "difficulty": 1, "priority": "P0 - Quick Win" },
-      { "keyword": "advanced wound care", "position": null, "volume": 1200, "difficulty": 7, "priority": "P1" },
-      { "keyword": "wound care management", "position": null, "volume": 900, "difficulty": 20, "priority": "P2" },
-      { "keyword": "mobile wound care", "position": null, "volume": 450, "difficulty": 25, "priority": "P2" },
-      { "keyword": "wound care companies", "position": null, "volume": 400, "difficulty": 15, "priority": "P1" },
-      { "keyword": "wound manager", "position": null, "volume": 350, "difficulty": 12, "priority": "P1" },
-      { "keyword": "emr examples", "position": null, "volume": 300, "difficulty": 14, "priority": "P1" },
-      { "keyword": "wound care product", "position": null, "volume": 200, "difficulty": 6, "priority": "P1" },
-      { "keyword": "wound care software", "position": null, "volume": 200, "difficulty": 28, "priority": "P2" },
-      { "keyword": "best wound care products", "position": null, "volume": 150, "difficulty": 2, "priority": "P0 - Quick Win" },
-      { "keyword": "wound care emr", "position": null, "volume": 150, "difficulty": 1, "priority": "P0 - Quick Win" },
-      { "keyword": "advanced wound care products", "position": null, "volume": 100, "difficulty": 7, "priority": "P1" },
-      { "keyword": "wound assessment tool", "position": null, "volume": 100, "difficulty": 4, "priority": "P0 - Quick Win" },
-      { "keyword": "wound care ehr", "position": null, "volume": 90, "difficulty": 17, "priority": "P2" },
-      { "keyword": "wound management software", "position": null, "volume": 30, "difficulty": 28, "priority": "P2" },
-      { "keyword": "telehealth wound care", "position": null, "volume": 20, "difficulty": 0, "priority": "P0 - Quick Win" },
-      { "keyword": "telemedicine wound care", "position": null, "volume": 20, "difficulty": 0, "priority": "P0 - Quick Win" },
-      { "keyword": "wound assessment software", "position": null, "volume": 10, "difficulty": 30, "priority": "P2" },
-      { "keyword": "wound care charting software", "position": null, "volume": 10, "difficulty": 28, "priority": "P2" }
-    ]
+    "ranking": [],
+    "targetKeywords": []
   },
   "traffic": {
     "monthly": 0,
-    "organicValue": null,
+    "organicValue": 0,
     "trend": [],
+    "trendLabels": [],
+    "growthRate": "N/A",
     "sources": {
       "organic": 0,
       "direct": null,
@@ -54,118 +39,78 @@
     },
     "topPages": [],
     "targets": {
-      "month1": "First ranking",
-      "month3": "200 monthly visits",
-      "month6": "500 monthly visits"
+      "month1": "Build foundation",
+      "month3": "First rankings",
+      "month6": "100+ monthly visitors"
     }
   },
+  "domainRatingHistory": {
+    "trend": [24],
+    "trendLabels": ["Dec"],
+    "growth": "N/A",
+    "note": "Baseline established"
+  },
   "backlinks": {
-    "total": 145,
-    "allTime": 430,
+    "liveBacklinks": 63,
+    "allTimeBacklinks": 63,
     "domainRating": 24,
-    "referringDomains": 70,
-    "allTimeReferringDomains": 100,
-    "topReferringDomains": [
-      { "domain": "crunchbase.com", "dr": 90, "links": 1, "firstSeen": "2025-09-23" },
-      { "domain": "za.com", "dr": 87, "links": 12, "firstSeen": "2024-07-06" },
-      { "domain": "itxoft.com", "dr": 81, "links": 14, "firstSeen": "2024-12-12" },
-      { "domain": "seoagency.sale", "dr": 77, "links": 2, "firstSeen": "2025-10-31" },
-      { "domain": "mex.com", "dr": 76, "links": 12, "firstSeen": "2025-05-18" },
-      { "domain": "cience.com", "dr": 75, "links": 2, "firstSeen": "2024-07-25" },
-      { "domain": "rank-your.site", "dr": 73, "links": 1, "firstSeen": "2025-04-16" },
-      { "domain": "exlinko.net", "dr": 72, "links": 3, "firstSeen": "2025-01-29" },
-      { "domain": "seoflx.net", "dr": 72, "links": 3, "firstSeen": "2025-01-24" },
-      { "domain": "sparltech.com", "dr": 67, "links": 6, "firstSeen": "2024-11-27" }
+    "referringDomains": 56,
+    "allTimeReferringDomains": 56,
+    "topReferrers": [
+      {"domain": "crunchbase.com", "domainRating": 90, "links": 1, "firstSeen": "2025-09"},
+      {"domain": "za.com", "domainRating": 88, "links": 12, "firstSeen": "2024-07"},
+      {"domain": "itxoft.com", "domainRating": 83, "links": 14, "firstSeen": "2024-12"},
+      {"domain": "seoagency.sale", "domainRating": 77, "links": 2, "firstSeen": "2025-10"},
+      {"domain": "mex.com", "domainRating": 76, "links": 12, "firstSeen": "2025-05"}
     ],
     "targets": {
-      "month1": "80 referring domains",
-      "month3": "100 referring domains",
-      "month6": "150 referring domains",
-      "drTarget": "30+ by month 6"
-    },
-    "targetDirectories": [
-      { "name": "G2", "tier": "Tier 1", "priority": "HIGH", "type": "SaaS" },
-      { "name": "Capterra", "tier": "Tier 1", "priority": "HIGH", "type": "SaaS" },
-      { "name": "GetApp", "tier": "Tier 1", "priority": "MEDIUM", "type": "SaaS" },
-      { "name": "Software Advice", "tier": "Tier 1", "priority": "MEDIUM", "type": "SaaS" },
-      { "name": "HIMSS Marketplace", "tier": "Tier 2", "priority": "MEDIUM", "type": "Healthcare" },
-      { "name": "WoundSource", "tier": "Tier 2", "priority": "MEDIUM", "type": "Healthcare" }
-    ]
+      "month1": "5 new referring domains",
+      "month3": "15 new referring domains",
+      "month6": "30+ referring domains",
+      "drTarget": "DR 30"
+    }
+  },
+  "competitors": {
+    "organic": [],
+    "analysis": "No organic competitors yet - site is in pre-ranking phase",
+    "advantages": ["Strong backlink foundation", "High-authority referring domains"]
   },
   "technicalSeo": {
     "issues": {
-      "total": null,
-      "critical": null,
-      "warnings": null,
-      "notices": null
+      "total": 0,
+      "critical": 0,
+      "warnings": 0,
+      "notices": 0
     },
-    "checklist": [
-      { "task": "Verify XML sitemap submission", "status": "pending", "priority": "HIGH" },
-      { "task": "Configure robots.txt", "status": "pending", "priority": "HIGH" },
-      { "task": "Implement canonical tags", "status": "pending", "priority": "HIGH" },
-      { "task": "Add Organization schema", "status": "pending", "priority": "MEDIUM" },
-      { "task": "Add Product schema", "status": "pending", "priority": "MEDIUM" },
-      { "task": "Setup Google Search Console", "status": "pending", "priority": "HIGH" },
-      { "task": "Setup Google Analytics 4", "status": "pending", "priority": "HIGH" },
-      { "task": "Mobile responsiveness audit", "status": "pending", "priority": "MEDIUM" },
-      { "task": "Core Web Vitals optimization", "status": "pending", "priority": "MEDIUM" }
-    ]
+    "checklist": [],
+    "platformNote": "Site appears well-optimized technically"
   },
   "coreWebVitals": {
-    "lcp": { "value": 3.6, "unit": "s", "status": "needs-improvement", "threshold": 2.5 },
-    "fid": { "value": 12, "unit": "ms", "status": "pass", "threshold": 100 },
-    "cls": { "value": 0, "unit": "", "status": "pass", "threshold": 0.1 },
-    "fcp": { "value": 2.4, "unit": "s", "status": "needs-improvement", "threshold": 1.8 },
-    "ttfb": { "value": null, "unit": "s", "status": "unknown", "threshold": 0.8 }
+    "device": "mobile",
+    "lcp": 3.5,
+    "fcp": 2.4,
+    "cls": 0,
+    "tbt": 30
   },
   "lighthouse": {
-    "performance": 87,
+    "performance": 88,
     "accessibility": 100,
     "bestPractices": 100,
     "seo": 100,
     "device": "mobile",
-    "lastAudit": "2025-12-15"
+    "auditDate": "2025-12-18"
   },
   "strategy": {
     "phase": "Foundation Building",
     "priorities": [
-      "Create content targeting KD 0-5 keywords",
-      "Build internal linking structure",
-      "Acquire healthcare industry backlinks",
-      "Complete technical SEO implementation"
-    ],
-    "contentPlan": {
-      "pillarPages": [
-        { "topic": "Wound Care EMR Guide", "targetKeywords": ["wound care emr", "wound care ehr"], "status": "planned" },
-        { "topic": "Wound Care Products Overview", "targetKeywords": ["wound care products", "best wound care products"], "status": "planned" },
-        { "topic": "Advanced Wound Care Technology", "targetKeywords": ["advanced wound care", "advanced wound care products"], "status": "planned" }
-      ],
-      "blogPosts": 8,
-      "targetWordCount": "1,500-2,000 per post"
-    },
-    "successMetrics": {
-      "month1": {
-        "goal": "First organic ranking",
-        "drTarget": 26,
-        "referringDomainsTarget": 80
-      },
-      "month3": {
-        "goal": "50+ organic keywords",
-        "drTarget": 30,
-        "trafficTarget": 200,
-        "referringDomainsTarget": 100
-      },
-      "month6": {
-        "goal": "10+ page 1 rankings",
-        "drTarget": 35,
-        "trafficTarget": 500,
-        "referringDomainsTarget": 150
-      }
-    }
+      "Content development for target keywords",
+      "Technical optimization for Core Web Vitals",
+      "Continue link building efforts"
+    ]
   },
   "dataSource": {
-    "provider": "Ahrefs",
-    "lastUpdated": "2025-12-15",
-    "projectId": 9107469
+    "provider": "Ahrefs + Lighthouse",
+    "lastUpdated": "2025-12-18",
+    "projectId": null
   }
 }

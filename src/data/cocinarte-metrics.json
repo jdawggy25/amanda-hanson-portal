@@ -1,0 +1,125 @@
+{
+  "client": {
+    "name": "Cocinarte",
+    "reportDate": "2025-12-18",
+    "website": "cocinartepdx.com",
+    "ahrefsProjectId": null
+  },
+  "overview": {
+    "domainRating": 4,
+    "ahrefsRank": 28458128,
+    "organicKeywords": 1,
+    "organicTraffic": 0,
+    "organicTrafficValue": 0.03,
+    "trackedKeywords": 1,
+    "status": "Early Ranking Phase",
+    "performanceScore": 68,
+    "seoScore": 92
+  },
+  "keywords": {
+    "liveBacklinks": 1,
+    "tracked": 1,
+    "topPositions": 0,
+    "top3Rankings": 0,
+    "avgPosition": 32,
+    "ranking": [
+      {
+        "keyword": "cake making classes near me",
+        "position": 32,
+        "volume": 250,
+        "difficulty": 0,
+        "traffic": 0,
+        "priority": "HIGH"
+      }
+    ],
+    "targetKeywords": [
+      {"keyword": "cooking classes portland", "volume": 480, "difficulty": 15, "priority": "HIGH"},
+      {"keyword": "cake decorating classes near me", "volume": 320, "difficulty": 5, "priority": "HIGH"}
+    ]
+  },
+  "traffic": {
+    "monthly": 0,
+    "organicValue": 0.03,
+    "trend": [],
+    "trendLabels": [],
+    "growthRate": "N/A",
+    "sources": {
+      "organic": 0,
+      "direct": null,
+      "referral": null,
+      "social": null
+    },
+    "topPages": [],
+    "targets": {
+      "month1": "Improve existing ranking",
+      "month3": "Top 20 for main keyword",
+      "month6": "50+ monthly visitors"
+    }
+  },
+  "domainRatingHistory": {
+    "trend": [4],
+    "trendLabels": ["Dec"],
+    "growth": "N/A",
+    "note": "First ranking achieved!"
+  },
+  "backlinks": {
+    "liveBacklinks": 7,
+    "allTimeBacklinks": 7,
+    "domainRating": 4,
+    "referringDomains": 7,
+    "allTimeReferringDomains": 7,
+    "topReferrers": [],
+    "targets": {
+      "month1": "10 new referring domains",
+      "month3": "25 new referring domains",
+      "month6": "50+ referring domains",
+      "drTarget": "DR 15"
+    }
+  },
+  "competitors": {
+    "organic": [],
+    "analysis": "Cooking class niche in Portland",
+    "advantages": ["First keyword ranking", "Niche market opportunity"]
+  },
+  "technicalSeo": {
+    "issues": {
+      "liveBacklinks": 1,
+      "critical": 1,
+      "warnings": 0,
+      "notices": 0
+    },
+    "checklist": [
+      {"task": "Fix LCP (5.9s)", "status": "pending", "priority": "HIGH"}
+    ],
+    "platformNote": "Performance needs improvement"
+  },
+  "coreWebVitals": {
+    "device": "mobile",
+    "lcp": 5.9,
+    "fcp": 3.2,
+    "cls": 0.003,
+    "tbt": 40
+  },
+  "lighthouse": {
+    "performance": 68,
+    "accessibility": 79,
+    "bestPractices": 96,
+    "seo": 92,
+    "device": "mobile",
+    "auditDate": "2025-12-18"
+  },
+  "strategy": {
+    "phase": "Growth Phase",
+    "priorities": [
+      "Improve ranking for 'cake making classes near me'",
+      "Fix LCP performance issue",
+      "Content development for cooking class keywords",
+      "Build local citations"
+    ]
+  },
+  "dataSource": {
+    "provider": "Ahrefs + Lighthouse",
+    "lastUpdated": "2025-12-18",
+    "projectId": null
+  }
+}

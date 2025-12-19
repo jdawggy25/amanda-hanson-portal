@@ -1,0 +1,174 @@
+---
+/**
+ * TaskSummaryCard Component
+ *
+ * Sprint progress bar and task counts by status.
+ */
+
+import type { SprintMetrics } from '../../lib/jira/types';
+
+interface Props {
+  metrics: SprintMetrics;
+  overdueCount: number;
+  clientId: string;
+}
+
+const { metrics, overdueCount, clientId } = Astro.props;
+
+const completionPercent = metrics.completionPercentage;
+---
+
+<div class="task-summary">
+  <div class="summary-header">
+    <h4>Sprint Progress</h4>
+    <span class="completion-percent">{completionPercent}%</span>
+  </div>
+
+  <div class="progress-bar">
+    <div class="progress-fill" style={`width: ${completionPercent}%;`}></div>
+  </div>
+
+  <div class="task-counts">
+    <div class="task-count todo">
+      <span class="count-value">{metrics.todoTasks}</span>
+      <span class="count-label">To Do</span>
+    </div>
+    <div class="task-count in-progress">
+      <span class="count-value">{metrics.inProgressTasks}</span>
+      <span class="count-label">In Progress</span>
+    </div>
+    <div class="task-count done">
+      <span class="count-value">{metrics.doneTasks}</span>
+      <span class="count-label">Done</span>
+    </div>
+    {overdueCount > 0 && (
+      <div class="task-count overdue">
+        <span class="count-value">{overdueCount}</span>
+        <span class="count-label">Overdue</span>
+      </div>
+    )}
+  </div>
+
+  <div class="points-summary">
+    <span class="points-done">{metrics.donePoints} pts done</span>
+    <span class="points-total">/ {metrics.totalPoints} pts total</span>
+  </div>
+
+  <a href={`/admin/clients/${clientId}#tasks`} class="view-tasks-link">
+    View All Tasks →
+  </a>
+</div>
+
+<style>
+  .task-summary {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1.25rem;
+  }
+
+  .summary-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .summary-header h4 {
+    margin: 0;
+    font-size: 1rem;
+    color: white;
+  }
+
+  .completion-percent {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #10b981;
+  }
+
+  .progress-bar {
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea, #10b981);
+    border-radius: 4px;
+    transition: width 0.3s ease-out;
+  }
+
+  .task-counts {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .task-count {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    flex: 1;
+  }
+
+  .count-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: white;
+  }
+
+  .count-label {
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+  }
+
+  .task-count.todo {
+    border-left: 3px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .task-count.in-progress {
+    border-left: 3px solid #667eea;
+  }
+
+  .task-count.done {
+    border-left: 3px solid #10b981;
+  }
+
+  .task-count.overdue {
+    border-left: 3px solid #ef4444;
+    background: rgba(239, 68, 68, 0.1);
+  }
+
+  .task-count.overdue .count-value {
+    color: #ef4444;
+  }
+
+  .points-summary {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 1rem;
+  }
+
+  .points-done {
+    color: #10b981;
+    font-weight: 500;
+  }
+
+  .view-tasks-link {
+    display: inline-block;
+    font-size: 0.85rem;
+    color: #667eea;
+    text-decoration: none;
+  }
+
+  .view-tasks-link:hover {
+    text-decoration: underline;
+  }
+</style>

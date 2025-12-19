@@ -1,0 +1,328 @@
+---
+/**
+ * AdminNav Component
+ *
+ * Sidebar navigation for admin pages with responsive hamburger menu on mobile.
+ */
+
+interface Props {
+  currentPath?: string;
+}
+
+const { currentPath = Astro.url.pathname } = Astro.props;
+
+// Navigation items
+const navItems = [
+  { href: '/admin', label: 'Dashboard', icon: 'home' },
+  { href: '/admin/command-center', label: 'Command Center', icon: 'command' },
+  { href: '/admin/settings', label: 'Settings', icon: 'cog' },
+];
+
+// Helper to check if path is active
+function isActive(href: string): boolean {
+  // Exact match for dashboard
+  if (href === '/admin') {
+    return currentPath === '/admin' || currentPath === '/admin/';
+  }
+  // Client pages should highlight Command Center
+  if (currentPath.startsWith('/admin/clients')) {
+    return href === '/admin/command-center';
+  }
+  return currentPath.startsWith(href);
+}
+
+// SVG icons
+const icons: Record<string, string> = {
+  home: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>`,
+  command: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>`,
+  document: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>`,
+  cog: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>`,
+  logout: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>`,
+};
+---
+
+<!-- Mobile Hamburger Toggle -->
+<button class="admin-nav-toggle" id="adminNavToggle" aria-label="Toggle navigation">
+  <span class="hamburger-line"></span>
+  <span class="hamburger-line"></span>
+  <span class="hamburger-line"></span>
+</button>
+
+<!-- Backdrop for mobile -->
+<div class="admin-nav-backdrop" id="adminNavBackdrop"></div>
+
+<!-- Sidebar Navigation -->
+<aside class="admin-nav" id="adminNav">
+  <!-- Brand Area -->
+  <div class="admin-nav-brand">
+    <div class="brand-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+        <path d="M2 17l10 5 10-5"></path>
+        <path d="M2 12l10 5 10-5"></path>
+      </svg>
+    </div>
+    <span class="brand-text">Admin</span>
+  </div>
+
+  <!-- Nav Links -->
+  <nav class="admin-nav-menu">
+    {navItems.map((item) => (
+      <a
+        href={item.href}
+        class:list={['admin-nav-link', { active: isActive(item.href) }]}
+      >
+        <span class="nav-icon" set:html={icons[item.icon]} />
+        <span class="nav-label">{item.label}</span>
+      </a>
+    ))}
+  </nav>
+
+  <!-- Logout at Bottom -->
+  <div class="admin-nav-footer">
+    <form method="POST" action="/admin/api/auth/logout">
+      <button type="submit" class="admin-nav-logout">
+        <span class="nav-icon" set:html={icons.logout} />
+        <span class="nav-label">Logout</span>
+      </button>
+    </form>
+  </div>
+</aside>
+
+<style>
+  /* Mobile Toggle Button */
+  .admin-nav-toggle {
+    display: none;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 110;
+    width: 40px;
+    height: 40px;
+    background: rgba(20, 20, 20, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    cursor: pointer;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 10px;
+  }
+
+  .hamburger-line {
+    width: 20px;
+    height: 2px;
+    background: white;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+
+  .admin-nav-toggle.active .hamburger-line:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+
+  .admin-nav-toggle.active .hamburger-line:nth-child(2) {
+    opacity: 0;
+  }
+
+  .admin-nav-toggle.active .hamburger-line:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+
+  /* Backdrop */
+  .admin-nav-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 99;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .admin-nav-backdrop.visible {
+    opacity: 1;
+  }
+
+  /* Sidebar */
+  .admin-nav {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 260px;
+    background: rgba(10, 13, 20, 0.98);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    transition: transform 0.3s ease;
+  }
+
+  /* Brand Area */
+  .admin-nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.5rem 1.25rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .brand-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+  }
+
+  .brand-text {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: white;
+  }
+
+  /* Nav Menu */
+  .admin-nav-menu {
+    flex: 1;
+    padding: 1rem 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .admin-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    border-left: 3px solid transparent;
+  }
+
+  .admin-nav-link:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+  }
+
+  .admin-nav-link.active {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%);
+    color: #667eea;
+    border-left-color: #667eea;
+  }
+
+  .nav-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+  }
+
+  .nav-label {
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  /* Footer / Logout */
+  .admin-nav-footer {
+    padding: 1rem 0.75rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .admin-nav-footer form {
+    margin: 0;
+  }
+
+  .admin-nav-logout {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  .admin-nav-logout:hover {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+  }
+
+  /* Mobile Styles */
+  @media (max-width: 768px) {
+    .admin-nav-toggle {
+      display: flex;
+    }
+
+    .admin-nav-backdrop {
+      display: block;
+      pointer-events: none;
+    }
+
+    .admin-nav-backdrop.visible {
+      pointer-events: auto;
+    }
+
+    .admin-nav {
+      transform: translateX(-100%);
+    }
+
+    .admin-nav.open {
+      transform: translateX(0);
+    }
+  }
+</style>
+
+<script>
+  const toggle = document.getElementById('adminNavToggle');
+  const nav = document.getElementById('adminNav');
+  const backdrop = document.getElementById('adminNavBackdrop');
+
+  function openNav() {
+    nav?.classList.add('open');
+    backdrop?.classList.add('visible');
+    toggle?.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeNav() {
+    nav?.classList.remove('open');
+    backdrop?.classList.remove('visible');
+    toggle?.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  toggle?.addEventListener('click', () => {
+    if (nav?.classList.contains('open')) {
+      closeNav();
+    } else {
+      openNav();
+    }
+  });
+
+  backdrop?.addEventListener('click', closeNav);
+
+  // Close on ESC key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeNav();
+  });
+
+  // Close on window resize to desktop
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 768) closeNav();
+  });
+</script>

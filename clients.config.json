@@ -6,19 +6,7 @@
       "password": "v3",
       "website": "v3biomedical.com",
       "enabled": true,
-      "seoMetrics": {
-        "lastUpdated": "2025-12-15",
-        "domainRating": 24.0,
-        "ahrefsRank": 6052731,
-        "organicKeywords": 0,
-        "organicTraffic": 0,
-        "organicTrafficValue": "N/A",
-        "liveBacklinks": 145,
-        "referringDomains": 70,
-        "trackedKeywords": 46,
-        "paidKeywords": 0,
-        "paidTraffic": 0
-      }
+      "jiraProjectKey": "V3"
     },
     {
       "id": "casita",
@@ -26,18 +14,7 @@
       "password": "casita",
       "website": "casitaazulpdx.com",
       "enabled": true,
-      "seoMetrics": {
-        "lastUpdated": "2025-12-15",
-        "domainRating": 22.0,
-        "ahrefsRank": 6863132,
-        "organicKeywords": 4,
-        "organicTraffic": 96,
-        "organicTrafficValue": "$21.58",
-        "liveBacklinks": 100,
-        "referringDomains": 38,
-        "paidKeywords": 0,
-        "paidTraffic": 0
-      }
+      "jiraProjectKey": "CASITA"
     },
     {
       "id": "bnc-builders",
@@ -45,18 +22,55 @@
       "password": "bnc-builders",
       "website": "bncbuildersinc.com",
       "enabled": true,
-      "seoMetrics": {
-        "lastUpdated": "2025-12-15",
-        "domainRating": 29.0,
-        "ahrefsRank": 3949210,
-        "organicKeywords": 24,
-        "organicTraffic": 91,
-        "organicTrafficValue": "$510.51",
-        "liveBacklinks": 361,
-        "referringDomains": 97,
-        "paidKeywords": 1,
-        "paidTraffic": 5
-      }
+      "jiraProjectKey": "BNC"
+    },
+    {
+      "id": "hansen-chiropractic",
+      "name": "Hansen Chiropractic",
+      "password": "hansen",
+      "website": "hansenchiropracticaz.com",
+      "enabled": true,
+      "jiraProjectKey": "HC"
+    },
+    {
+      "id": "king-roof",
+      "name": "King Roof",
+      "password": "kingroof",
+      "website": "kingroofco.com",
+      "enabled": true,
+      "jiraProjectKey": "KRC"
+    },
+    {
+      "id": "salt-creek-dental",
+      "name": "Salt Creek Dental",
+      "password": "saltcreek",
+      "website": "dentistingraham.com",
+      "enabled": true,
+      "jiraProjectKey": "SCD"
+    },
+    {
+      "id": "4-corners",
+      "name": "4 Corners Concrete Coatings",
+      "password": "4corners",
+      "website": "4cornersconcretecoatings.com",
+      "enabled": true,
+      "jiraProjectKey": "WZ4"
+    },
+    {
+      "id": "cocinarte",
+      "name": "Cocinarte",
+      "password": "cocinarte",
+      "website": "cocinartepdx.com",
+      "enabled": true,
+      "jiraProjectKey": "COC"
+    },
+    {
+      "id": "spanish-horizons",
+      "name": "Spanish Horizons Academy",
+      "password": "spanish",
+      "website": "spanishhorizonsacademy.com",
+      "enabled": true,
+      "jiraProjectKey": "SH"
     }
   ]
 }

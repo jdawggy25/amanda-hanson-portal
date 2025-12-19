@@ -1,0 +1,218 @@
+---
+import EpicProgressBar from './EpicProgressBar.astro';
+import type { EpicWithTasks } from '../../lib/jira/types';
+
+export interface Props {
+  epicGroup: EpicWithTasks;
+  defaultOpen?: boolean;
+}
+
+const { epicGroup, defaultOpen = true } = Astro.props;
+const { epic, tasks, metrics } = epicGroup;
+
+const epicTitle = epic?.summary ?? 'No Epic';
+const epicKey = epic?.key ?? 'no-epic';
+
+// Color map for epic colors (from Jira)
+const epicColorMap: Record<string, string> = {
+  'ghx-label-1': '#7c3aed',  // Purple
+  'ghx-label-2': '#2563eb',  // Blue
+  'ghx-label-3': '#0891b2',  // Cyan
+  'ghx-label-4': '#059669',  // Green
+  'ghx-label-5': '#ca8a04',  // Yellow
+  'ghx-label-6': '#ea580c',  // Orange
+  'ghx-label-7': '#dc2626',  // Red
+  'ghx-label-8': '#9333ea',  // Violet
+  'ghx-label-9': '#0d9488',  // Teal
+};
+
+const epicColor = epic?.color ? (epicColorMap[epic.color] || 'var(--color-primary)') : 'var(--color-text-muted)';
+
+// Status icon for epic
+const statusIcon = epic?.status === 'done'
+  ? 'check-circle'
+  : epic?.status === 'in-progress'
+    ? 'loader'
+    : 'circle';
+---
+
+<details class="epic-section" open={defaultOpen} data-epic-key={epicKey}>
+  <summary class="epic-header">
+    <div class="epic-indicator" style={`background: ${epicColor}`}></div>
+    <div class="epic-info">
+      <div class="epic-title-row">
+        <span class="epic-title">{epicTitle}</span>
+        {epic && (
+          <span class="epic-key">{epic.key}</span>
+        )}
+      </div>
+      <div class="epic-meta">
+        <span class={`epic-status ${epic?.status || 'todo'}`}>
+          {statusIcon === 'check-circle' && (
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+          )}
+          {statusIcon === 'loader' && (
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="2" x2="12" y2="6"></line>
+              <line x1="12" y1="18" x2="12" y2="22"></line>
+              <line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line>
+              <line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line>
+              <line x1="2" y1="12" x2="6" y2="12"></line>
+              <line x1="18" y1="12" x2="22" y2="12"></line>
+              <line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line>
+              <line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line>
+            </svg>
+          )}
+          {statusIcon === 'circle' && (
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+            </svg>
+          )}
+          {epic?.statusLabel || 'No Status'}
+        </span>
+      </div>
+    </div>
+    <div class="epic-progress-container">
+      <EpicProgressBar
+        donePercent={metrics.completionPercentage}
+        totalTasks={metrics.totalTasks}
+        doneTasks={metrics.doneTasks}
+        totalPoints={metrics.totalPoints}
+        donePoints={metrics.donePoints}
+      />
+    </div>
+    <svg class="chevron" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="6 9 12 15 18 9"></polyline>
+    </svg>
+  </summary>
+  <div class="epic-content">
+    <slot />
+  </div>
+</details>
+
+<style define:vars={{ epicColor }}>
+  .epic-section {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-bg-secondary);
+    margin-bottom: var(--space-4);
+    overflow: hidden;
+  }
+
+  .epic-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    cursor: pointer;
+    user-select: none;
+    transition: background var(--transition-fast);
+  }
+
+  .epic-header:hover {
+    background: var(--color-bg-deep);
+  }
+
+  .epic-header::-webkit-details-marker {
+    display: none;
+  }
+
+  .epic-indicator {
+    width: 4px;
+    height: 40px;
+    border-radius: var(--radius-full);
+    flex-shrink: 0;
+  }
+
+  .epic-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .epic-title-row {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-2);
+    margin-bottom: var(--space-1);
+  }
+
+  .epic-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .epic-key {
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    color: var(--epicColor);
+    background: color-mix(in srgb, var(--epicColor) 15%, transparent);
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    flex-shrink: 0;
+  }
+
+  .epic-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .epic-status {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+  }
+
+  .epic-status.done {
+    color: #22c55e;
+  }
+
+  .epic-status.in-progress {
+    color: #3b82f6;
+  }
+
+  .epic-progress-container {
+    width: 200px;
+    flex-shrink: 0;
+  }
+
+  .chevron {
+    color: var(--color-text-muted);
+    transition: transform var(--transition-fast);
+    flex-shrink: 0;
+  }
+
+  .epic-section[open] .chevron {
+    transform: rotate(180deg);
+  }
+
+  .epic-content {
+    padding: 0 var(--space-4) var(--space-4);
+  }
+
+  @media (max-width: 768px) {
+    .epic-header {
+      flex-wrap: wrap;
+    }
+
+    .epic-progress-container {
+      width: 100%;
+      order: 3;
+      margin-top: var(--space-2);
+    }
+
+    .chevron {
+      order: 2;
+      margin-left: auto;
+    }
+  }
+</style>

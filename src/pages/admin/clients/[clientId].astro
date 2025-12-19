@@ -1,0 +1,673 @@
+---
+/**
+ * Client Command Center
+ *
+ * Detailed view for a single client with tabbed interface.
+ */
+
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import TabNavigation from '../../../components/admin/TabNavigation.astro';
+import HealthScoreRing from '../../../components/admin/HealthScoreRing.astro';
+import HealthBreakdownBars from '../../../components/admin/HealthBreakdownBars.astro';
+import MetricsOverview from '../../../components/admin/MetricsOverview.astro';
+import TaskSummaryCard from '../../../components/admin/TaskSummaryCard.astro';
+import SprintDashboard from '../../../components/sprint-dashboard/SprintDashboard.astro';
+import { aggregateClientData, getCurrentMonth, getClientById } from '../../../lib/admin';
+import { getJiraInstanceUrl } from '../../../lib/jira/config';
+
+// Get client ID from URL
+const { clientId } = Astro.params;
+
+if (!clientId) {
+  return Astro.redirect('/admin/command-center');
+}
+
+// Get client config first
+const clientConfig = getClientById(clientId);
+
+if (!clientConfig) {
+  return Astro.redirect('/admin/command-center');
+}
+
+// Get current month
+const currentMonth = getCurrentMonth();
+const monthDisplay = new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+
+// Fetch client data
+let clientData = null;
+try {
+  clientData = await aggregateClientData(clientId, currentMonth);
+} catch (error) {
+  console.error(`Failed to load client data for ${clientId}:`, error);
+}
+
+// Tab configuration
+const tabs = [
+  { id: 'overview', label: 'Overview' },
+  { id: 'tasks', label: 'Tasks' },
+  { id: 'metrics', label: 'Metrics' },
+];
+
+// Get initial tab from URL hash or default to overview
+const urlHash = Astro.url.hash?.slice(1) || 'overview';
+const activeTab = tabs.find(t => t.id === urlHash) ? urlHash : 'overview';
+---
+
+<AdminLayout title={`${clientConfig.name} - Command Center`}>
+  <main class="client-command-center">
+    <header class="page-header">
+      <div class="header-left">
+        <a href="/admin/command-center" class="back-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+          Back to Dashboard
+        </a>
+        <h1>{clientConfig.name}</h1>
+        <a href={`https://${clientConfig.website}`} target="_blank" rel="noopener" class="website-link">
+          {clientConfig.website}
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <line x1="10" y1="14" x2="21" y2="3"></line>
+          </svg>
+        </a>
+      </div>
+      <div class="header-right">
+        <span class="current-month">{monthDisplay}</span>
+      </div>
+    </header>
+
+    {clientData ? (
+      <>
+        <!-- Health Overview Banner -->
+        <div class="health-banner">
+          <div class="health-main">
+            <HealthScoreRing
+              score={clientData.healthScore.breakdown.composite}
+              status={clientData.healthScore.breakdown.status}
+              size="large"
+            />
+            <div class="health-details">
+              <div class="health-status">
+                <span class={`status-badge ${clientData.healthScore.breakdown.status}`}>
+                  {clientData.healthScore.breakdown.status === 'healthy' ? 'Healthy' :
+                   clientData.healthScore.breakdown.status === 'needs-attention' ? 'Needs Attention' : 'Critical'}
+                </span>
+              </div>
+              <HealthBreakdownBars
+                seo={clientData.healthScore.breakdown.seo}
+                tasks={clientData.healthScore.breakdown.tasks}
+                narrative={clientData.healthScore.breakdown.narrative}
+              />
+            </div>
+          </div>
+          <div class="quick-stats">
+            <div class="stat">
+              <span class="stat-value">{clientData.metrics?.overview.domainRating ?? '-'}</span>
+              <span class="stat-label">DR</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">{clientData.metrics?.overview.organicTraffic ?? '-'}</span>
+              <span class="stat-label">Traffic</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">{clientData.tasks.metrics.totalTasks - clientData.tasks.metrics.doneTasks}</span>
+              <span class="stat-label">Open Tasks</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tabs -->
+        <TabNavigation tabs={tabs} activeTab={activeTab} />
+
+        <!-- Tab Panels -->
+        <div class="tab-panels">
+          <!-- Overview Panel -->
+          <div id="panel-overview" class:list={['tab-panel', { active: activeTab === 'overview' }]} role="tabpanel">
+            <div class="overview-grid">
+              <div class="overview-section">
+                <h3>SEO Metrics</h3>
+                <MetricsOverview metrics={clientData.metrics} />
+              </div>
+              <div class="overview-section">
+                <h3>Task Progress</h3>
+                <TaskSummaryCard
+                  metrics={clientData.tasks.metrics}
+                  overdueCount={clientData.tasks.overdueCount}
+                  clientId={clientId}
+                />
+              </div>
+            </div>
+
+            {clientData.healthScore.alerts.length > 0 && (
+              <div class="alerts-section">
+                <h3>Active Alerts</h3>
+                <div class="alerts-list">
+                  {clientData.healthScore.alerts.map((alert) => (
+                    <div class={`alert-item ${alert.severity}`}>
+                      <span class="alert-category">{alert.category}</span>
+                      <span class="alert-message">{alert.message}</span>
+                      {alert.actionUrl && (
+                        <a href={alert.actionUrl} class="alert-action">Fix →</a>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          <!-- Tasks Panel -->
+          <div id="panel-tasks" class:list={['tab-panel', { active: activeTab === 'tasks' }]} role="tabpanel" hidden={activeTab !== 'tasks'}>
+            <SprintDashboard
+              tasks={clientData.tasks.all}
+              projectName={clientConfig.name}
+              jiraBoardUrl={`${getJiraInstanceUrl()}/jira/software/projects/${clientConfig.jiraProjectKey}/boards`}
+              embedded={true}
+            />
+          </div>
+
+          <!-- Metrics Panel -->
+          <div id="panel-metrics" class:list={['tab-panel', { active: activeTab === 'metrics' }]} role="tabpanel" hidden={activeTab !== 'metrics'}>
+            <div class="metrics-full">
+              <MetricsOverview metrics={clientData.metrics} />
+
+              {clientData.metrics && (
+                <>
+                  <!-- Top Pages -->
+                  {clientData.metrics.topPages.length > 0 && (
+                    <div class="metrics-section">
+                      <h3>Top Pages</h3>
+                      <div class="data-table">
+                        <table>
+                          <thead>
+                            <tr>
+                              <th>Page</th>
+                              <th>Traffic</th>
+                              <th>Top Keyword</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {clientData.metrics.topPages.slice(0, 10).map((page) => (
+                              <tr>
+                                <td class="url-cell">{page.url}</td>
+                                <td>{page.traffic}</td>
+                                <td>{page.topKeyword || '-'}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  )}
+
+                  <!-- Top Referring Domains -->
+                  {clientData.metrics.backlinks.topReferring.length > 0 && (
+                    <div class="metrics-section">
+                      <h3>Top Referring Domains</h3>
+                      <div class="data-table">
+                        <table>
+                          <thead>
+                            <tr>
+                              <th>Domain</th>
+                              <th>DR</th>
+                              <th>Links</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {clientData.metrics.backlinks.topReferring.slice(0, 10).map((domain) => (
+                              <tr>
+                                <td>{domain.domain}</td>
+                                <td>{domain.domainRating}</td>
+                                <td>{domain.backlinks}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  )}
+                </>
+              )}
+
+              <div class="quick-actions">
+                <button id="collectClientMetrics" class="btn-action">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="23 4 23 10 17 10"></polyline>
+                    <polyline points="1 20 1 14 7 14"></polyline>
+                    <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+                  </svg>
+                  Refresh Metrics
+                </button>
+                <button id="generateClientReport" class="btn-action btn-success">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                  </svg>
+                  Generate Report
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
+    ) : (
+      <div class="error-state">
+        <p>Failed to load client data. Please try refreshing the page.</p>
+        <button onclick="window.location.reload()" class="btn-primary">
+          Retry
+        </button>
+      </div>
+    )}
+  </main>
+</AdminLayout>
+
+<style>
+  .client-command-center {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .header-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+    font-size: 0.85rem;
+  }
+
+  .back-link:hover {
+    color: white;
+  }
+
+  .page-header h1 {
+    margin: 0;
+    font-size: 1.75rem;
+    color: white;
+  }
+
+  .website-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+
+  .website-link:hover {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .current-month {
+    background: rgba(102, 126, 234, 0.2);
+    color: #667eea;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  /* Health Banner */
+  .health-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    background: rgba(20, 20, 20, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+
+  .health-main {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .health-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .status-badge {
+    display: inline-block;
+    padding: 0.35rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+
+  .status-badge.healthy {
+    background: rgba(16, 185, 129, 0.2);
+    color: #10b981;
+  }
+
+  .status-badge.needs-attention {
+    background: rgba(245, 158, 11, 0.2);
+    color: #f59e0b;
+  }
+
+  .status-badge.critical {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+  }
+
+  .quick-stats {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.75rem 1.25rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+  }
+
+  .stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+  }
+
+  .stat-label {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+  }
+
+  /* Tab Panels */
+  .tab-panels {
+    min-height: 500px;
+  }
+
+  .tab-panel {
+    display: none;
+  }
+
+  .tab-panel.active {
+    display: block;
+  }
+
+  /* Overview */
+  .overview-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .overview-section h3 {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 1rem 0;
+  }
+
+  .alerts-section {
+    margin-top: 1.5rem;
+  }
+
+  .alerts-section h3 {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 1rem 0;
+  }
+
+  .alerts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .alert-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    border-left: 3px solid;
+  }
+
+  .alert-item.critical {
+    border-color: #ef4444;
+  }
+
+  .alert-item.warning {
+    border-color: #f59e0b;
+  }
+
+  .alert-item.info {
+    border-color: #667eea;
+  }
+
+  .alert-category {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+    min-width: 60px;
+  }
+
+  .alert-message {
+    flex: 1;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .alert-action {
+    font-size: 0.85rem;
+    color: #667eea;
+    text-decoration: none;
+  }
+
+  .alert-action:hover {
+    text-decoration: underline;
+  }
+
+  /* Metrics Full */
+  .metrics-full {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .metrics-section h3 {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 1rem 0;
+  }
+
+  .data-table {
+    overflow-x: auto;
+  }
+
+  .data-table table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .data-table th,
+  .data-table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .data-table th {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 500;
+  }
+
+  .data-table td {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .url-cell {
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .quick-actions {
+    display: flex;
+    gap: 0.75rem;
+    padding-top: 1rem;
+  }
+
+  .btn-action {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: white;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-action:hover {
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  .btn-action.btn-success {
+    background: rgba(16, 185, 129, 0.2);
+    border-color: rgba(16, 185, 129, 0.4);
+    color: #10b981;
+  }
+
+  .btn-action.btn-success:hover {
+    background: rgba(16, 185, 129, 0.3);
+  }
+
+  .error-state {
+    text-align: center;
+    padding: 3rem;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .btn-primary {
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    .client-command-center {
+      /* Padding handled by AdminLayout */
+    }
+
+    .health-banner {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .overview-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .quick-stats {
+      width: 100%;
+      justify-content: space-around;
+    }
+  }
+</style>
+
+<script define:vars={{ clientId, currentMonth }}>
+  // Collect metrics button
+  document.getElementById('collectClientMetrics')?.addEventListener('click', async (e) => {
+    const btn = e.currentTarget;
+    btn.disabled = true;
+    btn.textContent = 'Refreshing...';
+
+    try {
+      const response = await fetch('/admin/api/collect-metrics', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ clientId })
+      });
+      const data = await response.json();
+
+      if (data.success) {
+        window.location.reload();
+      } else {
+        alert('Failed to refresh metrics: ' + (data.error || 'Unknown error'));
+      }
+    } catch (error) {
+      alert('Failed to refresh metrics');
+      console.error(error);
+    } finally {
+      btn.disabled = false;
+    }
+  });
+
+  // Generate report button
+  document.getElementById('generateClientReport')?.addEventListener('click', async (e) => {
+    const btn = e.currentTarget;
+    btn.disabled = true;
+    btn.textContent = 'Generating...';
+
+    try {
+      const response = await fetch('/admin/api/generate-reports', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ month: currentMonth, clientId })
+      });
+      const data = await response.json();
+
+      if (data.success) {
+        alert('Report generated successfully!');
+      } else {
+        alert('Failed to generate report: ' + (data.error || 'Unknown error'));
+      }
+    } catch (error) {
+      alert('Failed to generate report');
+      console.error(error);
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg> Generate Report`;
+    }
+  });
+</script>

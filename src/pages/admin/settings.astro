@@ -1,0 +1,384 @@
+---
+/**
+ * Admin Settings Page
+ *
+ * Displays environment info, integration status, and client configuration.
+ */
+
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import clientsConfig from '../../../clients.config.json';
+
+// Get enabled clients
+const clients = clientsConfig.clients.filter(c => c.enabled);
+const allClients = clientsConfig.clients;
+
+// Integration status checks (check if configured, not actual values)
+const integrations = [
+  {
+    name: 'Jira',
+    configured: !!(import.meta.env.JIRA_API_TOKEN && import.meta.env.JIRA_CLOUD_ID),
+    description: 'Task management and sprint tracking',
+    icon: 'jira'
+  },
+  {
+    name: 'Ahrefs',
+    configured: !!import.meta.env.AHREFS_API_TOKEN,
+    description: 'SEO metrics and backlink data',
+    icon: 'chart'
+  },
+  {
+    name: 'Supabase',
+    configured: !!(import.meta.env.SUPABASE_URL && import.meta.env.SUPABASE_ANON_KEY),
+    description: 'Narrative storage and caching',
+    icon: 'database'
+  },
+  {
+    name: 'GitHub',
+    configured: !!import.meta.env.GITHUB_TOKEN,
+    description: 'Report publishing',
+    icon: 'github'
+  },
+  {
+    name: 'PageSpeed',
+    configured: !!import.meta.env.PAGESPEED_API_KEY,
+    description: 'Lighthouse performance audits',
+    icon: 'speed'
+  },
+];
+
+// Environment info
+const nodeEnv = import.meta.env.MODE || 'development';
+const isProd = import.meta.env.PROD;
+
+// Icons
+const icons: Record<string, string> = {
+  jira: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 12l10 10 10-10L12 2z"></path></svg>`,
+  chart: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>`,
+  database: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>`,
+  github: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>`,
+  speed: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19.4 14.9C20.2 13.4 20.6 11.6 20.6 9.8c0-5.5-4.5-10-10-10S.6 4.3.6 9.8c0 1.8.4 3.6 1.2 5.1"></path><path d="m12 9 0 5"></path><circle cx="12" cy="14" r="2"></circle></svg>`,
+  check: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>`,
+  x: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`,
+};
+---
+
+<AdminLayout title="Settings">
+  <div class="settings-page">
+    <header class="page-header">
+      <h1>Settings</h1>
+      <p class="subtitle">Environment configuration and integration status</p>
+    </header>
+
+    <!-- Environment Info -->
+    <section class="settings-section">
+      <h2>Environment</h2>
+      <div class="env-card">
+        <div class="env-item">
+          <span class="env-label">Mode</span>
+          <span class:list={['env-value', 'env-badge', isProd ? 'prod' : 'dev']}>
+            {nodeEnv}
+          </span>
+        </div>
+        <div class="env-item">
+          <span class="env-label">Cache TTL</span>
+          <span class="env-value">{import.meta.env.JIRA_CACHE_TTL || '300'}s</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Integrations -->
+    <section class="settings-section">
+      <h2>Integrations</h2>
+      <div class="integrations-grid">
+        {integrations.map((integration) => (
+          <div class:list={['integration-card', { configured: integration.configured }]}>
+            <div class="integration-header">
+              <div class="integration-icon" set:html={icons[integration.icon]} />
+              <div class="integration-info">
+                <h3>{integration.name}</h3>
+                <p>{integration.description}</p>
+              </div>
+            </div>
+            <div class:list={['integration-status', { active: integration.configured }]}>
+              <span class="status-icon" set:html={integration.configured ? icons.check : icons.x} />
+              <span>{integration.configured ? 'Configured' : 'Not Configured'}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Clients -->
+    <section class="settings-section">
+      <h2>Clients ({clients.length} active / {allClients.length} total)</h2>
+      <div class="clients-table-wrapper">
+        <table class="clients-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Website</th>
+              <th>Jira Project</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {allClients.map((client) => (
+              <tr class:list={[{ disabled: !client.enabled }]}>
+                <td class="client-name">{client.name}</td>
+                <td class="client-website">
+                  <a href={`https://${client.website}`} target="_blank" rel="noopener">
+                    {client.website}
+                  </a>
+                </td>
+                <td class="client-jira">{client.jiraProjectKey || '-'}</td>
+                <td>
+                  <span class:list={['status-badge', client.enabled ? 'active' : 'inactive']}>
+                    {client.enabled ? 'Active' : 'Inactive'}
+                  </span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</AdminLayout>
+
+<style>
+  .settings-page {
+    max-width: 1000px;
+  }
+
+  .page-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .page-header h1 {
+    font-size: 1.75rem;
+    color: white;
+    margin-bottom: 0.25rem;
+  }
+
+  .subtitle {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .settings-section {
+    margin-bottom: 2.5rem;
+  }
+
+  .settings-section h2 {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+  }
+
+  /* Environment Card */
+  .env-card {
+    background: rgba(20, 20, 20, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 1.25rem;
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .env-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .env-label {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.9rem;
+  }
+
+  .env-value {
+    color: white;
+    font-weight: 500;
+  }
+
+  .env-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .env-badge.dev {
+    background: rgba(245, 158, 11, 0.2);
+    color: #f59e0b;
+  }
+
+  .env-badge.prod {
+    background: rgba(16, 185, 129, 0.2);
+    color: #10b981;
+  }
+
+  /* Integrations Grid */
+  .integrations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+
+  .integration-card {
+    background: rgba(20, 20, 20, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 1.25rem;
+    transition: border-color 0.2s;
+  }
+
+  .integration-card.configured {
+    border-color: rgba(16, 185, 129, 0.3);
+  }
+
+  .integration-header {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .integration-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.7);
+    flex-shrink: 0;
+  }
+
+  .integration-info h3 {
+    font-size: 1rem;
+    color: white;
+    margin-bottom: 0.25rem;
+  }
+
+  .integration-info p {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .integration-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: rgba(239, 68, 68, 0.9);
+  }
+
+  .integration-status.active {
+    color: #10b981;
+  }
+
+  .status-icon {
+    display: flex;
+    align-items: center;
+  }
+
+  /* Clients Table */
+  .clients-table-wrapper {
+    background: rgba(20, 20, 20, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .clients-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .clients-table th,
+  .clients-table td {
+    padding: 0.875rem 1rem;
+    text-align: left;
+  }
+
+  .clients-table th {
+    background: rgba(0, 0, 0, 0.2);
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+  }
+
+  .clients-table td {
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.9rem;
+  }
+
+  .clients-table tr:hover td {
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .clients-table tr.disabled td {
+    opacity: 0.5;
+  }
+
+  .client-name {
+    font-weight: 500;
+    color: white;
+  }
+
+  .client-website a {
+    color: #667eea;
+    text-decoration: none;
+  }
+
+  .client-website a:hover {
+    text-decoration: underline;
+  }
+
+  .client-jira {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .status-badge {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+
+  .status-badge.active {
+    background: rgba(16, 185, 129, 0.2);
+    color: #10b981;
+  }
+
+  .status-badge.inactive {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  @media (max-width: 768px) {
+    .integrations-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .clients-table-wrapper {
+      overflow-x: auto;
+    }
+
+    .clients-table {
+      min-width: 500px;
+    }
+  }
+</style>

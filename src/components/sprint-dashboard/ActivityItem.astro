@@ -1,0 +1,150 @@
+---
+import type { ActivityItem } from '../../lib/jira/types';
+
+export interface Props {
+  activity: ActivityItem;
+}
+
+const { activity } = Astro.props;
+
+// Format relative time
+const formatRelativeTime = (date: Date): string => {
+  const now = new Date();
+  const diff = now.getTime() - date.getTime();
+  const minutes = Math.floor(diff / (1000 * 60));
+  const hours = Math.floor(diff / (1000 * 60 * 60));
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+  if (minutes < 1) return 'Just now';
+  if (minutes < 60) return `${minutes}m ago`;
+  if (hours < 24) return `${hours}h ago`;
+  if (days === 1) return 'Yesterday';
+  if (days < 7) return `${days}d ago`;
+  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+};
+
+// Activity type colors and icons
+const activityConfig: Record<string, { color: string; icon: string }> = {
+  comment: { color: '#3b82f6', icon: 'message' },
+  status_change: { color: '#22c55e', icon: 'refresh' },
+  created: { color: '#8b5cf6', icon: 'plus' },
+};
+
+const config = activityConfig[activity.type] || activityConfig.created;
+---
+
+<div class={`activity-item ${activity.type}`}>
+  <div class="activity-icon" style={`background: color-mix(in srgb, ${config.color} 15%, transparent); color: ${config.color}`}>
+    {config.icon === 'message' && (
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+      </svg>
+    )}
+    {config.icon === 'refresh' && (
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="23 4 23 10 17 10"></polyline>
+        <polyline points="1 20 1 14 7 14"></polyline>
+        <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+      </svg>
+    )}
+    {config.icon === 'plus' && (
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="12" y1="5" x2="12" y2="19"></line>
+        <line x1="5" y1="12" x2="19" y2="12"></line>
+      </svg>
+    )}
+  </div>
+  <div class="activity-content">
+    <div class="activity-header">
+      <span class="activity-actor">{activity.actor}</span>
+      <span class="activity-time">{formatRelativeTime(activity.timestamp)}</span>
+    </div>
+    <div class="activity-body">
+      <span class="activity-task-key">{activity.taskKey}</span>
+      {activity.type === 'comment' && (
+        <p class="activity-text">{activity.content}</p>
+      )}
+      {activity.type === 'created' && (
+        <p class="activity-text">{activity.content}: <span class="task-title">{activity.taskSummary}</span></p>
+      )}
+      {activity.type === 'status_change' && (
+        <p class="activity-text">{activity.content}</p>
+      )}
+    </div>
+  </div>
+</div>
+
+<style>
+  .activity-item {
+    display: flex;
+    gap: var(--space-3);
+    padding: var(--space-3);
+    border-radius: var(--radius-md);
+    transition: background var(--transition-fast);
+  }
+
+  .activity-item:hover {
+    background: var(--color-bg-deep);
+  }
+
+  .activity-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .activity-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .activity-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-1);
+  }
+
+  .activity-actor {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--color-text);
+  }
+
+  .activity-time {
+    font-size: 0.6875rem;
+    color: var(--color-text-muted);
+  }
+
+  .activity-body {
+    font-size: 0.8125rem;
+    color: var(--color-text-secondary);
+  }
+
+  .activity-task-key {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--color-primary);
+    background: rgba(99, 102, 241, 0.1);
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    margin-right: var(--space-1);
+  }
+
+  .activity-text {
+    margin: var(--space-1) 0 0 0;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .task-title {
+    color: var(--color-text);
+  }
+</style>

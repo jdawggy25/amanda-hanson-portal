@@ -1,0 +1,133 @@
+{
+  "client": {
+    "name": "Spanish Horizons Academy",
+    "reportDate": "2025-12-18",
+    "website": "spanishhorizonsacademy.com",
+    "ahrefsProjectId": null
+  },
+  "overview": {
+    "domainRating": 4,
+    "ahrefsRank": 28322676,
+    "organicKeywords": 2,
+    "organicTraffic": 2,
+    "organicTrafficValue": 0,
+    "trackedKeywords": 2,
+    "status": "Early Growth - Ranking",
+    "performanceScore": 89,
+    "seoScore": 92
+  },
+  "keywords": {
+    "liveBacklinks": 2,
+    "tracked": 2,
+    "topPositions": 1,
+    "top3Rankings": 0,
+    "avgPosition": 42.5,
+    "ranking": [
+      {
+        "keyword": "spanish horizons",
+        "position": 6,
+        "volume": 30,
+        "difficulty": 0,
+        "traffic": 2,
+        "priority": "Branded"
+      },
+      {
+        "keyword": "horizon science academy",
+        "position": 79,
+        "volume": 800,
+        "difficulty": 9,
+        "traffic": 0,
+        "priority": "LOW"
+      }
+    ],
+    "targetKeywords": [
+      {"keyword": "spanish classes near me", "volume": 2400, "difficulty": 20, "priority": "HIGH"},
+      {"keyword": "learn spanish online", "volume": 4400, "difficulty": 35, "priority": "MEDIUM"}
+    ]
+  },
+  "traffic": {
+    "monthly": 2,
+    "organicValue": 0,
+    "trend": [],
+    "trendLabels": [],
+    "growthRate": "+100%",
+    "sources": {
+      "organic": 2,
+      "direct": null,
+      "referral": null,
+      "social": null
+    },
+    "topPages": [],
+    "targets": {
+      "month1": "Double organic traffic",
+      "month3": "Top 3 for brand term",
+      "month6": "50+ monthly visitors"
+    }
+  },
+  "domainRatingHistory": {
+    "trend": [4],
+    "trendLabels": ["Dec"],
+    "growth": "N/A",
+    "note": "Rankings established"
+  },
+  "backlinks": {
+    "liveBacklinks": 11,
+    "allTimeBacklinks": 11,
+    "domainRating": 4,
+    "referringDomains": 9,
+    "allTimeReferringDomains": 9,
+    "topReferrers": [],
+    "targets": {
+      "month1": "10 new referring domains",
+      "month3": "25 new referring domains",
+      "month6": "50+ referring domains",
+      "drTarget": "DR 15"
+    }
+  },
+  "competitors": {
+    "organic": [],
+    "analysis": "Spanish language learning niche",
+    "advantages": ["Best technical performance of all clients", "Brand term ranking in top 10"]
+  },
+  "technicalSeo": {
+    "issues": {
+      "liveBacklinks": 0,
+      "critical": 0,
+      "warnings": 1,
+      "notices": 0
+    },
+    "checklist": [
+      {"task": "Improve LCP (3.6s)", "status": "pending", "priority": "LOW"}
+    ],
+    "platformNote": "Excellent technical foundation"
+  },
+  "coreWebVitals": {
+    "device": "mobile",
+    "lcp": 3.6,
+    "fcp": 1.6,
+    "cls": 0,
+    "tbt": 0
+  },
+  "lighthouse": {
+    "performance": 89,
+    "accessibility": 79,
+    "bestPractices": 96,
+    "seo": 92,
+    "device": "mobile",
+    "auditDate": "2025-12-18"
+  },
+  "strategy": {
+    "phase": "Growth Phase",
+    "priorities": [
+      "Improve brand term ranking to top 3",
+      "Content development for Spanish learning keywords",
+      "Build quality backlinks",
+      "Expand keyword targeting"
+    ]
+  },
+  "dataSource": {
+    "provider": "Ahrefs + Lighthouse",
+    "lastUpdated": "2025-12-18",
+    "projectId": null
+  }
+}

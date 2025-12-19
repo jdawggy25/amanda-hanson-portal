@@ -1,0 +1,252 @@
+---
+/**
+ * AlertsPanel Component
+ *
+ * Collapsible section showing critical and warning alerts across all clients.
+ */
+
+import type { HealthAlert } from '../../lib/admin/types';
+
+interface Props {
+  alerts: Array<HealthAlert & { clientId: string; clientName: string }>;
+  warningAlerts?: Array<HealthAlert & { clientId: string; clientName: string }>;
+}
+
+const { alerts, warningAlerts = [] } = Astro.props;
+
+const hasCritical = alerts.length > 0;
+const hasWarnings = warningAlerts.length > 0;
+const showPanel = hasCritical || hasWarnings;
+
+// Category icons
+const categoryIcons = {
+  seo: `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>`,
+  tasks: `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>`,
+  narrative: `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>`,
+};
+---
+
+{showPanel && (
+  <div class="alerts-panel">
+    <details open>
+      <summary class="panel-header">
+        <div class="header-content">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+            <line x1="12" y1="9" x2="12" y2="13"></line>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+          <span>Alerts</span>
+          {hasCritical && (
+            <span class="alert-count critical">{alerts.length} critical</span>
+          )}
+          {hasWarnings && (
+            <span class="alert-count warning">{warningAlerts.length} warning{warningAlerts.length > 1 ? 's' : ''}</span>
+          )}
+        </div>
+        <svg class="chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </summary>
+
+      <div class="alerts-content">
+        {hasCritical && (
+          <div class="alerts-section critical">
+            <h4 class="section-title">Critical Issues</h4>
+            <div class="alerts-list">
+              {alerts.map((alert) => (
+                <div class="alert-item">
+                  <span class="alert-icon" set:html={categoryIcons[alert.category]} />
+                  <div class="alert-content">
+                    <span class="client-name">{alert.clientName}</span>
+                    <span class="alert-message">{alert.message}</span>
+                  </div>
+                  {alert.actionUrl && (
+                    <a href={alert.actionUrl} class="alert-action">Fix</a>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {hasWarnings && (
+          <div class="alerts-section warning">
+            <h4 class="section-title">Needs Attention</h4>
+            <div class="alerts-list">
+              {warningAlerts.slice(0, 5).map((alert) => (
+                <div class="alert-item">
+                  <span class="alert-icon" set:html={categoryIcons[alert.category]} />
+                  <div class="alert-content">
+                    <span class="client-name">{alert.clientName}</span>
+                    <span class="alert-message">{alert.message}</span>
+                  </div>
+                  {alert.actionUrl && (
+                    <a href={alert.actionUrl} class="alert-action">Fix</a>
+                  )}
+                </div>
+              ))}
+              {warningAlerts.length > 5 && (
+                <div class="more-alerts">
+                  +{warningAlerts.length - 5} more warnings
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    </details>
+  </div>
+)}
+
+<style>
+  .alerts-panel {
+    background: rgba(20, 20, 20, 0.9);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+  }
+
+  details[open] .chevron {
+    transform: rotate(180deg);
+  }
+
+  .panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.25rem;
+    cursor: pointer;
+    user-select: none;
+    list-style: none;
+  }
+
+  .panel-header::-webkit-details-marker {
+    display: none;
+  }
+
+  .header-content {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #ef4444;
+    font-weight: 600;
+  }
+
+  .alert-count {
+    font-size: 0.75rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+
+  .alert-count.critical {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+  }
+
+  .alert-count.warning {
+    background: rgba(245, 158, 11, 0.2);
+    color: #f59e0b;
+  }
+
+  .chevron {
+    color: rgba(255, 255, 255, 0.5);
+    transition: transform 0.2s;
+  }
+
+  .alerts-content {
+    padding: 0 1.25rem 1.25rem;
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .alerts-section {
+    flex: 1;
+  }
+
+  .section-title {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 0.75rem 0;
+  }
+
+  .alerts-section.critical .section-title {
+    color: #ef4444;
+  }
+
+  .alerts-section.warning .section-title {
+    color: #f59e0b;
+  }
+
+  .alerts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .alert-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 6px;
+  }
+
+  .alert-icon {
+    display: flex;
+    color: rgba(255, 255, 255, 0.5);
+    flex-shrink: 0;
+  }
+
+  .alert-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    min-width: 0;
+  }
+
+  .client-name {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: white;
+  }
+
+  .alert-message {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.6);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .alert-action {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    color: white;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .alert-action:hover {
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  .more-alerts {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+    padding: 0.25rem 0.75rem;
+  }
+
+  @media (max-width: 768px) {
+    .alerts-content {
+      flex-direction: column;
+      gap: 1rem;
+    }
+  }
+</style>

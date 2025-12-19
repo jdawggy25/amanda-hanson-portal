@@ -1,0 +1,492 @@
+---
+import LabelTag from './LabelTag.astro';
+import type { TransformedTask } from '../../lib/jira/types';
+
+export interface Props {
+  task: TransformedTask;
+  showEpic?: boolean;
+}
+
+const { task, showEpic = false } = Astro.props;
+
+// Status colors
+const statusColors: Record<string, { bg: string; text: string; border: string }> = {
+  'todo': { bg: 'rgba(148, 163, 184, 0.1)', text: '#94a3b8', border: 'rgba(148, 163, 184, 0.3)' },
+  'in-progress': { bg: 'rgba(59, 130, 246, 0.1)', text: '#3b82f6', border: 'rgba(59, 130, 246, 0.3)' },
+  'done': { bg: 'rgba(34, 197, 94, 0.1)', text: '#22c55e', border: 'rgba(34, 197, 94, 0.3)' },
+};
+
+// Priority colors
+const priorityColors: Record<string, string> = {
+  'Highest': '#dc2626',
+  'High': '#f97316',
+  'Medium': '#eab308',
+  'Low': '#22c55e',
+  'Lowest': '#94a3b8',
+};
+
+const statusStyle = statusColors[task.status] || statusColors.todo;
+const priorityColor = priorityColors[task.priority] || '#94a3b8';
+
+// Format date
+const formatDate = (date: Date) => {
+  const now = new Date();
+  const diff = now.getTime() - date.getTime();
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+  if (days === 0) return 'Today';
+  if (days === 1) return 'Yesterday';
+  if (days < 7) return `${days}d ago`;
+  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+};
+
+// Generate unique ID for this card
+const cardId = `task-${task.key}`;
+---
+
+<div
+  class={`task-card ${task.status}`}
+  data-task-key={task.key}
+  id={cardId}
+>
+  <div class="card-header">
+    <div class="card-meta">
+      <a href={task.jiraUrl} target="_blank" rel="noopener noreferrer" class="task-key">
+        {task.key}
+      </a>
+      <span class="issue-type">
+        {task.issueType}
+      </span>
+      {task.storyPoints !== null && (
+        <span class="story-points" title="Story Points">
+          <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+          </svg>
+          {task.storyPoints}
+        </span>
+      )}
+    </div>
+    <button class="expand-btn" aria-expanded="false" aria-controls={`${cardId}-details`}>
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </svg>
+    </button>
+  </div>
+
+  <h3 class="task-summary">{task.summary}</h3>
+
+  <div class="card-badges">
+    <span class="status-badge" style={`background: ${statusStyle.bg}; color: ${statusStyle.text}; border-color: ${statusStyle.border}`}>
+      {task.statusLabel}
+    </span>
+    <span class="priority-badge" style={`color: ${priorityColor}`} title={`Priority: ${task.priority}`}>
+      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M3 3h18v18H3V3zm2 2v14h14V5H5z"/>
+        {task.priority === 'Highest' && <path d="M12 7l5 5h-3v5h-4v-5H7l5-5z"/>}
+        {task.priority === 'High' && <path d="M12 8l4 4h-2.5v5h-3v-5H8l4-4z"/>}
+        {task.priority === 'Medium' && <rect x="7" y="11" width="10" height="2"/>}
+        {task.priority === 'Low' && <path d="M12 16l-4-4h2.5V7h3v5H16l-4 4z"/>}
+        {task.priority === 'Lowest' && <path d="M12 17l-5-5h3V7h4v5h3l-5 5z"/>}
+      </svg>
+      {task.priority}
+    </span>
+  </div>
+
+  {(task.labels.length > 0 || task.components.length > 0) && (
+    <div class="card-tags">
+      {task.labels.map(label => (
+        <LabelTag text={label} variant="label" />
+      ))}
+      {task.components.map(comp => (
+        <LabelTag text={comp} variant="component" />
+      ))}
+    </div>
+  )}
+
+  <div class="card-footer">
+    {task.assignee ? (
+      <div class="assignee" title={task.assignee}>
+        {task.assigneeAvatar ? (
+          <img src={task.assigneeAvatar} alt={task.assignee} class="avatar" />
+        ) : (
+          <span class="avatar-placeholder">{task.assignee.charAt(0)}</span>
+        )}
+        <span class="assignee-name">{task.assignee}</span>
+      </div>
+    ) : (
+      <span class="unassigned">Unassigned</span>
+    )}
+    <div class="card-stats">
+      {task.commentCount > 0 && (
+        <span class="comment-count" title={`${task.commentCount} comments`}>
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          </svg>
+          {task.commentCount}
+        </span>
+      )}
+      <span class="updated-date" title={`Updated: ${task.updated.toLocaleDateString()}`}>
+        {formatDate(task.updated)}
+      </span>
+    </div>
+  </div>
+
+  <!-- Expanded Details -->
+  <div class="card-details" id={`${cardId}-details`}>
+    {task.description && (
+      <div class="detail-section">
+        <h4>Description</h4>
+        <div class="description-content">{task.description}</div>
+      </div>
+    )}
+
+    {showEpic && task.epic && (
+      <div class="detail-section">
+        <h4>Epic</h4>
+        <div class="epic-link">
+          <span class="epic-key">{task.epic.key}</span>
+          {task.epic.summary}
+        </div>
+      </div>
+    )}
+
+    {task.comments.length > 0 && (
+      <div class="detail-section">
+        <h4>Recent Comments ({task.commentCount})</h4>
+        <div class="comments-list">
+          {task.comments.slice(0, 3).map(comment => (
+            <div class="comment">
+              <div class="comment-header">
+                <span class="comment-author">{comment.author}</span>
+                <span class="comment-date">{formatDate(comment.created)}</span>
+              </div>
+              <p class="comment-body">{comment.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    )}
+
+    <a href={task.jiraUrl} target="_blank" rel="noopener noreferrer" class="view-in-jira">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+        <polyline points="15 3 21 3 21 9"></polyline>
+        <line x1="10" y1="14" x2="21" y2="3"></line>
+      </svg>
+      View in Jira
+    </a>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    document.querySelectorAll('.task-card .expand-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const card = btn.closest('.task-card');
+        const isExpanded = card?.classList.toggle('expanded');
+        btn.setAttribute('aria-expanded', String(isExpanded));
+      });
+    });
+  });
+</script>
+
+<style>
+  .task-card {
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-3);
+    transition: all var(--transition-fast);
+  }
+
+  .task-card:hover {
+    border-color: var(--color-border-accent);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .task-card.todo {
+    border-left: 3px solid #94a3b8;
+  }
+
+  .task-card.in-progress {
+    border-left: 3px solid #3b82f6;
+  }
+
+  .task-card.done {
+    border-left: 3px solid #22c55e;
+    opacity: 0.8;
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-2);
+  }
+
+  .card-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .task-key {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .task-key:hover {
+    text-decoration: underline;
+  }
+
+  .issue-type {
+    font-size: 0.6875rem;
+    color: var(--color-text-muted);
+    background: var(--color-bg-secondary);
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+  }
+
+  .story-points {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    color: #eab308;
+    background: rgba(234, 179, 8, 0.1);
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+  }
+
+  .expand-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-sm);
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+
+  .expand-btn:hover {
+    background: var(--color-bg-secondary);
+    color: var(--color-text);
+  }
+
+  .expand-btn svg {
+    transition: transform var(--transition-fast);
+  }
+
+  .task-card.expanded .expand-btn svg {
+    transform: rotate(180deg);
+  }
+
+  .task-summary {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text);
+    margin: 0 0 var(--space-2) 0;
+    line-height: 1.4;
+  }
+
+  .card-badges {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-2);
+  }
+
+  .status-badge {
+    font-size: 0.6875rem;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+    border: 1px solid;
+  }
+
+  .priority-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 0.6875rem;
+    font-weight: 500;
+  }
+
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1);
+    margin-bottom: var(--space-2);
+  }
+
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: var(--space-2);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .assignee {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .avatar {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+  }
+
+  .avatar-placeholder {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: white;
+    font-size: 0.625rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .assignee-name {
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+  }
+
+  .unassigned {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    font-style: italic;
+  }
+
+  .card-stats {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .comment-count {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 0.6875rem;
+    color: var(--color-text-muted);
+  }
+
+  .updated-date {
+    font-size: 0.6875rem;
+    color: var(--color-text-muted);
+  }
+
+  /* Expanded details */
+  .card-details {
+    display: none;
+    margin-top: var(--space-3);
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .task-card.expanded .card-details {
+    display: block;
+  }
+
+  .detail-section {
+    margin-bottom: var(--space-3);
+  }
+
+  .detail-section h4 {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 var(--space-2) 0;
+  }
+
+  .description-content {
+    font-size: 0.8125rem;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+    white-space: pre-wrap;
+  }
+
+  .epic-link {
+    font-size: 0.8125rem;
+    color: var(--color-text-secondary);
+  }
+
+  .epic-key {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-primary);
+    background: rgba(99, 102, 241, 0.1);
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    margin-right: var(--space-2);
+  }
+
+  .comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .comment {
+    background: var(--color-bg-secondary);
+    padding: var(--space-2);
+    border-radius: var(--radius-sm);
+  }
+
+  .comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-1);
+  }
+
+  .comment-author {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--color-text);
+  }
+
+  .comment-date {
+    font-size: 0.6875rem;
+    color: var(--color-text-muted);
+  }
+
+  .comment-body {
+    font-size: 0.8125rem;
+    color: var(--color-text-secondary);
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  .view-in-jira {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--color-primary);
+    text-decoration: none;
+    margin-top: var(--space-2);
+  }
+
+  .view-in-jira:hover {
+    text-decoration: underline;
+  }
+</style>

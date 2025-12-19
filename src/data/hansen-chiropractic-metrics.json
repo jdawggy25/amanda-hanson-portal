@@ -1,0 +1,113 @@
+{
+  "client": {
+    "name": "Hansen Chiropractic",
+    "reportDate": "2025-12-18",
+    "website": "hansenchiropracticaz.com",
+    "ahrefsProjectId": null
+  },
+  "overview": {
+    "domainRating": 1,
+    "ahrefsRank": 59059962,
+    "organicKeywords": 0,
+    "organicTraffic": 0,
+    "organicTrafficValue": 0,
+    "trackedKeywords": null,
+    "status": "New Site - Foundation Phase",
+    "performanceScore": 80,
+    "seoScore": 92
+  },
+  "keywords": {
+    "liveBacklinks": 0,
+    "tracked": null,
+    "topPositions": 0,
+    "top3Rankings": 0,
+    "avgPosition": null,
+    "ranking": [],
+    "targetKeywords": []
+  },
+  "traffic": {
+    "monthly": 0,
+    "organicValue": 0,
+    "trend": [],
+    "trendLabels": [],
+    "growthRate": "N/A",
+    "sources": {
+      "organic": 0,
+      "direct": null,
+      "referral": null,
+      "social": null
+    },
+    "topPages": [],
+    "targets": {
+      "month1": "Build backlink foundation",
+      "month3": "First local rankings",
+      "month6": "50+ monthly visitors"
+    }
+  },
+  "domainRatingHistory": {
+    "trend": [1],
+    "trendLabels": ["Dec"],
+    "growth": "N/A",
+    "note": "New domain - building authority"
+  },
+  "backlinks": {
+    "liveBacklinks": 56,
+    "allTimeBacklinks": 56,
+    "domainRating": 1,
+    "referringDomains": 42,
+    "allTimeReferringDomains": 42,
+    "topReferrers": [],
+    "targets": {
+      "month1": "10 new referring domains",
+      "month3": "25 new referring domains",
+      "month6": "60+ referring domains",
+      "drTarget": "DR 15"
+    }
+  },
+  "competitors": {
+    "organic": [],
+    "analysis": "New site with no organic visibility yet",
+    "advantages": ["Good technical foundation", "Solid performance scores"]
+  },
+  "technicalSeo": {
+    "issues": {
+      "liveBacklinks": 0,
+      "critical": 0,
+      "warnings": 1,
+      "notices": 0
+    },
+    "checklist": [
+      {"task": "Improve LCP (4.3s)", "status": "pending", "priority": "MEDIUM"}
+    ],
+    "platformNote": "Good technical foundation"
+  },
+  "coreWebVitals": {
+    "device": "mobile",
+    "lcp": 4.3,
+    "fcp": 3.0,
+    "cls": 0.006,
+    "tbt": 0
+  },
+  "lighthouse": {
+    "performance": 80,
+    "accessibility": 96,
+    "bestPractices": 100,
+    "seo": 92,
+    "device": "mobile",
+    "auditDate": "2025-12-18"
+  },
+  "strategy": {
+    "phase": "Foundation Building",
+    "priorities": [
+      "Local SEO optimization",
+      "Google Business Profile optimization",
+      "Content development for target keywords",
+      "Build quality backlinks"
+    ]
+  },
+  "dataSource": {
+    "provider": "Ahrefs + Lighthouse",
+    "lastUpdated": "2025-12-18",
+    "projectId": null
+  }
+}

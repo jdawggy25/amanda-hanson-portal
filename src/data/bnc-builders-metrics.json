@@ -1,169 +1,98 @@
 {
   "client": {
     "name": "BNC Builders Inc.",
-    "reportDate": "December 2025",
+    "reportDate": "2025-12-18",
     "website": "bncbuildersinc.com",
     "ahrefsProjectId": null
   },
   "overview": {
     "domainRating": 29,
-    "ahrefsRank": 3949210,
-    "organicKeywords": 24,
-    "organicTraffic": 91,
+    "ahrefsRank": 3973347,
+    "organicKeywords": 0,
+    "organicTraffic": 0,
+    "organicTrafficValue": 0,
     "trackedKeywords": null,
-    "status": "Early Growth",
+    "status": "Building Authority",
     "performanceScore": 60,
     "seoScore": 92
   },
   "keywords": {
-    "total": 24,
+    "liveBacklinks": 0,
     "tracked": null,
-    "topPositions": 14,
-    "top3Rankings": 1,
+    "topPositions": 0,
+    "top3Rankings": 0,
     "avgPosition": null,
-    "ranking": [
-      { "keyword": "bnc builders", "position": 2, "volume": 80, "difficulty": 8, "traffic": 29, "priority": "Branded" },
-      { "keyword": "contractors oceanside ca", "position": 8, "volume": 100, "difficulty": 0, "traffic": 7, "priority": "Local - HIGH" },
-      { "keyword": "remodeling escondido", "position": 6, "volume": 70, "difficulty": 2, "traffic": 5, "priority": "Local - HIGH" },
-      { "keyword": "escondido kitchen remodeling", "position": 7, "volume": 70, "difficulty": 1, "traffic": 5, "priority": "Kitchen - HIGH" },
-      { "keyword": "kitchen remodel poway", "position": 10, "volume": 150, "difficulty": 9, "traffic": 5, "priority": "Kitchen - HIGH" },
-      { "keyword": "bathroom remodeling encinitas", "position": 9, "volume": 150, "difficulty": 0, "traffic": 5, "priority": "Bathroom - HIGH" },
-      { "keyword": "bathroom remodel encinitas", "position": 11, "volume": 150, "difficulty": 0, "traffic": 4, "priority": "Bathroom" },
-      { "keyword": "kitchen remodeling chula vista", "position": 10, "volume": 100, "difficulty": 0, "traffic": 4, "priority": "Kitchen" },
-      { "keyword": "kitchen remodel escondido ca", "position": 8, "volume": 50, "difficulty": 14, "traffic": 3, "priority": "Kitchen" },
-      { "keyword": "chula vista kitchen remodel", "position": 9, "volume": 70, "difficulty": 0, "traffic": 3, "priority": "Kitchen" },
-      { "keyword": "kitchen remodel oceanside", "position": 9, "volume": 90, "difficulty": 0, "traffic": 3, "priority": "Kitchen" },
-      { "keyword": "bathroom remodel escondido", "position": 10, "volume": 100, "difficulty": 0, "traffic": 3, "priority": "Bathroom" }
-    ],
-    "targetKeywords": [
-      { "keyword": "kitchen remodel escondido", "volume": 70, "difficulty": 1, "priority": "HIGH - Optimize existing" },
-      { "keyword": "bathroom remodel escondido", "volume": 100, "difficulty": 0, "priority": "HIGH - Optimize existing" },
-      { "keyword": "kitchen remodel oceanside", "volume": 90, "difficulty": 0, "priority": "HIGH - Create page" },
-      { "keyword": "contractors escondido", "volume": 200, "difficulty": 0, "priority": "HIGH - New opportunity" },
-      { "keyword": "home remodeling escondido", "volume": 90, "difficulty": 0, "priority": "HIGH - New opportunity" },
-      { "keyword": "general contractor oceanside", "volume": 150, "difficulty": 0, "priority": "MEDIUM - New opportunity" },
-      { "keyword": "adu construction escondido", "volume": 50, "difficulty": 0, "priority": "MEDIUM - Service expansion" }
-    ]
+    "ranking": [],
+    "targetKeywords": []
   },
   "traffic": {
-    "monthly": 91,
-    "organicValue": 510.51,
-    "trend": [47, 52, 69, 67, 80, 80, 87],
-    "trendLabels": ["Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-    "growthRate": "+85%",
+    "monthly": 0,
+    "organicValue": 0,
+    "trend": [],
+    "trendLabels": [],
+    "growthRate": "N/A",
     "sources": {
-      "organic": 91,
+      "organic": 0,
       "direct": null,
       "referral": null,
       "social": null
     },
-    "topPages": [
-      { "url": "/", "traffic": 32, "keywords": 2, "topKeyword": "bnc builders", "position": 2 },
-      { "url": "/kitchen-remodeling", "traffic": 13, "keywords": 4, "topKeyword": "escondido kitchen remodeling", "position": 7 },
-      { "url": "/oceanside-remodeling", "traffic": 12, "keywords": 4, "topKeyword": "contractors oceanside ca", "position": 8 },
-      { "url": "/kitchen-remodeling-poway", "traffic": 7, "keywords": 3, "topKeyword": "kitchen remodel poway", "position": 10 },
-      { "url": "/bathroom-remodeling-encinitas", "traffic": 7, "keywords": 2, "topKeyword": "bathroom remodeling encinitas", "position": 9 },
-      { "url": "/bathroom-remodeling", "traffic": 5, "keywords": 2, "topKeyword": "bathroom remodel escondido", "position": 10 },
-      { "url": "/encinitas-remodeling", "traffic": 4, "keywords": 1, "topKeyword": "bathroom remodel encinitas", "position": 11 },
-      { "url": "/chula-vista-remodeling", "traffic": 4, "keywords": 1, "topKeyword": "kitchen remodeling chula vista", "position": 10 }
-    ],
+    "topPages": [],
     "targets": {
-      "month1": "150 monthly visits",
-      "month3": "350 monthly visits",
-      "month6": "500 monthly visits"
+      "month1": "Fix performance issues",
+      "month3": "First rankings",
+      "month6": "100+ monthly visitors"
     }
   },
   "domainRatingHistory": {
-    "trend": [9, 9, 9, 10, 10, 11, 11, 21, 20, 27, 29, 29],
-    "trendLabels": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-    "growth": "+222%",
-    "note": "Strong DR growth in Aug 2025 from directory/citation building"
-  },
-  "anchorText": {
-    "distribution": [
-      { "anchor": "bncbuildersinc.com", "refdomains": 99, "dofollowLinks": 52, "topDR": 80 },
-      { "anchor": "(empty/image)", "refdomains": 36, "dofollowLinks": 27, "topDR": 95 },
-      { "anchor": "https://bncbuildersinc.com/", "refdomains": 24, "dofollowLinks": 56, "topDR": 73 },
-      { "anchor": "bncbuildersinc.com/kitchen-a...", "refdomains": 16, "dofollowLinks": 34, "topDR": 81 },
-      { "anchor": "Visit Website", "refdomains": 11, "dofollowLinks": 23, "topDR": 93 },
-      { "anchor": "Website", "refdomains": 11, "dofollowLinks": 277, "topDR": 90 },
-      { "anchor": "BNC Builders Inc.", "refdomains": 8, "dofollowLinks": 17, "topDR": 37 },
-      { "anchor": "home remodeling and renovation services in Escondido", "refdomains": 7, "dofollowLinks": 8, "topDR": 61 }
-    ],
-    "analysis": "Good mix of branded and URL anchors with some keyword-rich anchors. Continue building 'kitchen remodel escondido' and 'bathroom remodel oceanside' anchors"
-  },
-  "brokenBacklinks": {
-    "count": 10,
-    "opportunities": [
-      { "sourceUrl": "list.ly/list/2tXA-bnc-builders-inc", "sourceDR": 76, "targetUrl": "/reasons-to-invest-in-a-bathroom-remodeling-services-infographic/", "anchor": "Reasons To Invest In A Bathroom Remodeling Services [Infographic]" },
-      { "sourceUrl": "list.ly/list/2tXA-bnc-builders-inc", "sourceDR": 76, "targetUrl": "/know-the-gas-fire-pit-installation-cost/", "anchor": "Know The Gas Fire Pit Installation Cost" },
-      { "sourceUrl": "list.ly/list/2tXA-bnc-builders-inc", "sourceDR": 76, "targetUrl": "/kitchen-and-bathroom-remodeling-escondido/", "anchor": "bathroom remodeling service provider across the Escondido CA" },
-      { "sourceUrl": "list.ly/list/2tXA-bnc-builders-inc", "sourceDR": 76, "targetUrl": "/home-remodeling-contractor/", "anchor": "home remodeling contractor" },
-      { "sourceUrl": "list.ly/list/2tXA-bnc-builders-inc", "sourceDR": 76, "targetUrl": "/how-much-does-an-outdoor-patio-cover-cost/", "anchor": "How Much Does An Outdoor Patio Cover Cost" }
-    ],
-    "note": "10 broken backlinks from list.ly (DR 76) pointing to deleted blog posts - opportunity to reclaim by redirecting or recreating content"
+    "trend": [29],
+    "trendLabels": ["Dec"],
+    "growth": "N/A",
+    "note": "Strong authority baseline"
   },
   "backlinks": {
-    "total": 361,
-    "allTime": 2358,
+    "liveBacklinks": 177,
+    "allTimeBacklinks": 177,
     "domainRating": 29,
-    "referringDomains": 97,
-    "allTimeReferringDomains": 378,
-    "topReferringDomains": [
-      { "domain": "bbb.org", "dr": 93, "links": 24, "firstSeen": "2025-07" },
-      { "domain": "homeadvisor.com", "dr": 91, "links": 4, "firstSeen": "2023-04" },
-      { "domain": "yellowpages.com", "dr": 90, "links": 8, "firstSeen": "2025-06" },
-      { "domain": "expertise.com", "dr": 88, "links": 4, "firstSeen": "2024-08" },
-      { "domain": "za.com", "dr": 87, "links": 1, "firstSeen": "2024-07" },
-      { "domain": "superpages.com", "dr": 84, "links": 7, "firstSeen": "2025-08" },
-      { "domain": "ezlocal.com", "dr": 80, "links": 2, "firstSeen": "2025-07" },
-      { "domain": "dexknows.com", "dr": 78, "links": 2, "firstSeen": "2025-07" },
-      { "domain": "webwiki.com", "dr": 77, "links": 3, "firstSeen": "2021-10" },
-      { "domain": "list.ly", "dr": 76, "links": 58, "firstSeen": "2021-05" }
+    "referringDomains": 85,
+    "allTimeReferringDomains": 85,
+    "topReferrers": [
+      {"domain": "blogspot.com", "dr": 95, "links": 62, "firstSeen": "2020-07"},
+      {"domain": "weebly.com", "dr": 94, "links": 2, "firstSeen": "2020-10"},
+      {"domain": "issuu.com", "dr": 93, "links": 2, "firstSeen": "2024-09"},
+      {"domain": "bbb.org", "dr": 93, "links": 31, "firstSeen": "2025-07"},
+      {"domain": "homeadvisor.com", "dr": 91, "links": 5, "firstSeen": "2023-04"}
     ],
     "targets": {
-      "month1": "110 referring domains",
-      "month3": "130 referring domains",
-      "month6": "160 referring domains",
-      "drTarget": "45+ by month 6"
-    },
-    "targetDirectories": [
-      { "name": "Chamber of Commerce (Escondido, Oceanside, Poway)", "tier": "Tier 1", "priority": "HIGH", "type": "Local" },
-      { "name": "Houzz, Porch, Angi", "tier": "Tier 1", "priority": "HIGH", "type": "Industry" },
-      { "name": "Local business associations", "tier": "Tier 2", "priority": "MEDIUM", "type": "Business" },
-      { "name": "San Diego Union-Tribune, North County Times", "tier": "Tier 2", "priority": "MEDIUM", "type": "PR" }
-    ]
+      "month1": "5 new referring domains",
+      "month3": "20 new referring domains",
+      "month6": "100+ referring domains",
+      "drTarget": "DR 35"
+    }
   },
-  "paidSearch": {
-    "keywords": 1,
-    "traffic": 5,
-    "cost": 23.02
+  "competitors": {
+    "organic": [],
+    "analysis": "Strongest domain authority among clients",
+    "advantages": ["Highest DR (29)", "Strong directory presence (BBB, HomeAdvisor)", "Large backlink portfolio"]
   },
   "technicalSeo": {
     "issues": {
-      "total": 5,
+      "liveBacklinks": 1,
       "critical": 1,
-      "warnings": 3,
-      "notices": 1
+      "warnings": 0,
+      "notices": 0
     },
     "checklist": [
-      { "task": "Add FAQ schema to all service pages", "status": "pending", "priority": "HIGH" },
-      { "task": "Optimize title tags for target keywords", "status": "pending", "priority": "HIGH" },
-      { "task": "Expand content on thin location pages", "status": "pending", "priority": "HIGH" },
-      { "task": "Add LocalBusiness and Service schema markup", "status": "pending", "priority": "HIGH" },
-      { "task": "Improve internal linking structure", "status": "pending", "priority": "MEDIUM" },
-      { "task": "Optimize image alt tags and file names", "status": "pending", "priority": "MEDIUM" },
-      { "task": "Write compelling meta descriptions", "status": "pending", "priority": "MEDIUM" },
-      { "task": "Add Google Maps embed to location pages", "status": "pending", "priority": "MEDIUM" }
+      {"task": "Fix LCP (10.0s - Critical)", "status": "pending", "priority": "HIGH"}
     ],
-    "platformNote": "Platform lock-in (Scorpion) may limit SEO flexibility"
+    "platformNote": "Scorpion platform - may have limitations"
   },
   "coreWebVitals": {
-    "lcp": { "value": 10.0, "unit": "s", "status": "fail", "threshold": 2.5 },
-    "fid": { "value": 5, "unit": "ms", "status": "pass", "threshold": 100 },
-    "cls": { "value": 0, "unit": "", "status": "pass", "threshold": 0.1 },
-    "fcp": { "value": 3.4, "unit": "s", "status": "fail", "threshold": 1.8 },
-    "ttfb": { "value": null, "unit": "s", "status": "unknown", "threshold": 0.8 }
+    "device": "mobile",
+    "lcp": 10.0,
+    "fcp": 3.2,
+    "cls": 0.026,
+    "tbt": 0
   },
   "lighthouse": {
     "performance": 60,
@@ -171,69 +100,19 @@
     "bestPractices": 82,
     "seo": 92,
     "device": "mobile",
-    "lastAudit": "2025-12-15"
-  },
-  "competitors": {
-    "organic": [
-      { "domain": "remodelworks.com", "dr": 39, "commonKeywords": 15, "traffic": 2686, "share": 2.2, "type": "Primary" },
-      { "domain": "kaminskiyhomeremodeling.com", "dr": 36, "commonKeywords": 14, "traffic": 1888, "share": 2.7, "type": "Primary" },
-      { "domain": "larsremodel.com", "dr": 46, "commonKeywords": 5, "traffic": 1829, "share": 1.7, "type": "Primary" },
-      { "domain": "pure-cabinets.com", "dr": 6, "commonKeywords": 6, "traffic": 157, "share": 11.5, "type": "Niche" },
-      { "domain": "kitchenbarn.net", "dr": 1.7, "commonKeywords": 4, "traffic": 163, "share": 26.6, "type": "Local" },
-      { "domain": "houzz.com", "dr": 92, "commonKeywords": 3, "traffic": 2701746, "share": 0, "type": "Directory" },
-      { "domain": "reborncabinets.com", "dr": 30, "commonKeywords": 3, "traffic": 1645, "share": 2.3, "type": "Secondary" }
-    ],
-    "analysis": "Primary competitors (Remodel Works, Kaminsky, Lars) have 15-30x more traffic but only marginally higher DR. Opportunity to close the gap through content and local SEO.",
-    "advantages": [
-      "Local Focus - Specialization in North San Diego County",
-      "Service Range - Kitchen, bathroom, ADU, deck",
-      "BBB Rating - Strong trust signal (DR 93 backlink)",
-      "Reviews - Positive customer feedback",
-      "Growth Trajectory - DR grew 222% in 2025"
-    ]
+    "auditDate": "2025-12-18"
   },
   "strategy": {
-    "phase": "Early Growth",
+    "phase": "Technical Optimization",
     "priorities": [
-      "Push kitchen remodeling keywords into top 5",
-      "Optimize existing service pages",
-      "Expand thin location page content",
-      "Build local backlinks and citations"
-    ],
-    "contentPlan": {
-      "newPages": [
-        { "topic": "Kitchen Remodel Oceanside", "targetKeywords": ["kitchen remodel oceanside ca"], "wordCount": 1500, "status": "planned" },
-        { "topic": "Bathroom Remodel Carlsbad", "targetKeywords": ["bathroom remodel carlsbad"], "wordCount": 1500, "status": "planned" },
-        { "topic": "ADU Construction Guide", "targetKeywords": ["adu construction escondido"], "wordCount": 2000, "status": "planned" },
-        { "topic": "Project Gallery", "targetKeywords": ["remodeling projects escondido"], "wordCount": 1000, "status": "planned" }
-      ],
-      "blogPosts": 6,
-      "targetWordCount": "1,200-1,800 per post"
-    },
-    "successMetrics": {
-      "month1": {
-        "goal": "Top 5 for 3+ keywords",
-        "drTarget": 32,
-        "trafficTarget": 150,
-        "referringDomainsTarget": 110
-      },
-      "month3": {
-        "goal": "Top 5 for 5+ keywords",
-        "drTarget": 38,
-        "trafficTarget": 350,
-        "referringDomainsTarget": 130
-      },
-      "month6": {
-        "goal": "500+ monthly visitors",
-        "drTarget": 45,
-        "trafficTarget": 500,
-        "referringDomainsTarget": 160
-      }
-    }
+      "CRITICAL: Fix LCP performance issue",
+      "Improve accessibility",
+      "Local SEO content development"
+    ]
   },
   "dataSource": {
-    "provider": "Ahrefs",
-    "lastUpdated": "2025-12-15",
+    "provider": "Ahrefs + Lighthouse",
+    "lastUpdated": "2025-12-18",
     "projectId": null
   }
 }

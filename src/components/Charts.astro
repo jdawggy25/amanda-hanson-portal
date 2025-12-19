@@ -1,15 +1,13 @@
 ---
+import type { ClientMetrics } from '../lib/metrics';
+
 interface Props {
-  client: string;
+  metrics: ClientMetrics;
 }
 
-const { client } = Astro.props;
+const { metrics } = Astro.props;
 
-// Load client-specific metrics
-const metricsModule = await import(`../data/${client}-metrics.json`);
-const metricsData = metricsModule.default;
-
-const { traffic, keywords, coreWebVitals, overview } = metricsData;
+const { traffic, coreWebVitals, overview } = metrics;
 ---
 
 <div class="charts-section">
@@ -357,6 +355,16 @@ const { traffic, keywords, coreWebVitals, overview } = metricsData;
     background: rgba(248, 113, 113, 0.1);
   }
 
+  .vital-status.warning {
+    color: #fbbf24;
+    background: rgba(251, 191, 36, 0.1);
+  }
+
+  .vital-status.unknown {
+    color: var(--color-text-muted);
+    background: var(--color-bg-secondary);
+  }
+
   .vital-value {
     font-family: var(--font-mono);
     font-size: 1.5rem;
@@ -407,6 +415,11 @@ const { traffic, keywords, coreWebVitals, overview } = metricsData;
   .vital-progress[data-status="fail"] {
     background: linear-gradient(90deg, #dc2626, var(--color-error));
     box-shadow: 0 0 8px rgba(248, 113, 113, 0.3);
+  }
+
+  .vital-progress[data-status="warning"] {
+    background: linear-gradient(90deg, #d97706, #fbbf24);
+    box-shadow: 0 0 8px rgba(251, 191, 36, 0.3);
   }
 
   .vital-threshold {

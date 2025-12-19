@@ -1,0 +1,221 @@
+---
+title: Performance Report - {{client.name}}
+description: Monthly SEO metrics, rankings, and traffic analysis for {{monthDisplay}}
+---
+
+# Performance Report - {{monthDisplay}}
+
+{{#if narrative.executiveSummary}}
+## Executive Summary
+
+{{narrative.executiveSummary}}
+{{/if}}
+
+## Performance Snapshot
+
+| Metric | This Month | Change |
+|--------|------------|--------|
+| **Traffic Value** | {{formatCurrency changes.trafficValue.current}}/mo | {{changes.trafficValue.percentChange}} |
+| **Organic Traffic** | {{formatNumber changes.traffic.current}}/mo | {{changes.traffic.percentChange}} |
+| **Domain Rating** | {{changes.domainRating.current}} | {{formatDRChange changes.domainRating.change}} |
+| **Organic Keywords** | {{formatNumber changes.keywords.current}} | {{changes.keywords.percentChange}} |
+| **Live Backlinks** | {{formatNumber changes.backlinks.current}} | {{changes.backlinks.percentChange}} |
+
+## Domain Authority Metrics
+
+| Metric | Value |
+|--------|-------|
+| **Domain Rating (DR)** | {{overview.domainRating}} |
+| **Ahrefs Rank** | {{formatNumber overview.ahrefsRank}} |
+| **Live Backlinks** | {{formatNumber backlinks.liveBacklinks}} |
+| **Referring Domains** | {{formatNumber backlinks.referringDomains}} |
+
+## Organic Search Performance
+
+| Metric | Value |
+|--------|-------|
+| **Organic Keywords ({{country}})** | {{formatNumber overview.organicKeywords}} |
+| **Organic Traffic ({{country}})** | {{formatNumber overview.organicTraffic}}/month |
+| **Traffic Value ({{country}})** | {{formatCurrency overview.organicTrafficValue}}/month |
+{{#if keywords.positionDistribution}}
+| **Top 10 Rankings** | {{keywords.positionDistribution.top10}} |
+| **Top 3 Rankings** | {{keywords.positionDistribution.top3}} |
+{{/if}}
+
+{{#if paidSearch}}
+## Paid Search Performance
+
+| Metric | Value |
+|--------|-------|
+| **Paid Keywords** | {{paidSearch.paidKeywords}} |
+| **Paid Traffic** | {{paidSearch.paidTraffic}}/month |
+| **Paid Cost** | {{formatCurrency paidSearch.paidCost}}/month |
+{{/if}}
+
+{{#if keywords.topKeywords}}
+## Current Keyword Rankings
+
+### Top Performing Keywords
+
+| Keyword | Position | Volume | Traffic | KD |
+|---------|----------|--------|---------|-----|
+{{#each keywords.topKeywords}}
+| {{keyword}} | {{position}} | {{volume}} | {{traffic}} | {{keywordDifficulty}} |
+{{/each}}
+
+{{#if keywords.byCategory}}
+{{#each keywords.byCategory}}
+### {{categoryName}}
+
+| Keyword | Position | Volume | Traffic |
+|---------|----------|--------|---------|
+{{#each keywords}}
+| {{keyword}} | {{position}} | {{volume}} | {{traffic}} |
+{{/each}}
+
+{{/each}}
+{{/if}}
+{{/if}}
+
+{{#if traffic.topPages}}
+## Top Performing Pages
+
+| Page | Traffic | Keywords | Top Keyword | Position |
+|------|---------|----------|-------------|----------|
+{{#each traffic.topPages}}
+| {{title}} | {{traffic}} | {{keywords}} | {{topKeyword}} | {{position}} |
+{{/each}}
+{{/if}}
+
+{{#if backlinks.topReferrers}}
+## Backlink Profile
+
+### Top Referring Domains (by Domain Rating)
+
+| Domain | Domain Rating | Links | First Seen |
+|--------|---------------|-------|------------|
+{{#each backlinks.topReferrers}}
+| {{domain}} | {{domainRating}} | {{links}} | {{firstSeen}} |
+{{/each}}
+
+### Backlink Summary
+
+- **Total Live Backlinks:** {{formatNumber backlinks.liveBacklinks}}
+- **Total Referring Domains:** {{formatNumber backlinks.referringDomains}}
+{{#if backlinks.allTimeBacklinks}}
+- **All-Time Backlinks:** {{formatNumber backlinks.allTimeBacklinks}}
+{{/if}}
+{{#if backlinks.allTimeReferringDomains}}
+- **All-Time Referring Domains:** {{formatNumber backlinks.allTimeReferringDomains}}
+{{/if}}
+{{/if}}
+
+{{#if topCompetitors}}
+## Competitive Position
+
+How you compare to organic search competitors:
+
+| Competitor | DR | Keywords | Traffic | Common Keywords |
+|------------|-----|----------|---------|-----------------|
+{{#each topCompetitors}}
+| {{domain}} | {{dr}} | {{formatNumber keywords}} | {{formatNumber traffic}} | {{commonKeywords}} |
+{{/each}}
+
+*Competitors are sites ranking for similar keywords in organic search.*
+{{/if}}
+
+{{#if technicalSeo.issues}}
+## Technical SEO Health
+
+### Known Issues
+
+| Issue | Impact | Priority |
+|-------|--------|----------|
+{{#each technicalSeo.issues}}
+| {{issue}} | {{impact}} | {{priority}} |
+{{/each}}
+{{/if}}
+
+{{#if coreWebVitals}}
+### Core Web Vitals ({{coreWebVitals.device}} - {{monthDisplay}})
+
+| Metric | Value | Target | Status |
+|--------|-------|--------|--------|
+{{#if coreWebVitals.lcp}}
+| LCP (Largest Contentful Paint) | {{coreWebVitals.lcp}}s | < 2.5s | {{lcpStatus coreWebVitals.lcp}} |
+{{/if}}
+{{#if coreWebVitals.fcp}}
+| FCP (First Contentful Paint) | {{coreWebVitals.fcp}}s | < 1.8s | {{fcpStatus coreWebVitals.fcp}} |
+{{/if}}
+{{#if coreWebVitals.cls}}
+| CLS (Cumulative Layout Shift) | {{coreWebVitals.cls}} | < 0.1 | {{clsStatus coreWebVitals.cls}} |
+{{/if}}
+{{#if coreWebVitals.tbt}}
+| TBT (Total Blocking Time) | {{coreWebVitals.tbt}}ms | < 200ms | {{tbtStatus coreWebVitals.tbt}} |
+{{/if}}
+{{/if}}
+
+{{#if lighthouse}}
+### Lighthouse Scores
+
+| Category | Score |
+|----------|-------|
+| Performance | {{lighthouse.performance}} |
+| SEO | {{lighthouse.seo}} |
+| Accessibility | {{lighthouse.accessibility}} |
+| Best Practices | {{lighthouse.bestPractices}} |
+
+*Audit Date: {{lighthouse.auditDate}} | Device: {{lighthouse.device}}*
+{{/if}}
+
+## Key Insights
+
+{{#if narrative.keyWins}}
+### Key Wins
+{{#each narrative.keyWins}}
+{{@index_1}}. {{this}}
+{{/each}}
+{{/if}}
+
+{{#if strategy.strengths}}
+### Strengths
+{{#each strategy.strengths}}
+{{@index_1}}. {{this}}
+{{/each}}
+{{/if}}
+
+{{#if strategy.opportunities}}
+### Opportunities
+{{#each strategy.opportunities}}
+{{@index_1}}. {{this}}
+{{/each}}
+{{/if}}
+
+{{#if narrative.challenges}}
+### Challenges
+{{#each narrative.challenges}}
+{{@index_1}}. {{this}}
+{{/each}}
+{{/if}}
+
+{{#if narrative.recommendations}}
+## Recommendations
+
+{{#each narrative.recommendations}}
+{{@index_1}}. {{this}}
+{{/each}}
+{{/if}}
+
+{{#if narrative.highlights}}
+## Additional Highlights
+
+{{#each narrative.highlights}}
+- {{this}}
+{{/each}}
+{{/if}}
+
+---
+
+*Report Period: {{monthDisplay}}*
+*Data Source: Ahrefs*
+*Generated: {{generatedDate}}*

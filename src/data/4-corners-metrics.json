@@ -1,0 +1,114 @@
+{
+  "client": {
+    "name": "4 Corners Concrete Coatings",
+    "reportDate": "2025-12-18",
+    "website": "4cornersconcretecoatings.com",
+    "ahrefsProjectId": null
+  },
+  "overview": {
+    "domainRating": 0,
+    "ahrefsRank": 0,
+    "organicKeywords": 0,
+    "organicTraffic": 0,
+    "organicTrafficValue": 0,
+    "trackedKeywords": null,
+    "status": "New Site - Critical Issues",
+    "performanceScore": 42,
+    "seoScore": 100
+  },
+  "keywords": {
+    "liveBacklinks": 0,
+    "tracked": null,
+    "topPositions": 0,
+    "top3Rankings": 0,
+    "avgPosition": null,
+    "ranking": [],
+    "targetKeywords": []
+  },
+  "traffic": {
+    "monthly": 0,
+    "organicValue": 0,
+    "trend": [],
+    "trendLabels": [],
+    "growthRate": "N/A",
+    "sources": {
+      "organic": 0,
+      "direct": null,
+      "referral": null,
+      "social": null
+    },
+    "topPages": [],
+    "targets": {
+      "month1": "Fix critical performance issues",
+      "month3": "Build backlink foundation",
+      "month6": "First rankings"
+    }
+  },
+  "domainRatingHistory": {
+    "trend": [0],
+    "trendLabels": ["Dec"],
+    "growth": "N/A",
+    "note": "New domain - needs backlinks"
+  },
+  "backlinks": {
+    "liveBacklinks": 32,
+    "allTimeBacklinks": 32,
+    "domainRating": 0,
+    "referringDomains": 31,
+    "allTimeReferringDomains": 31,
+    "topReferrers": [],
+    "targets": {
+      "month1": "10 new referring domains",
+      "month3": "30 new referring domains",
+      "month6": "60+ referring domains",
+      "drTarget": "DR 10"
+    }
+  },
+  "competitors": {
+    "organic": [],
+    "analysis": "New site with no visibility",
+    "advantages": ["Perfect SEO score"]
+  },
+  "technicalSeo": {
+    "issues": {
+      "liveBacklinks": 2,
+      "critical": 2,
+      "warnings": 0,
+      "notices": 0
+    },
+    "checklist": [
+      {"task": "CRITICAL: Fix LCP (6.4s)", "status": "pending", "priority": "HIGH"},
+      {"task": "CRITICAL: Fix CLS (0.566)", "status": "pending", "priority": "HIGH"}
+    ],
+    "platformNote": "Severe performance issues need immediate attention"
+  },
+  "coreWebVitals": {
+    "device": "mobile",
+    "lcp": 6.4,
+    "fcp": 2.6,
+    "cls": 0.566,
+    "tbt": 50
+  },
+  "lighthouse": {
+    "performance": 42,
+    "accessibility": 82,
+    "bestPractices": 100,
+    "seo": 100,
+    "device": "mobile",
+    "auditDate": "2025-12-18"
+  },
+  "strategy": {
+    "phase": "Critical Technical Remediation",
+    "priorities": [
+      "URGENT: Fix LCP and CLS issues",
+      "Performance optimization",
+      "Build quality backlinks",
+      "Local SEO setup"
+    ]
+  },
+  "dataSource": {
+    "provider": "Ahrefs + Lighthouse",
+    "lastUpdated": "2025-12-18",
+    "projectId": null
+  }
+}

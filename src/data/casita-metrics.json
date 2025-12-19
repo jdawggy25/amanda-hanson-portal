@@ -1,209 +1,112 @@
 {
   "client": {
     "name": "Casita Azul",
-    "reportDate": "December 2025",
+    "reportDate": "2025-12-18",
     "website": "casitaazulpdx.com",
     "ahrefsProjectId": null
   },
   "overview": {
     "domainRating": 22,
-    "ahrefsRank": 6863132,
-    "organicKeywords": 4,
-    "organicTraffic": 96,
+    "ahrefsRank": 6809473,
+    "organicKeywords": 0,
+    "organicTraffic": 0,
+    "organicTrafficValue": 0,
     "trackedKeywords": null,
-    "status": "Foundation Building",
-    "performanceScore": 60,
+    "status": "Pre-ranking phase",
+    "performanceScore": 57,
     "seoScore": 100
   },
   "keywords": {
-    "total": 4,
+    "liveBacklinks": 0,
     "tracked": null,
-    "topPositions": 3,
+    "topPositions": 0,
+    "top3Rankings": 0,
     "avgPosition": null,
-    "ranking": [
-      { "keyword": "la casita azul", "position": 3, "volume": 350, "difficulty": 0, "traffic": 51, "priority": "Branded" },
-      { "keyword": "casita azul", "position": 1, "volume": 250, "difficulty": 0, "traffic": 44, "priority": "Branded" },
-      { "keyword": "spanish immersion preschool portland", "position": 9, "volume": 20, "difficulty": 10, "traffic": 1, "priority": "Local - HIGH" },
-      { "keyword": "alegria azul", "position": 2, "volume": 0, "difficulty": 0, "traffic": 0, "priority": "Branded" }
-    ],
-    "targetKeywords": [
-      { "keyword": "spanish immersion preschool", "volume": 480, "difficulty": 45, "priority": "HIGH" },
-      { "keyword": "bilingual preschool", "volume": 720, "difficulty": 42, "priority": "HIGH" },
-      { "keyword": "spanish classes for toddlers", "volume": 590, "difficulty": 35, "priority": "HIGH" },
-      { "keyword": "spanish daycare", "volume": 320, "difficulty": 33, "priority": "HIGH" },
-      { "keyword": "spanish preschool near me", "volume": 260, "difficulty": 38, "priority": "HIGH" },
-      { "keyword": "spanish classes portland", "volume": 140, "difficulty": null, "priority": "LOCAL - CRITICAL" },
-      { "keyword": "spanish preschool portland", "volume": 70, "difficulty": null, "priority": "LOCAL - CRITICAL" },
-      { "keyword": "spanish daycare beaverton", "volume": 20, "difficulty": null, "priority": "LOCAL" },
-      { "keyword": "spanish preschool hillsboro", "volume": 30, "difficulty": null, "priority": "LOCAL" }
-    ]
+    "ranking": [],
+    "targetKeywords": []
   },
   "traffic": {
-    "monthly": 96,
-    "organicValue": 21.58,
-    "trend": [93, 84, 84, 67, 63, 83, 96],
-    "trendLabels": ["Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    "monthly": 0,
+    "organicValue": 0,
+    "trend": [],
+    "trendLabels": [],
+    "growthRate": "N/A",
     "sources": {
-      "organic": 96,
+      "organic": 0,
       "direct": null,
       "referral": null,
       "social": null
     },
-    "topPages": [
-      { "url": "/", "traffic": 86, "keywords": 3 },
-      { "url": "/programs/calendar", "traffic": 2, "keywords": 2 },
-      { "url": "/programs", "traffic": 2, "keywords": 2 },
-      { "url": "/admissions/tuitions-and-fees", "traffic": 2, "keywords": 2 },
-      { "url": "/locations", "traffic": 1, "keywords": 1 },
-      { "url": "/contact-us", "traffic": 1, "keywords": 1 },
-      { "url": "/camp-alegria", "traffic": 1, "keywords": 2 }
-    ],
+    "topPages": [],
     "targets": {
-      "month1": "150 monthly visits",
-      "month3": "250 monthly visits",
-      "month6": "400 monthly visits"
+      "month1": "Fix critical performance issues",
+      "month3": "First rankings",
+      "month6": "50+ monthly visitors"
     }
   },
   "domainRatingHistory": {
-    "trend": [9, 9, 9, 8, 8, 8, 8, 9, 8, 19, 22, 22],
-    "trendLabels": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-    "growth": "+144%",
-    "note": "Significant DR jump in Oct 2025 from link building efforts"
-  },
-  "competitors": {
-    "organic": [
-      { "domain": "winnie.com", "dr": 65, "commonKeywords": 3, "traffic": 145112, "type": "Directory" },
-      { "domain": "careyes.net", "dr": 13, "commonKeywords": 2, "traffic": 340, "share": 3.5, "type": "Direct" },
-      { "domain": "esperanzaspanishschool.com", "dr": 0.7, "commonKeywords": 1, "traffic": 37, "share": 9.0, "type": "Direct" }
-    ],
-    "note": "Limited direct competitors in Portland market - opportunity for market leadership"
-  },
-  "anchorText": {
-    "distribution": [
-      { "anchor": "casitaazulpdx.com", "refdomains": 27, "dofollowLinks": 25, "topDR": 54 },
-      { "anchor": "(empty/image)", "refdomains": 4, "dofollowLinks": 21, "topDR": 28 },
-      { "anchor": "Casita Azul | Spanish School | Page", "refdomains": 3, "dofollowLinks": 3, "topDR": 3.3 },
-      { "anchor": "Partner Casita Azul", "refdomains": 1, "dofollowLinks": 192, "topDR": 7 }
-    ],
-    "analysis": "Anchor profile is heavily branded/URL-based. Opportunity to build more keyword-rich anchors like 'spanish immersion preschool portland'"
-  },
-  "brokenBacklinks": {
-    "count": 0,
-    "opportunities": [],
-    "note": "No broken backlinks detected - clean link profile"
+    "trend": [22],
+    "trendLabels": ["Dec"],
+    "growth": "N/A",
+    "note": "Baseline established"
   },
   "backlinks": {
-    "total": 100,
-    "allTime": 331,
+    "liveBacklinks": 121,
+    "allTimeBacklinks": 121,
     "domainRating": 22,
-    "referringDomains": 38,
-    "allTimeReferringDomains": 71,
-    "topReferringDomains": [
-      { "domain": "oregonlive.com", "dr": 86, "links": 2, "firstSeen": "2024-01-09" },
-      { "domain": "rank-your.site", "dr": 73, "links": 1, "firstSeen": "2025-03-30" },
-      { "domain": "seoflox.io", "dr": 72, "links": 2, "firstSeen": "2025-02-03" },
-      { "domain": "exlinko.org", "dr": 72, "links": 2, "firstSeen": "2025-02-15" },
-      { "domain": "sparltech.com", "dr": 67, "links": 2, "firstSeen": "2025-03-22" },
-      { "domain": "creativeposts.top", "dr": 52, "links": 2, "firstSeen": "2025-07-25" },
-      { "domain": "sovereignmedia.co.za", "dr": 44, "links": 1, "firstSeen": "2025-05-28" },
-      { "domain": "purple-elephant.us", "dr": 43, "links": 1, "firstSeen": "2025-07-22" },
-      { "domain": "veethemes.co.in", "dr": 42, "links": 1, "firstSeen": "2025-07-11" },
-      { "domain": "bethanyfamilyinstitute.com", "dr": 36, "links": 1, "firstSeen": "2025-07-04" }
-    ],
+    "referringDomains": 36,
+    "allTimeReferringDomains": 36,
+    "topReferrers": [],
     "targets": {
-      "month1": "50 referring domains",
-      "month3": "65 referring domains",
-      "month6": "85 referring domains",
-      "drTarget": "32+ by month 6"
-    },
-    "targetDirectories": [
-      { "name": "Portland parenting blogs", "tier": "Tier 1", "priority": "HIGH", "type": "Local" },
-      { "name": "Local directories", "tier": "Tier 1", "priority": "HIGH", "type": "Local" },
-      { "name": "Portland Chamber of Commerce", "tier": "Tier 2", "priority": "MEDIUM", "type": "Business" },
-      { "name": "Local PR opportunities", "tier": "Tier 2", "priority": "MEDIUM", "type": "PR" }
-    ]
+      "month1": "5 new referring domains",
+      "month3": "15 new referring domains",
+      "month6": "50+ referring domains",
+      "drTarget": "DR 28"
+    }
+  },
+  "competitors": {
+    "organic": [],
+    "analysis": "No organic competitors yet - site is in pre-ranking phase",
+    "advantages": ["Good backlink count", "Strong SEO score"]
   },
   "technicalSeo": {
     "issues": {
-      "total": 6,
-      "critical": 6,
+      "liveBacklinks": 1,
+      "critical": 1,
       "warnings": 0,
       "notices": 0
     },
     "checklist": [
-      { "task": "Update all H1s and H2s across 6 main pages", "status": "pending", "priority": "CRITICAL" },
-      { "task": "Update all title tags and meta descriptions", "status": "pending", "priority": "CRITICAL" },
-      { "task": "Add LocalBusiness schema markup", "status": "pending", "priority": "CRITICAL" },
-      { "task": "Claim/optimize Google Business Profile for each location", "status": "pending", "priority": "CRITICAL" },
-      { "task": "Create location-specific landing pages", "status": "pending", "priority": "HIGH" },
-      { "task": "Split Programs into age-specific pages", "status": "pending", "priority": "HIGH" },
-      { "task": "Create spanish-classes-portland service page", "status": "pending", "priority": "HIGH" },
-      { "task": "Create spanish-immersion-preschool-portland service page", "status": "pending", "priority": "HIGH" }
+      {"task": "Fix LCP (14.5s - Critical)", "status": "pending", "priority": "HIGH"}
     ],
-    "pageIssues": [
-      { "page": "Homepage", "currentH1": "Welcome to Casita Azul!", "optimizedH1": "Spanish Immersion Preschool & Daycare in Portland, Oregon" },
-      { "page": "Our Story", "currentH1": "Discover Our Journey!", "optimizedH1": "About Casita Azul: Portland's Latina-Owned Spanish Immersion School" },
-      { "page": "Programs", "currentH1": "Discover Our Programs!", "optimizedH1": "Spanish Immersion Programs for Infants, Toddlers & Preschoolers" },
-      { "page": "Locations", "currentH1": "Welcome to Our Casitas!", "optimizedH1": "Spanish Immersion Preschool & Daycare Locations in Portland Metro" },
-      { "page": "Admissions", "currentH1": "Getting Started", "optimizedH1": "Enroll in Spanish Immersion Preschool & Daycare at Casita Azul" },
-      { "page": "Contact", "currentH1": "Contact Us!", "optimizedH1": "Contact Casita Azul Spanish Immersion School" }
-    ]
+    "platformNote": "Critical performance issues need immediate attention"
   },
   "coreWebVitals": {
-    "lcp": { "value": 15.7, "unit": "s", "status": "fail", "threshold": 2.5 },
-    "fid": { "value": 2, "unit": "ms", "status": "pass", "threshold": 100 },
-    "cls": { "value": 0.053, "unit": "", "status": "pass", "threshold": 0.1 },
-    "fcp": { "value": 3.8, "unit": "s", "status": "fail", "threshold": 1.8 },
-    "ttfb": { "value": null, "unit": "s", "status": "unknown", "threshold": 0.8 }
+    "device": "mobile",
+    "lcp": 14.5,
+    "fcp": 3.8,
+    "cls": 0.093,
+    "tbt": 10
   },
   "lighthouse": {
-    "performance": 60,
+    "performance": 57,
     "accessibility": 81,
     "bestPractices": 75,
     "seo": 100,
     "device": "mobile",
-    "lastAudit": "2025-12-15"
+    "auditDate": "2025-12-18"
   },
   "strategy": {
-    "phase": "Foundation Building",
+    "phase": "Technical Remediation",
     "priorities": [
-      "Implement on-page SEO quick wins",
-      "Add LocalBusiness schema markup",
-      "Optimize Google Business Profile listings",
-      "Create service and location pages"
-    ],
-    "contentPlan": {
-      "pillarPages": [
-        { "topic": "Spanish Classes Portland", "targetKeywords": ["spanish classes portland", "spanish classes for kids portland"], "status": "planned" },
-        { "topic": "Spanish Immersion Preschool Portland", "targetKeywords": ["spanish immersion preschool portland", "spanish preschool portland"], "status": "planned" },
-        { "topic": "Location Pages", "targetKeywords": ["preschool beaverton", "preschool hillsboro"], "status": "planned" }
-      ],
-      "blogPosts": 6,
-      "targetWordCount": "1,200-1,500 per post"
-    },
-    "successMetrics": {
-      "month1": {
-        "goal": "Top 10 for 3+ local terms",
-        "drTarget": 24,
-        "referringDomainsTarget": 50
-      },
-      "month3": {
-        "goal": "250 monthly visitors",
-        "drTarget": 28,
-        "trafficTarget": 250,
-        "referringDomainsTarget": 65
-      },
-      "month6": {
-        "goal": "400+ monthly visitors",
-        "drTarget": 32,
-        "trafficTarget": 400,
-        "referringDomainsTarget": 85
-      }
-    }
+      "CRITICAL: Fix LCP performance issue",
+      "Improve accessibility score",
+      "Content development"
+    ]
   },
   "dataSource": {
-    "provider": "Ahrefs",
-    "lastUpdated": "2025-12-15",
+    "provider": "Ahrefs + Lighthouse",
+    "lastUpdated": "2025-12-18",
     "projectId": null
   }
 }

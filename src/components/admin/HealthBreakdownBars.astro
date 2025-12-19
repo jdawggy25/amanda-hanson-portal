@@ -1,0 +1,105 @@
+---
+/**
+ * HealthBreakdownBars Component
+ *
+ * Three mini progress bars for SEO/Tasks/Narrative sub-scores.
+ */
+
+interface Props {
+  seo: number;
+  tasks: number;
+  narrative: number;
+  compact?: boolean;
+}
+
+const { seo, tasks, narrative, compact = false } = Astro.props;
+
+function getBarColor(score: number): string {
+  if (score >= 75) return '#10b981'; // Green
+  if (score >= 50) return '#f59e0b'; // Amber
+  return '#ef4444'; // Red
+}
+
+const bars = [
+  { label: 'SEO', score: seo, color: getBarColor(seo) },
+  { label: 'Tasks', score: tasks, color: getBarColor(tasks) },
+  { label: 'Narrative', score: narrative, color: getBarColor(narrative) },
+];
+---
+
+<div class:list={['breakdown-bars', { compact }]}>
+  {bars.map((bar) => (
+    <div class="bar-row">
+      <span class="bar-label">{bar.label}</span>
+      <div class="bar-track">
+        <div
+          class="bar-fill"
+          style={`width: ${bar.score}%; background-color: ${bar.color};`}
+        />
+      </div>
+      <span class="bar-value" style={`color: ${bar.color};`}>{bar.score}</span>
+    </div>
+  ))}
+</div>
+
+<style>
+  .breakdown-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  .breakdown-bars.compact {
+    gap: 0.25rem;
+  }
+
+  .bar-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .bar-label {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.6);
+    width: 55px;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
+  .compact .bar-label {
+    font-size: 0.65rem;
+    width: 45px;
+  }
+
+  .bar-track {
+    flex: 1;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .compact .bar-track {
+    height: 4px;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.3s ease-out;
+  }
+
+  .bar-value {
+    font-size: 0.75rem;
+    font-weight: 600;
+    width: 28px;
+    text-align: right;
+  }
+
+  .compact .bar-value {
+    font-size: 0.65rem;
+    width: 24px;
+  }
+</style>

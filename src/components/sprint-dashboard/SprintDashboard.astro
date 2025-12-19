@@ -1,0 +1,426 @@
+---
+import DashboardHeader from './DashboardHeader.astro';
+import FilterBar from './FilterBar.astro';
+import EpicSection from './EpicSection.astro';
+import EnhancedTaskCard from './EnhancedTaskCard.astro';
+import ActivityFeed from './ActivityFeed.astro';
+import type {
+  TransformedTask,
+  SprintMetrics,
+  EpicWithTasks,
+  ActivityItem,
+  EpicInfo,
+  SprintInfo
+} from '../../lib/jira/types';
+import {
+  calculateSprintMetrics,
+  groupTasksByEpic,
+  generateActivityFeed,
+  getUniqueLabels,
+  getUniqueComponents,
+  getUniqueAssignees,
+  getUniqueEpics
+} from '../../lib/jira/metrics';
+
+export interface Props {
+  tasks: TransformedTask[];
+  projectName: string;
+  jiraBoardUrl: string;
+  embedded?: boolean;
+}
+
+const { tasks, projectName, jiraBoardUrl, embedded = false } = Astro.props;
+
+// Calculate all derived data
+const metrics: SprintMetrics = calculateSprintMetrics(tasks);
+const epicGroups: EpicWithTasks[] = groupTasksByEpic(tasks);
+const activities: ActivityItem[] = generateActivityFeed(tasks, 15);
+
+// Get filter options
+const epics: EpicInfo[] = getUniqueEpics(tasks);
+const labels: string[] = getUniqueLabels(tasks);
+const components: string[] = getUniqueComponents(tasks);
+const assignees: string[] = getUniqueAssignees(tasks);
+
+// Get active sprint if any
+const activeSprint: SprintInfo | null = tasks.find(t => t.sprint?.state === 'active')?.sprint ?? null;
+
+// Group tasks by status for Kanban view
+const todoTasks = tasks.filter(t => t.status === 'todo');
+const inProgressTasks = tasks.filter(t => t.status === 'in-progress');
+const doneTasks = tasks.filter(t => t.status === 'done');
+
+// Serialize data for client-side filtering
+const tasksJson = JSON.stringify(tasks.map(t => ({
+  key: t.key,
+  status: t.status,
+  epicKey: t.epic?.key || null,
+  labels: t.labels,
+  components: t.components,
+  assignee: t.assignee,
+})));
+---
+
+<div class:list={['sprint-dashboard', { embedded }]} data-tasks={tasksJson}>
+  {!embedded && (
+    <DashboardHeader
+      metrics={metrics}
+      sprint={activeSprint}
+      projectName={projectName}
+      jiraBoardUrl={jiraBoardUrl}
+    />
+  )}
+
+  <FilterBar
+    epics={epics}
+    labels={labels}
+    components={components}
+    assignees={assignees}
+  />
+
+  <div class="dashboard-content">
+    <main class="main-content">
+      <!-- Kanban View -->
+      <div class="kanban-view" id="kanban-view">
+        <div class="kanban-board">
+          <div class="kanban-column todo">
+            <div class="column-header">
+              <span class="column-title">To Do</span>
+              <span class="column-count">{todoTasks.length}</span>
+            </div>
+            <div class="column-content">
+              {todoTasks.map(task => (
+                <EnhancedTaskCard task={task} showEpic={true} />
+              ))}
+              {todoTasks.length === 0 && (
+                <p class="empty-column">No tasks</p>
+              )}
+            </div>
+          </div>
+
+          <div class="kanban-column in-progress">
+            <div class="column-header">
+              <span class="column-title">In Progress</span>
+              <span class="column-count">{inProgressTasks.length}</span>
+            </div>
+            <div class="column-content">
+              {inProgressTasks.map(task => (
+                <EnhancedTaskCard task={task} showEpic={true} />
+              ))}
+              {inProgressTasks.length === 0 && (
+                <p class="empty-column">No tasks</p>
+              )}
+            </div>
+          </div>
+
+          <div class="kanban-column done">
+            <div class="column-header">
+              <span class="column-title">Done</span>
+              <span class="column-count">{doneTasks.length}</span>
+            </div>
+            <div class="column-content">
+              {doneTasks.map(task => (
+                <EnhancedTaskCard task={task} showEpic={true} />
+              ))}
+              {doneTasks.length === 0 && (
+                <p class="empty-column">No tasks</p>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Epic View -->
+      <div class="epic-view" id="epic-view" style="display: none;">
+        {epicGroups.map((group, index) => (
+          <EpicSection epicGroup={group} defaultOpen={index < 3}>
+            <div class="epic-tasks-grid">
+              {group.tasks.map(task => (
+                <EnhancedTaskCard task={task} />
+              ))}
+            </div>
+          </EpicSection>
+        ))}
+        {epicGroups.length === 0 && (
+          <div class="empty-state">
+            <p>No tasks found</p>
+          </div>
+        )}
+      </div>
+
+      <!-- List View -->
+      <div class="list-view" id="list-view" style="display: none;">
+        <div class="task-list">
+          {tasks.map(task => (
+            <EnhancedTaskCard task={task} showEpic={true} />
+          ))}
+          {tasks.length === 0 && (
+            <div class="empty-state">
+              <p>No tasks found</p>
+            </div>
+          )}
+        </div>
+      </div>
+    </main>
+
+    <aside class="sidebar">
+      <ActivityFeed activities={activities} />
+    </aside>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const dashboard = document.querySelector('.sprint-dashboard');
+    if (!dashboard) return;
+
+    const kanbanView = document.getElementById('kanban-view');
+    const epicView = document.getElementById('epic-view');
+    const listView = document.getElementById('list-view');
+
+    // View switching
+    document.addEventListener('viewChange', ((e: CustomEvent) => {
+      const { view } = e.detail;
+
+      kanbanView!.style.display = view === 'kanban' ? 'block' : 'none';
+      epicView!.style.display = view === 'epic' ? 'block' : 'none';
+      listView!.style.display = view === 'list' ? 'block' : 'none';
+    }) as EventListener);
+
+    // Filtering
+    const tasksData = JSON.parse(dashboard.getAttribute('data-tasks') || '[]');
+
+    document.addEventListener('filterChange', ((e: CustomEvent) => {
+      const { filters } = e.detail;
+      const taskCards = document.querySelectorAll('.task-card');
+      let shownCount = 0;
+
+      taskCards.forEach(card => {
+        const taskKey = card.getAttribute('data-task-key');
+        const taskData = tasksData.find((t: any) => t.key === taskKey);
+
+        if (!taskData) {
+          (card as HTMLElement).style.display = 'block';
+          shownCount++;
+          return;
+        }
+
+        let visible = true;
+
+        // Epic filter
+        if (filters.epic) {
+          if (filters.epic === 'none') {
+            visible = taskData.epicKey === null;
+          } else {
+            visible = taskData.epicKey === filters.epic;
+          }
+        }
+
+        // Label filter
+        if (visible && filters.label) {
+          visible = taskData.labels.includes(filters.label);
+        }
+
+        // Component filter
+        if (visible && filters.component) {
+          visible = taskData.components.includes(filters.component);
+        }
+
+        // Assignee filter
+        if (visible && filters.assignee) {
+          if (filters.assignee === 'unassigned') {
+            visible = taskData.assignee === null;
+          } else {
+            visible = taskData.assignee === filters.assignee;
+          }
+        }
+
+        // Status filter
+        if (visible && filters.status) {
+          visible = taskData.status === filters.status;
+        }
+
+        (card as HTMLElement).style.display = visible ? 'block' : 'none';
+        if (visible) shownCount++;
+      });
+
+      // Update filter results
+      document.dispatchEvent(new CustomEvent('filterResults', {
+        detail: { shown: shownCount, total: tasksData.length }
+      }));
+
+      // Update column counts in Kanban view
+      const columns = document.querySelectorAll('.kanban-column');
+      columns.forEach(column => {
+        const visibleCards = column.querySelectorAll('.task-card[style*="display: block"], .task-card:not([style*="display"])');
+        const countEl = column.querySelector('.column-count');
+        if (countEl) {
+          let count = 0;
+          visibleCards.forEach(card => {
+            if ((card as HTMLElement).style.display !== 'none') count++;
+          });
+          countEl.textContent = String(count);
+        }
+      });
+    }) as EventListener);
+  });
+</script>
+
+<style>
+  .sprint-dashboard {
+    max-width: 100%;
+  }
+
+  .dashboard-content {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: var(--space-6);
+  }
+
+  .main-content {
+    min-width: 0;
+  }
+
+  .sidebar {
+    position: sticky;
+    top: var(--space-4);
+    align-self: start;
+  }
+
+  /* Kanban View */
+  .kanban-board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-4);
+  }
+
+  .kanban-column {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .column-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-3) var(--space-4);
+    background: var(--color-bg-deep);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .kanban-column.todo .column-header {
+    border-top: 3px solid #94a3b8;
+  }
+
+  .kanban-column.in-progress .column-header {
+    border-top: 3px solid #3b82f6;
+  }
+
+  .kanban-column.done .column-header {
+    border-top: 3px solid #22c55e;
+  }
+
+  .column-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .column-count {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    background: var(--color-bg-secondary);
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    font-family: var(--font-mono);
+  }
+
+  .column-content {
+    padding: var(--space-3);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    flex: 1;
+    overflow-y: auto;
+    max-height: 600px;
+  }
+
+  .empty-column {
+    text-align: center;
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+    padding: var(--space-4);
+  }
+
+  /* Epic View */
+  .epic-tasks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--space-3);
+  }
+
+  /* List View */
+  .task-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .empty-state {
+    text-align: center;
+    color: var(--color-text-muted);
+    padding: var(--space-8);
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+  }
+
+  @media (max-width: 1200px) {
+    .dashboard-content {
+      grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+      position: static;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .kanban-board {
+      grid-template-columns: 1fr;
+    }
+
+    .column-content {
+      max-height: 400px;
+    }
+  }
+
+  /* Embedded mode styles */
+  .sprint-dashboard.embedded {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1rem;
+  }
+
+  .sprint-dashboard.embedded .dashboard-content {
+    grid-template-columns: 1fr;
+  }
+
+  .sprint-dashboard.embedded .sidebar {
+    display: none;
+  }
+
+  .sprint-dashboard.embedded .kanban-column {
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  .sprint-dashboard.embedded .column-header {
+    background: rgba(0, 0, 0, 0.3);
+  }
+</style>

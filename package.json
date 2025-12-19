@@ -11,10 +11,24 @@
     "preview": "astro preview",
     "astro": "astro",
     "add-client": "node scripts/add-client.js",
-    "sync-clients": "node scripts/sync-clients.js"
+    "sync-clients": "node scripts/sync-clients.js",
+    "seo:collect": "npx tsx scripts/seo-automation/index.ts collect",
+    "seo:collect:client": "npx tsx scripts/seo-automation/index.ts collect --client",
+    "seo:validate": "npx tsx scripts/seo-automation/index.ts validate",
+    "cache:check": "npx tsx scripts/check-cache.ts",
+    "cache:seed": "npx tsx scripts/seed-metrics-cache.ts"
   },
   "dependencies": {
+    "@astrojs/node": "^9.5.1",
+    "@supabase/ssr": "^0.8.0",
+    "@supabase/supabase-js": "^2.89.0",
     "apexcharts": "^5.3.6",
-    "astro": "^5.16.5"
+    "astro": "^5.16.5",
+    "handlebars": "^4.7.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "dotenv": "^17.2.3",
+    "tsx": "^4.19.0"
   }
 }

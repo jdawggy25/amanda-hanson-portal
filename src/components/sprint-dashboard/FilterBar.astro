@@ -1,0 +1,347 @@
+---
+import type { EpicInfo } from '../../lib/jira/types';
+
+export interface Props {
+  epics: EpicInfo[];
+  labels: string[];
+  components: string[];
+  assignees: string[];
+}
+
+const { epics, labels, components, assignees } = Astro.props;
+---
+
+<div class="filter-bar" id="filter-bar">
+  <div class="filter-group">
+    <label class="filter-label">View</label>
+    <div class="view-toggle">
+      <button class="view-btn active" data-view="kanban">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7"></rect>
+          <rect x="14" y="3" width="7" height="7"></rect>
+          <rect x="14" y="14" width="7" height="7"></rect>
+          <rect x="3" y="14" width="7" height="7"></rect>
+        </svg>
+        Kanban
+      </button>
+      <button class="view-btn" data-view="epic">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="8" y1="6" x2="21" y2="6"></line>
+          <line x1="8" y1="12" x2="21" y2="12"></line>
+          <line x1="8" y1="18" x2="21" y2="18"></line>
+          <line x1="3" y1="6" x2="3.01" y2="6"></line>
+          <line x1="3" y1="12" x2="3.01" y2="12"></line>
+          <line x1="3" y1="18" x2="3.01" y2="18"></line>
+        </svg>
+        By Epic
+      </button>
+      <button class="view-btn" data-view="list">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="8" y1="6" x2="21" y2="6"></line>
+          <line x1="8" y1="12" x2="21" y2="12"></line>
+          <line x1="8" y1="18" x2="21" y2="18"></line>
+          <line x1="3" y1="6" x2="3" y2="6"></line>
+          <line x1="3" y1="12" x2="3" y2="12"></line>
+          <line x1="3" y1="18" x2="3" y2="18"></line>
+        </svg>
+        List
+      </button>
+    </div>
+  </div>
+
+  <div class="filter-divider"></div>
+
+  <div class="filter-group">
+    <label class="filter-label">Filters</label>
+    <div class="filter-dropdowns">
+      {epics.length > 0 && (
+        <div class="filter-dropdown">
+          <select id="filter-epic" class="filter-select">
+            <option value="">All Epics</option>
+            {epics.map(epic => (
+              <option value={epic.key}>{epic.summary}</option>
+            ))}
+            <option value="none">No Epic</option>
+          </select>
+        </div>
+      )}
+
+      {labels.length > 0 && (
+        <div class="filter-dropdown">
+          <select id="filter-label" class="filter-select">
+            <option value="">All Labels</option>
+            {labels.map(label => (
+              <option value={label}>{label}</option>
+            ))}
+          </select>
+        </div>
+      )}
+
+      {components.length > 0 && (
+        <div class="filter-dropdown">
+          <select id="filter-component" class="filter-select">
+            <option value="">All Components</option>
+            {components.map(comp => (
+              <option value={comp}>{comp}</option>
+            ))}
+          </select>
+        </div>
+      )}
+
+      {assignees.length > 0 && (
+        <div class="filter-dropdown">
+          <select id="filter-assignee" class="filter-select">
+            <option value="">All Assignees</option>
+            {assignees.map(assignee => (
+              <option value={assignee}>{assignee}</option>
+            ))}
+            <option value="unassigned">Unassigned</option>
+          </select>
+        </div>
+      )}
+
+      <div class="filter-dropdown">
+        <select id="filter-status" class="filter-select">
+          <option value="">All Status</option>
+          <option value="todo">To Do</option>
+          <option value="in-progress">In Progress</option>
+          <option value="done">Done</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <button class="clear-filters" id="clear-filters" disabled>
+    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="18" y1="6" x2="6" y2="18"></line>
+      <line x1="6" y1="6" x2="18" y2="18"></line>
+    </svg>
+    Clear
+  </button>
+
+  <div class="filter-results" id="filter-results">
+    <span class="results-count">Showing all tasks</span>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const filterBar = document.getElementById('filter-bar');
+    if (!filterBar) return;
+
+    const viewBtns = filterBar.querySelectorAll('.view-btn');
+    const filterSelects = filterBar.querySelectorAll('.filter-select');
+    const clearBtn = document.getElementById('clear-filters');
+    const resultsEl = document.getElementById('filter-results');
+
+    // View toggle
+    viewBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        viewBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const view = btn.getAttribute('data-view');
+        document.dispatchEvent(new CustomEvent('viewChange', { detail: { view } }));
+      });
+    });
+
+    // Filter change
+    const applyFilters = () => {
+      const filters: Record<string, string> = {};
+      let hasFilters = false;
+
+      filterSelects.forEach(select => {
+        const value = (select as HTMLSelectElement).value;
+        const id = select.id.replace('filter-', '');
+        if (value) {
+          filters[id] = value;
+          hasFilters = true;
+        }
+      });
+
+      if (clearBtn) {
+        (clearBtn as HTMLButtonElement).disabled = !hasFilters;
+      }
+
+      document.dispatchEvent(new CustomEvent('filterChange', { detail: { filters } }));
+    };
+
+    filterSelects.forEach(select => {
+      select.addEventListener('change', applyFilters);
+    });
+
+    // Clear filters
+    clearBtn?.addEventListener('click', () => {
+      filterSelects.forEach(select => {
+        (select as HTMLSelectElement).value = '';
+      });
+      applyFilters();
+    });
+
+    // Listen for filter results updates
+    document.addEventListener('filterResults', ((e: CustomEvent) => {
+      if (resultsEl) {
+        const { shown, total } = e.detail;
+        const countEl = resultsEl.querySelector('.results-count');
+        if (countEl) {
+          countEl.textContent = shown === total
+            ? `Showing all ${total} tasks`
+            : `Showing ${shown} of ${total} tasks`;
+        }
+      }
+    }) as EventListener);
+  });
+</script>
+
+<style>
+  .filter-bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-3) var(--space-4);
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--space-4);
+    flex-wrap: wrap;
+  }
+
+  .filter-group {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .filter-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .view-toggle {
+    display: flex;
+    background: var(--color-bg-deep);
+    border-radius: var(--radius-md);
+    padding: 2px;
+  }
+
+  .view-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    padding: var(--space-2) var(--space-3);
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+
+  .view-btn:hover {
+    color: var(--color-text);
+  }
+
+  .view-btn.active {
+    background: var(--color-bg-secondary);
+    color: var(--color-primary);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  .filter-divider {
+    width: 1px;
+    height: 24px;
+    background: var(--color-border);
+  }
+
+  .filter-dropdowns {
+    display: flex;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+  }
+
+  .filter-dropdown {
+    position: relative;
+  }
+
+  .filter-select {
+    appearance: none;
+    padding: var(--space-2) var(--space-6) var(--space-2) var(--space-3);
+    background: var(--color-bg-deep);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    min-width: 120px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+  }
+
+  .filter-select:hover {
+    border-color: var(--color-border-accent);
+  }
+
+  .filter-select:focus {
+    outline: none;
+    border-color: var(--color-primary);
+  }
+
+  .clear-filters {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    padding: var(--space-2) var(--space-3);
+    background: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+
+  .clear-filters:hover:not(:disabled) {
+    background: var(--color-bg-deep);
+    color: var(--color-text);
+    border-color: var(--color-border-accent);
+  }
+
+  .clear-filters:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .filter-results {
+    margin-left: auto;
+  }
+
+  .results-count {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+  }
+
+  @media (max-width: 768px) {
+    .filter-bar {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .filter-divider {
+      display: none;
+    }
+
+    .filter-results {
+      margin-left: 0;
+      width: 100%;
+      text-align: center;
+      padding-top: var(--space-2);
+      border-top: 1px solid var(--color-border);
+    }
+  }
+</style>

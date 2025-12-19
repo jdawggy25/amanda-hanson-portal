@@ -1,0 +1,246 @@
+---
+import MetricsCard from './MetricsCard.astro';
+import SprintProgressBar from './SprintProgressBar.astro';
+import type { SprintMetrics, SprintInfo } from '../../lib/jira/types';
+
+export interface Props {
+  metrics: SprintMetrics;
+  sprint?: SprintInfo | null;
+  projectName: string;
+  jiraBoardUrl: string;
+}
+
+const { metrics, sprint, projectName, jiraBoardUrl } = Astro.props;
+
+// Calculate percentages for progress bar
+const total = metrics.totalTasks || 1;
+const todoPercent = Math.round((metrics.todoTasks / total) * 100);
+const inProgressPercent = Math.round((metrics.inProgressTasks / total) * 100);
+const donePercent = Math.round((metrics.doneTasks / total) * 100);
+
+// Format sprint dates
+const formatDate = (date: Date | null) => {
+  if (!date) return null;
+  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+};
+
+const sprintDateRange = sprint?.startDate && sprint?.endDate
+  ? `${formatDate(sprint.startDate)} - ${formatDate(sprint.endDate)}`
+  : null;
+---
+
+<header class="dashboard-header">
+  <div class="header-top">
+    <div class="header-info">
+      <div class="title-row">
+        <h1>Sprint Dashboard</h1>
+        <span class="live-indicator">
+          <span class="live-dot"></span>
+          Live from Jira
+        </span>
+      </div>
+      <p class="subtitle">
+        Real-time sprint tracking for <a href={jiraBoardUrl} target="_blank" rel="noopener noreferrer">{projectName}</a>
+        {sprint && <span class="sprint-name"> - {sprint.name}</span>}
+        {sprintDateRange && <span class="sprint-dates">({sprintDateRange})</span>}
+      </p>
+    </div>
+    <a href={jiraBoardUrl} target="_blank" rel="noopener noreferrer" class="jira-button">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+        <polyline points="15 3 21 3 21 9"></polyline>
+        <line x1="10" y1="14" x2="21" y2="3"></line>
+      </svg>
+      Open in Jira
+    </a>
+  </div>
+
+  <div class="metrics-grid">
+    <MetricsCard
+      label="Total Tasks"
+      value={metrics.totalTasks}
+      subValue={metrics.totalPoints > 0 ? `${metrics.totalPoints} pts` : undefined}
+      icon="tasks"
+    />
+    <MetricsCard
+      label="To Do"
+      value={metrics.todoTasks}
+      subValue={metrics.todoPoints > 0 ? `${metrics.todoPoints} pts` : undefined}
+      variant="todo"
+      icon="tasks"
+    />
+    <MetricsCard
+      label="In Progress"
+      value={metrics.inProgressTasks}
+      subValue={metrics.inProgressPoints > 0 ? `${metrics.inProgressPoints} pts` : undefined}
+      variant="in-progress"
+      icon="tasks"
+    />
+    <MetricsCard
+      label="Done"
+      value={metrics.doneTasks}
+      subValue={metrics.donePoints > 0 ? `${metrics.donePoints} pts` : undefined}
+      variant="done"
+      icon="tasks"
+    />
+  </div>
+
+  <div class="progress-section">
+    <SprintProgressBar
+      todoPercent={todoPercent}
+      inProgressPercent={inProgressPercent}
+      donePercent={donePercent}
+      label="Sprint Progress"
+    />
+  </div>
+</header>
+
+<style>
+  .dashboard-header {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    margin-bottom: var(--space-6);
+  }
+
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+  }
+
+  .header-info {
+    flex: 1;
+  }
+
+  .title-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    margin-bottom: var(--space-2);
+  }
+
+  h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0;
+  }
+
+  .live-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-1) var(--space-3);
+    background: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    border-radius: var(--radius-full);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: #22c55e;
+  }
+
+  .live-dot {
+    width: 6px;
+    height: 6px;
+    background: #22c55e;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .subtitle {
+    font-size: 0.9375rem;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  .subtitle a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .subtitle a:hover {
+    text-decoration: underline;
+  }
+
+  .sprint-name {
+    color: var(--color-text-secondary);
+    font-weight: 500;
+  }
+
+  .sprint-dates {
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+  }
+
+  .jira-button {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    background: var(--color-bg-deep);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+  }
+
+  .jira-button:hover {
+    background: var(--color-bg);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+  }
+
+  .progress-section {
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-border);
+  }
+
+  @media (max-width: 768px) {
+    .header-top {
+      flex-direction: column;
+    }
+
+    .title-row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-2);
+    }
+
+    .jira-button {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .metrics-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .metrics-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

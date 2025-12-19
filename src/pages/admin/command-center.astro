@@ -1,0 +1,475 @@
+---
+/**
+ * Admin Command Center
+ *
+ * Central dashboard for managing all SEO clients with health scores,
+ * alerts, and inline actions.
+ */
+
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import AlertsPanel from '../../components/admin/AlertsPanel.astro';
+import QuickActionsBar from '../../components/admin/QuickActionsBar.astro';
+import ClientHealthCard from '../../components/admin/ClientHealthCard.astro';
+import { aggregateAllClients, getCurrentMonth } from '../../lib/admin';
+import type { HealthAlert } from '../../lib/admin/types';
+
+// Get current month
+const currentMonth = getCurrentMonth();
+const monthDisplay = new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+
+// Fetch dashboard data
+let dashboardData = null;
+let warningAlerts: Array<HealthAlert & { clientId: string; clientName: string }> = [];
+
+try {
+  dashboardData = await aggregateAllClients(currentMonth);
+
+  // Collect warning alerts from all clients
+  for (const client of dashboardData.clients) {
+    for (const alert of client.alerts) {
+      if (alert.severity === 'warning') {
+        warningAlerts.push({
+          ...alert,
+          clientId: client.clientId,
+          clientName: client.clientName,
+        });
+      }
+    }
+  }
+} catch (error) {
+  console.error('Failed to load dashboard data:', error);
+}
+---
+
+<AdminLayout title="Command Center">
+  <div class="command-center">
+    <!-- Command Center Dashboard -->
+    <div class="dashboard">
+        <header class="dashboard-header">
+          <div class="header-left">
+            <h1>SEO Command Center</h1>
+            <p class="subtitle">Monitor and manage all client sites</p>
+          </div>
+          <div class="header-right">
+            <div class="stats-summary">
+              {dashboardData && (
+                <>
+                  <div class="stat healthy">
+                    <span class="stat-value">{dashboardData.totals.healthy}</span>
+                    <span class="stat-label">Healthy</span>
+                  </div>
+                  <div class="stat warning">
+                    <span class="stat-value">{dashboardData.totals.needsAttention}</span>
+                    <span class="stat-label">Attention</span>
+                  </div>
+                  <div class="stat critical">
+                    <span class="stat-value">{dashboardData.totals.critical}</span>
+                    <span class="stat-label">Critical</span>
+                  </div>
+                </>
+              )}
+            </div>
+            <span class="current-month">{monthDisplay}</span>
+          </div>
+        </header>
+
+        {dashboardData ? (
+          <>
+            <!-- Alerts Panel -->
+            <AlertsPanel
+              alerts={dashboardData.criticalAlerts}
+              warningAlerts={warningAlerts}
+            />
+
+            <!-- Quick Actions -->
+            <QuickActionsBar currentMonth={currentMonth} />
+
+            <!-- Clients Grid -->
+            <section class="clients-section">
+              <div class="section-header">
+                <h2>Clients ({dashboardData.totals.totalClients})</h2>
+                <div class="sort-options">
+                  <select id="sortBy" class="sort-select">
+                    <option value="health-asc">Health: Low to High</option>
+                    <option value="health-desc">Health: High to Low</option>
+                    <option value="name-asc">Name: A to Z</option>
+                    <option value="name-desc">Name: Z to A</option>
+                  </select>
+                </div>
+              </div>
+              <div class="clients-grid" id="clientsGrid">
+                {dashboardData.clients.map((client) => (
+                  <ClientHealthCard client={client} currentMonth={currentMonth} />
+                ))}
+              </div>
+            </section>
+          </>
+        ) : (
+          <div class="error-state">
+            <p>Failed to load dashboard data. Please try refreshing the page.</p>
+            <button onclick="window.location.reload()" class="btn-primary">
+              Retry
+            </button>
+          </div>
+        )}
+      </div>
+  </div>
+</AdminLayout>
+
+<style>
+  .command-center {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Login Styles */
+  .login-card {
+    max-width: 400px;
+    margin: 4rem auto;
+    background: rgba(20, 20, 20, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 2rem;
+  }
+
+  .login-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .lock-icon {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 1rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+  }
+
+  .login-header h1 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: white;
+  }
+
+  .login-header p {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+  }
+
+  .login-form .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .login-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+  }
+
+  .login-form input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: white;
+    font-size: 1rem;
+  }
+
+  .login-form input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+  }
+
+  .btn-primary {
+    width: 100%;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  }
+
+  /* Dashboard Styles */
+  .dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .header-left h1 {
+    font-size: 1.75rem;
+    color: white;
+    margin: 0 0 0.25rem 0;
+  }
+
+  .subtitle {
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0;
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .stats-summary {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    min-width: 60px;
+  }
+
+  .stat.healthy {
+    background: rgba(16, 185, 129, 0.15);
+  }
+
+  .stat.warning {
+    background: rgba(245, 158, 11, 0.15);
+  }
+
+  .stat.critical {
+    background: rgba(239, 68, 68, 0.15);
+  }
+
+  .stat-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+
+  .stat.healthy .stat-value {
+    color: #10b981;
+  }
+
+  .stat.warning .stat-value {
+    color: #f59e0b;
+  }
+
+  .stat.critical .stat-value {
+    color: #ef4444;
+  }
+
+  .stat-label {
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+  }
+
+  .current-month {
+    background: rgba(102, 126, 234, 0.2);
+    color: #667eea;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  .logout-form {
+    display: inline;
+  }
+
+  .btn-logout {
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    color: white;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .btn-logout:hover {
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  /* Clients Section */
+  .clients-section {
+    margin-top: 1.5rem;
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .section-header h2 {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0;
+  }
+
+  .sort-select {
+    padding: 0.4rem 0.75rem;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    color: white;
+    font-size: 0.8rem;
+  }
+
+  .clients-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .error-state {
+    text-align: center;
+    padding: 3rem;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .error-state .btn-primary {
+    width: auto;
+    margin-top: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    .command-center {
+      padding: 1rem;
+    }
+
+    .dashboard-header {
+      flex-direction: column;
+    }
+
+    .header-right {
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    .clients-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  // Sort functionality
+  const sortSelect = document.getElementById('sortBy') as HTMLSelectElement;
+  const clientsGrid = document.getElementById('clientsGrid');
+
+  sortSelect?.addEventListener('change', () => {
+    if (!clientsGrid) return;
+
+    const cards = Array.from(clientsGrid.querySelectorAll('.client-card'));
+    const sortValue = sortSelect.value;
+
+    cards.sort((a, b) => {
+      const aName = a.querySelector('.client-name')?.textContent || '';
+      const bName = b.querySelector('.client-name')?.textContent || '';
+      const aScore = parseInt(a.querySelector('.score-label')?.textContent || '0');
+      const bScore = parseInt(b.querySelector('.score-label')?.textContent || '0');
+
+      switch (sortValue) {
+        case 'health-asc':
+          return aScore - bScore;
+        case 'health-desc':
+          return bScore - aScore;
+        case 'name-asc':
+          return aName.localeCompare(bName);
+        case 'name-desc':
+          return bName.localeCompare(aName);
+        default:
+          return 0;
+      }
+    });
+
+    // Re-append sorted cards
+    cards.forEach(card => clientsGrid.appendChild(card));
+  });
+
+  // Generate report buttons
+  document.querySelectorAll('.generate-report').forEach((btn) => {
+    btn.addEventListener('click', async (e) => {
+      const clientId = (e.currentTarget as HTMLElement).getAttribute('data-client');
+      const month = (document.getElementById('reportMonth') as HTMLInputElement)?.value;
+
+      const button = e.currentTarget as HTMLButtonElement;
+      button.disabled = true;
+
+      try {
+        const response = await fetch('/admin/api/generate-reports', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ month, clientId })
+        });
+        const data = await response.json();
+
+        if (data.success) {
+          showNotification('success', `Report generated for ${clientId}.`);
+        } else {
+          showNotification('error', `Error: ${data.error || data.message}`);
+        }
+      } catch (error) {
+        showNotification('error', 'Failed to generate report.');
+        console.error(error);
+      } finally {
+        button.disabled = false;
+      }
+    });
+  });
+
+  function showNotification(type: 'success' | 'error', message: string) {
+    const existing = document.querySelector('.notification');
+    if (existing) existing.remove();
+
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.textContent = message;
+    notification.style.cssText = `
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      z-index: 1000;
+      ${type === 'success'
+        ? 'background: rgba(16, 185, 129, 0.9); color: white;'
+        : 'background: rgba(239, 68, 68, 0.9); color: white;'}
+    `;
+
+    document.body.appendChild(notification);
+
+    setTimeout(() => {
+      notification.style.opacity = '0';
+      notification.style.transition = 'opacity 0.3s';
+      setTimeout(() => notification.remove(), 300);
+    }, 3000);
+  }
+</script>

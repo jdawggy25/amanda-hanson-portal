@@ -1,0 +1,144 @@
+---
+/**
+ * TabNavigation Component
+ *
+ * Simple tab switcher with URL hash support.
+ */
+
+interface Tab {
+  id: string;
+  label: string;
+  icon?: string;
+}
+
+interface Props {
+  tabs: Tab[];
+  activeTab?: string;
+}
+
+const { tabs, activeTab = tabs[0]?.id } = Astro.props;
+
+// Icons for each tab type
+const icons: Record<string, string> = {
+  overview: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>`,
+  tasks: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>`,
+  narrative: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>`,
+  metrics: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>`,
+  reports: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>`,
+};
+---
+
+<nav class="tab-navigation" role="tablist">
+  {tabs.map((tab) => (
+    <button
+      class:list={['tab-button', { active: tab.id === activeTab }]}
+      data-tab={tab.id}
+      role="tab"
+      aria-selected={tab.id === activeTab ? 'true' : 'false'}
+      aria-controls={`panel-${tab.id}`}
+    >
+      {icons[tab.id] && <span class="tab-icon" set:html={icons[tab.id]} />}
+      <span class="tab-label">{tab.label}</span>
+    </button>
+  ))}
+</nav>
+
+<style>
+  .tab-navigation {
+    display: flex;
+    gap: 0.25rem;
+    padding: 0.25rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+  }
+
+  .tab-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1rem;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .tab-button:hover {
+    color: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .tab-button.active {
+    background: rgba(102, 126, 234, 0.2);
+    color: #667eea;
+  }
+
+  .tab-icon {
+    display: flex;
+    align-items: center;
+  }
+
+  @media (max-width: 640px) {
+    .tab-navigation {
+      flex-wrap: wrap;
+    }
+
+    .tab-button {
+      flex: 1;
+      justify-content: center;
+      min-width: 80px;
+    }
+
+    .tab-label {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  // Tab switching logic
+  document.querySelectorAll('.tab-button').forEach((button) => {
+    button.addEventListener('click', (e) => {
+      const tabId = (e.currentTarget as HTMLElement).getAttribute('data-tab');
+      if (!tabId) return;
+
+      // Update active tab button
+      document.querySelectorAll('.tab-button').forEach((btn) => {
+        btn.classList.remove('active');
+        btn.setAttribute('aria-selected', 'false');
+      });
+      (e.currentTarget as HTMLElement).classList.add('active');
+      (e.currentTarget as HTMLElement).setAttribute('aria-selected', 'true');
+
+      // Show/hide panels
+      document.querySelectorAll('.tab-panel').forEach((panel) => {
+        panel.classList.remove('active');
+        panel.setAttribute('hidden', '');
+      });
+      const activePanel = document.getElementById(`panel-${tabId}`);
+      if (activePanel) {
+        activePanel.classList.add('active');
+        activePanel.removeAttribute('hidden');
+      }
+
+      // Update URL hash
+      history.replaceState(null, '', `#${tabId}`);
+    });
+  });
+
+  // Handle initial hash
+  document.addEventListener('DOMContentLoaded', () => {
+    const hash = window.location.hash.slice(1);
+    if (hash) {
+      const tabButton = document.querySelector(`[data-tab="${hash}"]`) as HTMLElement;
+      if (tabButton) {
+        tabButton.click();
+      }
+    }
+  });
+</script>

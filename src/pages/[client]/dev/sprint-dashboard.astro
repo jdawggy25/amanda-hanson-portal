@@ -1,0 +1,127 @@
+---
+import DashboardLayout from '../../../layouts/DashboardLayout.astro';
+import SprintDashboard from '../../../components/sprint-dashboard/SprintDashboard.astro';
+import { getClientTasks } from '../../../lib/jira/client';
+import { getProjectMapping } from '../../../lib/jira/config';
+import type { TransformedTask } from '../../../lib/jira/types';
+
+export const prerender = false;
+
+const { client } = Astro.params;
+
+if (!client) {
+  return Astro.redirect('/');
+}
+
+const VALID_CLIENTS = ['v3', 'casita', 'bnc-builders', 'hansen-chiropractic', 'king-roof', 'salt-creek-dental', '4-corners', 'cocinarte', 'spanish-horizons'];
+if (!VALID_CLIENTS.includes(client)) {
+  return Astro.redirect('/');
+}
+
+let jiraTasks: TransformedTask[] = [];
+let jiraError: string | null = null;
+let projectName = '';
+
+const mapping = getProjectMapping(client);
+if (mapping) {
+  projectName = mapping.projectName;
+  if (mapping.projectId) {
+    try {
+      jiraTasks = await getClientTasks(client, mapping.projectKey);
+    } catch (error) {
+      console.error('Failed to fetch Jira tasks:', error);
+      jiraError = 'Unable to load tasks from Jira';
+    }
+  } else {
+    jiraError = `Jira project not yet created for ${mapping.projectName}`;
+  }
+}
+
+const title = `Sprint Dashboard - ${projectName}`;
+const jiraBoardUrl = mapping?.boardId
+  ? `https://comcreatedevelopment.atlassian.net/jira/software/projects/${mapping.projectKey}/boards/${mapping.boardId}`
+  : `https://comcreatedevelopment.atlassian.net/jira/software/projects/${mapping?.projectKey}/backlog`;
+---
+
+<DashboardLayout title={title} client={client}>
+  {jiraError ? (
+    <div class="jira-error">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="8" x2="12" y2="12"></line>
+        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+      </svg>
+      <div>
+        <p class="error-title">{jiraError}</p>
+        <p class="error-note">Please check Jira configuration or try again later.</p>
+        <a href={jiraBoardUrl} target="_blank" rel="noopener noreferrer" class="jira-link">
+          Open Jira Project
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <line x1="10" y1="14" x2="21" y2="3"></line>
+          </svg>
+        </a>
+      </div>
+    </div>
+  ) : (
+    <SprintDashboard
+      tasks={jiraTasks}
+      projectName={projectName}
+      jiraBoardUrl={jiraBoardUrl}
+    />
+  )}
+</DashboardLayout>
+
+<style>
+  .jira-error {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-4);
+    padding: var(--space-6);
+    background: rgba(251, 191, 36, 0.1);
+    border: 1px solid rgba(251, 191, 36, 0.3);
+    border-radius: var(--radius-lg);
+    color: #fbbf24;
+    max-width: 600px;
+    margin: var(--space-8) auto;
+  }
+
+  .jira-error svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .error-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin: 0 0 var(--space-2) 0;
+  }
+
+  .error-note {
+    font-size: 0.9375rem;
+    color: var(--color-text-muted);
+    margin: 0 0 var(--space-4) 0;
+  }
+
+  .jira-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+  }
+
+  .jira-link:hover {
+    background: var(--color-bg);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+</style>

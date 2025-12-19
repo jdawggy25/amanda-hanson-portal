@@ -1,0 +1,293 @@
+---
+import type { TransformedTask } from '../lib/jira/types';
+
+interface Props {
+  tasks: TransformedTask[];
+  title?: string;
+  showEmpty?: boolean;
+}
+
+const { tasks, title = 'Sprint Tasks', showEmpty = true } = Astro.props;
+
+const todoTasks = tasks.filter(t => t.status === 'todo');
+const inProgressTasks = tasks.filter(t => t.status === 'in-progress');
+const doneTasks = tasks.filter(t => t.status === 'done');
+
+function getStatusBadgeClass(status: string): string {
+  switch (status) {
+    case 'done': return 'badge-done';
+    case 'in-progress': return 'badge-in-progress';
+    default: return 'badge-todo';
+  }
+}
+
+function getPriorityBadgeClass(priority: string): string {
+  const p = priority.toLowerCase();
+  if (p === 'highest' || p === 'high') return 'badge-critical';
+  if (p === 'medium') return 'badge-medium';
+  return 'badge-low';
+}
+---
+
+<div class="jira-tasks-section">
+  <div class="section-header">
+    <span class="label-mono-accent">{title}</span>
+    <div class="task-summary">
+      <span class="summary-item done">{doneTasks.length} Done</span>
+      <span class="summary-item in-progress">{inProgressTasks.length} In Progress</span>
+      <span class="summary-item todo">{todoTasks.length} To Do</span>
+    </div>
+  </div>
+
+  {tasks.length === 0 && showEmpty ? (
+    <div class="empty-state">
+      <p>No tasks found in Jira for this project.</p>
+    </div>
+  ) : (
+    <div class="tasks-table-wrapper">
+      <table class="tasks-table">
+        <thead>
+          <tr>
+            <th>Task</th>
+            <th>Status</th>
+            <th>Priority</th>
+            <th>Assignee</th>
+            <th>Link</th>
+          </tr>
+        </thead>
+        <tbody>
+          {tasks.map((task) => (
+            <tr>
+              <td class="task-summary-cell">
+                <span class="task-key">{task.key}</span>
+                <span class="task-title">{task.summary}</span>
+              </td>
+              <td>
+                <span class={`badge ${getStatusBadgeClass(task.status)}`}>
+                  {task.statusLabel}
+                </span>
+              </td>
+              <td>
+                <span class={`badge ${getPriorityBadgeClass(task.priority)}`}>
+                  {task.priority}
+                </span>
+              </td>
+              <td class="assignee-cell">
+                {task.assignee || <span class="unassigned">Unassigned</span>}
+              </td>
+              <td>
+                <a href={task.jiraUrl} target="_blank" rel="noopener noreferrer" class="jira-link">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                    <polyline points="15 3 21 3 21 9"></polyline>
+                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                  </svg>
+                </a>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )}
+</div>
+
+<style>
+  .jira-tasks-section {
+    margin: var(--space-8) 0;
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-4);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .label-mono-accent {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-primary);
+  }
+
+  .task-summary {
+    display: flex;
+    gap: var(--space-4);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+  }
+
+  .summary-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+  }
+
+  .summary-item.done { color: #22c55e; }
+  .summary-item.in-progress { color: var(--color-primary); }
+  .summary-item.todo { color: var(--color-text-muted); }
+
+  .tasks-table-wrapper {
+    overflow-x: auto;
+    background: var(--color-bg-deep);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  .tasks-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+  }
+
+  .tasks-table thead {
+    background: var(--color-bg-secondary);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .tasks-table th {
+    padding: var(--space-3) var(--space-4);
+    text-align: left;
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-muted);
+  }
+
+  .tasks-table tbody tr {
+    border-bottom: 1px solid var(--color-border);
+    transition: background var(--transition-fast);
+  }
+
+  .tasks-table tbody tr:last-child {
+    border-bottom: none;
+  }
+
+  .tasks-table tbody tr:hover {
+    background: var(--color-bg);
+  }
+
+  .tasks-table td {
+    padding: var(--space-3) var(--space-4);
+    color: var(--color-text-secondary);
+  }
+
+  .task-summary-cell {
+    max-width: 400px;
+  }
+
+  .task-key {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-primary);
+    margin-right: var(--space-2);
+  }
+
+  .task-title {
+    color: var(--color-text);
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .badge-done {
+    background: rgba(34, 197, 94, 0.15);
+    color: #22c55e;
+  }
+
+  .badge-in-progress {
+    background: var(--color-primary-glow);
+    color: var(--color-primary);
+  }
+
+  .badge-todo {
+    background: var(--color-bg-secondary);
+    color: var(--color-text-muted);
+  }
+
+  .badge-critical {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+  }
+
+  .badge-medium {
+    background: rgba(251, 191, 36, 0.15);
+    color: #fbbf24;
+  }
+
+  .badge-low {
+    background: var(--color-bg-secondary);
+    color: var(--color-text-muted);
+  }
+
+  .assignee-cell {
+    white-space: nowrap;
+  }
+
+  .unassigned {
+    color: var(--color-text-muted);
+    font-style: italic;
+  }
+
+  .jira-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: var(--radius-sm);
+    color: var(--color-text-muted);
+    transition: all var(--transition-fast);
+  }
+
+  .jira-link:hover {
+    background: var(--color-primary-glow);
+    color: var(--color-primary);
+  }
+
+  .empty-state {
+    padding: var(--space-8);
+    text-align: center;
+    color: var(--color-text-muted);
+    background: var(--color-bg-deep);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  @media (max-width: 640px) {
+    .section-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-2);
+    }
+
+    .tasks-table {
+      font-size: 0.75rem;
+    }
+
+    .tasks-table th,
+    .tasks-table td {
+      padding: var(--space-2);
+    }
+
+    .task-summary-cell {
+      max-width: 200px;
+    }
+  }
+</style>

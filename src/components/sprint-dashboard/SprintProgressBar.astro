@@ -1,0 +1,109 @@
+---
+export interface Props {
+  todoPercent: number;
+  inProgressPercent: number;
+  donePercent: number;
+  label?: string;
+  showLabels?: boolean;
+}
+
+const { todoPercent, inProgressPercent, donePercent, label, showLabels = true } = Astro.props;
+---
+
+<div class="progress-container">
+  {label && <span class="progress-label">{label}</span>}
+  <div class="progress-bar">
+    <div class="progress-segment done" style={`width: ${donePercent}%`}></div>
+    <div class="progress-segment in-progress" style={`width: ${inProgressPercent}%`}></div>
+    <div class="progress-segment todo" style={`width: ${todoPercent}%`}></div>
+  </div>
+  {showLabels && (
+    <div class="progress-stats">
+      <span class="stat done">
+        <span class="stat-dot"></span>
+        Done {donePercent}%
+      </span>
+      <span class="stat in-progress">
+        <span class="stat-dot"></span>
+        In Progress {inProgressPercent}%
+      </span>
+      <span class="stat todo">
+        <span class="stat-dot"></span>
+        To Do {todoPercent}%
+      </span>
+    </div>
+  )}
+</div>
+
+<style>
+  .progress-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    width: 100%;
+  }
+
+  .progress-label {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+  }
+
+  .progress-bar {
+    display: flex;
+    height: 8px;
+    background: var(--color-bg-deep);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .progress-segment {
+    transition: width 0.3s ease;
+  }
+
+  .progress-segment.done {
+    background: #22c55e;
+  }
+
+  .progress-segment.in-progress {
+    background: #3b82f6;
+  }
+
+  .progress-segment.todo {
+    background: #475569;
+  }
+
+  .progress-stats {
+    display: flex;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+  }
+
+  .stat {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+  }
+
+  .stat-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  .stat.done .stat-dot {
+    background: #22c55e;
+  }
+
+  .stat.in-progress .stat-dot {
+    background: #3b82f6;
+  }
+
+  .stat.todo .stat-dot {
+    background: #475569;
+  }
+</style>

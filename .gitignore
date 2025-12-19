@@ -17,6 +17,9 @@ pnpm-debug.log*
 .env
 .env.production
 
+# metrics cache (auto-generated)
+src/data/cache/*.json
+
 # macOS-specific files
 .DS_Store
 

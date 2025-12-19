@@ -1,0 +1,91 @@
+---
+export interface Props {
+  donePercent: number;
+  totalTasks: number;
+  doneTasks: number;
+  totalPoints?: number;
+  donePoints?: number;
+  compact?: boolean;
+}
+
+const { donePercent, totalTasks, doneTasks, totalPoints = 0, donePoints = 0, compact = false } = Astro.props;
+---
+
+<div class={`epic-progress ${compact ? 'compact' : ''}`}>
+  <div class="progress-bar">
+    <div class="progress-fill" style={`width: ${donePercent}%`}></div>
+  </div>
+  <div class="progress-info">
+    <span class="progress-percent">{donePercent}%</span>
+    <span class="progress-detail">
+      {doneTasks}/{totalTasks} tasks
+      {totalPoints > 0 && <span class="points">({donePoints}/{totalPoints} pts)</span>}
+    </span>
+  </div>
+</div>
+
+<style>
+  .epic-progress {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .epic-progress.compact {
+    gap: var(--space-2);
+  }
+
+  .progress-bar {
+    flex: 1;
+    height: 6px;
+    background: var(--color-bg-deep);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    min-width: 60px;
+  }
+
+  .compact .progress-bar {
+    height: 4px;
+    min-width: 40px;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #22c55e, #4ade80);
+    border-radius: var(--radius-full);
+    transition: width 0.3s ease;
+  }
+
+  .progress-info {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-2);
+    flex-shrink: 0;
+  }
+
+  .progress-percent {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text);
+    font-family: var(--font-mono);
+    min-width: 36px;
+  }
+
+  .compact .progress-percent {
+    font-size: 0.75rem;
+    min-width: 28px;
+  }
+
+  .progress-detail {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+  }
+
+  .compact .progress-detail {
+    font-size: 0.6875rem;
+  }
+
+  .points {
+    color: var(--color-text-secondary);
+  }
+</style>

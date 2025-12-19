@@ -87,7 +87,15 @@ if (requireAuth && auth.authenticated && !auth.authorized) {
     box-sizing: border-box;
   }
 
-  @media (max-width: 768px) {
+  /* Tablet: reduce sidebar space impact */
+  @media (max-width: 1024px) {
+    .admin-main {
+      padding: 1.5rem 1.5rem;
+    }
+  }
+
+  /* Mobile: sidebar becomes overlay */
+  @media (max-width: 900px) {
     .admin-main {
       margin-left: 0;
       padding: 1rem;

@@ -358,11 +358,13 @@ try {
     margin-top: 1rem;
   }
 
-  @media (max-width: 768px) {
-    .command-center {
-      padding: 1rem;
+  @media (max-width: 1024px) {
+    .clients-grid {
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     }
+  }
 
+  @media (max-width: 900px) {
     .dashboard-header {
       flex-direction: column;
     }
@@ -372,8 +374,27 @@ try {
       justify-content: space-between;
     }
 
+    .header-left h1 {
+      font-size: 1.5rem;
+    }
+  }
+
+  @media (max-width: 600px) {
     .clients-grid {
       grid-template-columns: 1fr;
+    }
+
+    .stats-summary {
+      gap: 0.5rem;
+    }
+
+    .stat {
+      padding: 0.35rem 0.5rem;
+      min-width: 50px;
+    }
+
+    .stat-value {
+      font-size: 1rem;
     }
   }
 </style>

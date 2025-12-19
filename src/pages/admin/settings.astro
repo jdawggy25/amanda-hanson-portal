@@ -368,17 +368,28 @@ const icons: Record<string, string> = {
     color: rgba(255, 255, 255, 0.5);
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 900px) {
     .integrations-grid {
       grid-template-columns: 1fr;
     }
 
+    .page-header h1 {
+      font-size: 1.5rem;
+    }
+  }
+
+  @media (max-width: 600px) {
     .clients-table-wrapper {
       overflow-x: auto;
     }
 
     .clients-table {
       min-width: 500px;
+    }
+
+    .env-card {
+      flex-direction: column;
+      gap: 1rem;
     }
   }
 </style>

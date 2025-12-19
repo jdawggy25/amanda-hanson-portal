@@ -262,8 +262,8 @@ const icons: Record<string, string> = {
     color: #ef4444;
   }
 
-  /* Mobile Styles */
-  @media (max-width: 768px) {
+  /* Mobile/Tablet Styles - sidebar becomes overlay */
+  @media (max-width: 900px) {
     .admin-nav-toggle {
       display: flex;
     }
@@ -323,6 +323,6 @@ const icons: Record<string, string> = {
 
   // Close on window resize to desktop
   window.addEventListener('resize', () => {
-    if (window.innerWidth > 768) closeNav();
+    if (window.innerWidth > 900) closeNav();
   });
 </script>

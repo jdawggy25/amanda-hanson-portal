@@ -22,26 +22,8 @@ const {
   website,
   healthScore,
   quickMetrics,
-  narrativeStatus,
   alerts,
 } = client;
-
-// Status badge colors
-const statusColors = {
-  none: { bg: 'rgba(239, 68, 68, 0.2)', text: '#ef4444' },
-  draft: { bg: 'rgba(245, 158, 11, 0.2)', text: '#f59e0b' },
-  ready: { bg: 'rgba(16, 185, 129, 0.2)', text: '#10b981' },
-  published: { bg: 'rgba(102, 126, 234, 0.2)', text: '#667eea' },
-};
-
-const statusLabels = {
-  none: 'No Narrative',
-  draft: 'Draft',
-  ready: 'Ready',
-  published: 'Published',
-};
-
-const statusStyle = statusColors[narrativeStatus];
 
 // Health status border color
 const borderColors = {
@@ -66,12 +48,6 @@ const criticalAlerts = alerts.filter(a => a.severity === 'critical').length;
         {website}
       </a>
     </div>
-    <span
-      class="narrative-status"
-      style={`background: ${statusStyle.bg}; color: ${statusStyle.text};`}
-    >
-      {statusLabels[narrativeStatus]}
-    </span>
   </div>
 
   <div class="card-body">
@@ -85,7 +61,6 @@ const criticalAlerts = alerts.filter(a => a.severity === 'critical').length;
         <HealthBreakdownBars
           seo={healthScore.seo}
           tasks={healthScore.tasks}
-          narrative={healthScore.narrative}
           compact
         />
       </div>
@@ -127,11 +102,8 @@ const criticalAlerts = alerts.filter(a => a.severity === 'critical').length;
     <a href={`/admin/clients/${clientId}`} class="btn-primary">
       Open
     </a>
-    <a
-      href={`/admin/narratives?client=${clientId}&month=${currentMonth}`}
-      class="btn-secondary"
-    >
-      Edit Narrative
+    <a href={`/${clientId}/`} class="btn-secondary" target="_blank">
+      View Docs
     </a>
     <button
       class="btn-icon generate-report"
@@ -192,14 +164,6 @@ const criticalAlerts = alerts.filter(a => a.severity === 'critical').length;
   .website:hover {
     color: rgba(255, 255, 255, 0.7);
     text-decoration: underline;
-  }
-
-  .narrative-status {
-    font-size: 0.7rem;
-    padding: 0.25rem 0.5rem;
-    border-radius: 4px;
-    font-weight: 500;
-    flex-shrink: 0;
   }
 
   .card-body {

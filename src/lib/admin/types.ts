@@ -6,7 +6,6 @@
 
 import type { TransformedTask, SprintMetrics } from '../jira/types';
 import type { ClientMetrics } from '../metrics';
-import type { NarrativeRecord } from '../storage/supabase';
 
 // Client configuration from clients.config.json
 export interface ClientConfig {
@@ -30,9 +29,8 @@ export interface ClientConfig {
 
 // Health score breakdown for a client
 export interface HealthScoreBreakdown {
-  seo: number;          // 0-100, weight: 40%
-  tasks: number;        // 0-100, weight: 35%
-  narrative: number;    // 0-100, weight: 25%
+  seo: number;          // 0-100, weight: 55%
+  tasks: number;        // 0-100, weight: 45%
   composite: number;    // weighted average
   status: 'healthy' | 'needs-attention' | 'critical';
 }
@@ -54,9 +52,6 @@ export interface HealthScoreDetails {
       sprintCompletion: number | null;
       avgAgeInProgress: number | null;
     };
-    narrative: {
-      status: 'none' | 'draft' | 'ready' | 'published';
-    };
   };
   alerts: HealthAlert[];
 }
@@ -64,7 +59,7 @@ export interface HealthScoreDetails {
 // Alert for a specific issue
 export interface HealthAlert {
   severity: 'critical' | 'warning' | 'info';
-  category: 'seo' | 'tasks' | 'narrative';
+  category: 'seo' | 'tasks';
   message: string;
   actionUrl?: string;
 }
@@ -78,18 +73,11 @@ export interface ClientTaskData {
   avgDaysInProgress: number | null;
 }
 
-// Narrative data with status
-export interface ClientNarrativeData {
-  status: 'none' | 'draft' | 'ready' | 'published';
-  record: NarrativeRecord | null;
-}
-
 // Fully aggregated data for a single client
 export interface ClientAggregatedData {
   client: ClientConfig;
   metrics: ClientMetrics | null;
   tasks: ClientTaskData;
-  narrative: ClientNarrativeData;
   healthScore: HealthScoreDetails;
 }
 
@@ -105,7 +93,6 @@ export interface ClientSummary {
     openTasks: number;
     overdueCount: number;
   };
-  narrativeStatus: 'none' | 'draft' | 'ready' | 'published';
   alerts: HealthAlert[];
 }
 

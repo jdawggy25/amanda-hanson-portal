@@ -2,17 +2,16 @@
 /**
  * HealthBreakdownBars Component
  *
- * Three mini progress bars for SEO/Tasks/Narrative sub-scores.
+ * Two mini progress bars for SEO/Tasks sub-scores.
  */
 
 interface Props {
   seo: number;
   tasks: number;
-  narrative: number;
   compact?: boolean;
 }
 
-const { seo, tasks, narrative, compact = false } = Astro.props;
+const { seo, tasks, compact = false } = Astro.props;
 
 function getBarColor(score: number): string {
   if (score >= 75) return '#10b981'; // Green
@@ -23,7 +22,6 @@ function getBarColor(score: number): string {
 const bars = [
   { label: 'SEO', score: seo, color: getBarColor(seo) },
   { label: 'Tasks', score: tasks, color: getBarColor(tasks) },
-  { label: 'Narrative', score: narrative, color: getBarColor(narrative) },
 ];
 ---
 

@@ -1,12 +1,11 @@
 /**
  * Health Score Calculator
  *
- * Calculates a composite health score from SEO metrics, Jira tasks, and narrative status.
+ * Calculates a composite health score from SEO metrics and Jira tasks.
  *
  * Weights:
- * - SEO: 40%
- * - Tasks: 35%
- * - Narrative: 25%
+ * - SEO: 55%
+ * - Tasks: 45%
  */
 
 import type { ClientMetrics } from '../metrics';
@@ -16,14 +15,12 @@ import type {
   HealthScoreDetails,
   HealthAlert,
   ClientTaskData,
-  ClientNarrativeData,
 } from './types';
 
 // Weight constants
 const WEIGHTS = {
-  seo: 0.40,
-  tasks: 0.35,
-  narrative: 0.25,
+  seo: 0.55,
+  tasks: 0.45,
 };
 
 // SEO sub-weights (must sum to 1.0)
@@ -193,44 +190,11 @@ function calculateTaskScore(taskData: ClientTaskData): {
 }
 
 /**
- * Calculate narrative score component (0-100)
- */
-function calculateNarrativeScore(narrativeData: ClientNarrativeData): {
-  score: number;
-  factors: HealthScoreDetails['factors']['narrative'];
-} {
-  const { status } = narrativeData;
-
-  let score = 0;
-  switch (status) {
-    case 'published':
-      score = 100;
-      break;
-    case 'ready':
-      score = 85;
-      break;
-    case 'draft':
-      score = 50;
-      break;
-    case 'none':
-    default:
-      score = 0;
-      break;
-  }
-
-  return {
-    score,
-    factors: { status },
-  };
-}
-
-/**
  * Generate alerts based on scores and factors
  */
 function generateAlerts(
   seoFactors: HealthScoreDetails['factors']['seo'],
   taskFactors: HealthScoreDetails['factors']['tasks'],
-  narrativeFactors: HealthScoreDetails['factors']['narrative'],
   clientId: string
 ): HealthAlert[] {
   const alerts: HealthAlert[] = [];
@@ -260,17 +224,17 @@ function generateAlerts(
 
   if (seoFactors.keywordsCount !== null && seoFactors.keywordsCount === 0) {
     alerts.push({
-      severity: 'critical',
+      severity: 'warning',
       category: 'seo',
-      message: 'No organic keywords ranking',
+      message: 'No organic keywords ranking yet',
     });
   }
 
   if (seoFactors.domainRating !== null && seoFactors.domainRating < 10) {
     alerts.push({
-      severity: 'warning',
+      severity: 'info',
       category: 'seo',
-      message: `Domain rating is low (${seoFactors.domainRating})`,
+      message: `Domain rating is low (${seoFactors.domainRating}) - building authority`,
     });
   }
 
@@ -301,23 +265,6 @@ function generateAlerts(
     });
   }
 
-  // Narrative alerts
-  if (narrativeFactors.status === 'none') {
-    alerts.push({
-      severity: 'critical',
-      category: 'narrative',
-      message: 'No narrative created for this month',
-      actionUrl: `/admin/clients/${clientId}#narrative`,
-    });
-  } else if (narrativeFactors.status === 'draft') {
-    alerts.push({
-      severity: 'warning',
-      category: 'narrative',
-      message: 'Narrative is still in draft status',
-      actionUrl: `/admin/clients/${clientId}#narrative`,
-    });
-  }
-
   return alerts;
 }
 
@@ -336,26 +283,22 @@ function getHealthStatus(composite: number): 'healthy' | 'needs-attention' | 'cr
 export function calculateHealthScore(
   clientId: string,
   metrics: ClientMetrics | null,
-  taskData: ClientTaskData,
-  narrativeData: ClientNarrativeData
+  taskData: ClientTaskData
 ): HealthScoreDetails {
   // Calculate individual scores
   const seoResult = calculateSeoScore(metrics);
   const taskResult = calculateTaskScore(taskData);
-  const narrativeResult = calculateNarrativeScore(narrativeData);
 
-  // Calculate composite score
+  // Calculate composite score (SEO + Tasks only)
   const composite = Math.round(
     seoResult.score * WEIGHTS.seo +
-    taskResult.score * WEIGHTS.tasks +
-    narrativeResult.score * WEIGHTS.narrative
+    taskResult.score * WEIGHTS.tasks
   );
 
   // Generate alerts
   const alerts = generateAlerts(
     seoResult.factors,
     taskResult.factors,
-    narrativeResult.factors,
     clientId
   );
 
@@ -363,14 +306,12 @@ export function calculateHealthScore(
     breakdown: {
       seo: seoResult.score,
       tasks: taskResult.score,
-      narrative: narrativeResult.score,
       composite,
       status: getHealthStatus(composite),
     },
     factors: {
       seo: seoResult.factors,
       tasks: taskResult.factors,
-      narrative: narrativeResult.factors,
     },
     alerts,
   };

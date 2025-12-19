@@ -11,7 +11,6 @@ import type {
   ClientAggregatedData,
   ClientSummary,
   CommandCenterData,
-  ClientNarrativeData,
   HealthAlert,
 } from './types';
 import { calculateHealthScore, calculateTaskData } from './health-score';
@@ -83,13 +82,6 @@ async function fetchTasksForClient(client: ClientConfig) {
 }
 
 /**
- * Get default narrative data (narratives feature removed)
- */
-function getDefaultNarrativeData(): ClientNarrativeData {
-  return { status: 'none', record: null };
-}
-
-/**
  * Aggregate all data for a single client
  */
 export async function aggregateClientData(
@@ -108,16 +100,13 @@ export async function aggregateClientData(
     fetchTasksForClient(client),
   ]);
 
-  const narrativeData = getDefaultNarrativeData();
-
   // Calculate health score
-  const healthScore = calculateHealthScore(clientId, metrics, taskData, narrativeData);
+  const healthScore = calculateHealthScore(clientId, metrics, taskData);
 
   return {
     client,
     metrics,
     tasks: taskData,
-    narrative: narrativeData,
     healthScore,
   };
 }
@@ -134,9 +123,6 @@ export async function aggregateAllClients(_month?: string): Promise<CommandCente
       // Fetch tasks
       const taskData = await fetchTasksForClient(client);
 
-      // Narrative data (feature removed)
-      const narrativeData = getDefaultNarrativeData();
-
       // Try to get metrics - use cached snapshot from config if API fails
       let metrics: ClientMetrics | null = null;
       try {
@@ -146,7 +132,7 @@ export async function aggregateAllClients(_month?: string): Promise<CommandCente
       }
 
       // Calculate health score
-      const healthScore = calculateHealthScore(client.id, metrics, taskData, narrativeData);
+      const healthScore = calculateHealthScore(client.id, metrics, taskData);
 
       return {
         clientId: client.id,
@@ -159,7 +145,6 @@ export async function aggregateAllClients(_month?: string): Promise<CommandCente
           openTasks: taskData.metrics.todoTasks + taskData.metrics.inProgressTasks,
           overdueCount: taskData.overdueCount,
         },
-        narrativeStatus: narrativeData.status,
         alerts: healthScore.alerts,
       };
     } catch (error) {
@@ -173,7 +158,6 @@ export async function aggregateAllClients(_month?: string): Promise<CommandCente
         healthScore: {
           seo: 0,
           tasks: 0,
-          narrative: 0,
           composite: 0,
           status: 'critical',
         },
@@ -183,7 +167,6 @@ export async function aggregateAllClients(_month?: string): Promise<CommandCente
           openTasks: 0,
           overdueCount: 0,
         },
-        narrativeStatus: 'none',
         alerts: [
           {
             severity: 'critical',

@@ -242,10 +242,53 @@ const categoryIcons = {
     padding: 0.25rem 0.75rem;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 900px) {
     .alerts-content {
       flex-direction: column;
       gap: 1rem;
+    }
+
+    .header-content {
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .panel-header {
+      padding: 0.75rem 1rem;
+    }
+
+    .alerts-content {
+      padding: 0 1rem 1rem;
+    }
+
+    .alert-item {
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      padding: 0.6rem 0.75rem;
+    }
+
+    .alert-content {
+      width: calc(100% - 2rem);
+      order: 2;
+    }
+
+    .alert-icon {
+      order: 1;
+    }
+
+    .alert-action {
+      order: 3;
+      margin-left: auto;
+    }
+
+    .alert-message {
+      white-space: normal;
+    }
+
+    .header-content span:first-of-type {
+      width: 100%;
     }
   }
 </style>

@@ -303,4 +303,36 @@ const criticalAlerts = alerts.filter(a => a.severity === 'critical').length;
     background: rgba(255, 255, 255, 0.15);
     color: white;
   }
+
+  @media (max-width: 600px) {
+    .client-card {
+      padding: 1rem;
+    }
+
+    .health-section {
+      flex-wrap: wrap;
+    }
+
+    .metrics-section {
+      gap: 0.75rem;
+    }
+
+    .metric {
+      min-width: 45px;
+    }
+
+    .card-actions {
+      flex-wrap: wrap;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+      flex: 1 1 calc(50% - 0.5rem);
+      min-width: 0;
+    }
+
+    .btn-icon {
+      flex-shrink: 0;
+    }
+  }
 </style>

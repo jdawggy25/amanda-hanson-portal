@@ -1,76 +1,12 @@
 {
   "clients": [
     {
-      "id": "v3",
-      "name": "V3 Biomedical",
-      "password": "v3",
-      "website": "v3biomedical.com",
+      "id": "amanda-hanson",
+      "name": "Amanda Hanson",
+      "password": "midlifemuse",
+      "website": "amandahanson.com",
       "enabled": true,
-      "jiraProjectKey": "V3"
-    },
-    {
-      "id": "casita",
-      "name": "Casita Azul",
-      "password": "casita",
-      "website": "casitaazulpdx.com",
-      "enabled": true,
-      "jiraProjectKey": "CASITA"
-    },
-    {
-      "id": "bnc-builders",
-      "name": "BNC Builders Inc.",
-      "password": "bnc-builders",
-      "website": "bncbuildersinc.com",
-      "enabled": true,
-      "jiraProjectKey": "BNC"
-    },
-    {
-      "id": "hansen-chiropractic",
-      "name": "Hansen Chiropractic",
-      "password": "hansen",
-      "website": "hansenchiropracticaz.com",
-      "enabled": true,
-      "jiraProjectKey": "HC"
-    },
-    {
-      "id": "king-roof",
-      "name": "King Roof",
-      "password": "kingroof",
-      "website": "kingroofco.com",
-      "enabled": true,
-      "jiraProjectKey": "KRC"
-    },
-    {
-      "id": "salt-creek-dental",
-      "name": "Salt Creek Dental",
-      "password": "saltcreek",
-      "website": "dentistingraham.com",
-      "enabled": true,
-      "jiraProjectKey": "SCD"
-    },
-    {
-      "id": "4-corners",
-      "name": "4 Corners Concrete Coatings",
-      "password": "4corners",
-      "website": "4cornersconcretecoatings.com",
-      "enabled": true,
-      "jiraProjectKey": "WZ4"
-    },
-    {
-      "id": "cocinarte",
-      "name": "Cocinarte",
-      "password": "cocinarte",
-      "website": "cocinartepdx.com",
-      "enabled": true,
-      "jiraProjectKey": "COC"
-    },
-    {
-      "id": "spanish-horizons",
-      "name": "Spanish Horizons Academy",
-      "password": "spanish",
-      "website": "spanishhorizonsacademy.com",
-      "enabled": true,
-      "jiraProjectKey": "SH"
+      "jiraProjectKey": "AH"
     }
   ]
 }

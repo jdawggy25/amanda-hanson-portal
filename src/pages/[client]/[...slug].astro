@@ -1,12 +1,13 @@
 ---
 import { getCollection } from 'astro:content';
 import DocLayout from '../../layouts/DocLayout.astro';
+import clientsConfig from '../../../clients.config.json';
 
 export const prerender = true;
 
 export async function getStaticPaths() {
-  // Define available clients
-  const CLIENTS = ['v3', 'casita', 'bnc-builders', 'hansen-chiropractic', 'king-roof', 'salt-creek-dental', '4-corners', 'cocinarte', 'spanish-horizons'];
+  // Get clients from config file
+  const CLIENTS = clientsConfig.clients.filter(c => c.enabled).map(c => c.id);
 
   const docs = await getCollection('docs');
 

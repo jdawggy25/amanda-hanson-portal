@@ -1,0 +1,857 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import clientsConfig from '../../../clients.config.json';
+
+export const prerender = false;
+
+export async function getStaticPaths() {
+  const CLIENTS = clientsConfig.clients.filter(c => c.enabled).map(c => c.id);
+  return CLIENTS.map(client => ({
+    params: { client },
+  }));
+}
+
+const { client } = Astro.params;
+
+const clientConfig = clientsConfig.clients.find(c => c.id === client);
+if (!clientConfig || !clientConfig.enabled) {
+  return Astro.redirect('/');
+}
+
+const clientName = clientConfig.name;
+
+// KEYWORD ATTACK STRATEGY - From Ahrefs December 2025
+// Priority 1: Quick Wins (Low difficulty, decent volume)
+const quickWinKeywords = [
+  { keyword: "midlife crisis women", volume: 900, difficulty: 2, traffic_potential: 1500, priority: "HIGH", strategy: "Create pillar page with comprehensive guide. Target featured snippet with list format." },
+  { keyword: "midlife reinvention", volume: 50, difficulty: 0, traffic_potential: 20, priority: "HIGH", strategy: "Own this term completely. Create 'Midlife Reinvention Guide' as cornerstone content." },
+  { keyword: "women midlife crisis", volume: 150, difficulty: 0, traffic_potential: 1400, priority: "HIGH", strategy: "Alternative phrasing - redirect or merge with main pillar." },
+  { keyword: "midlife crisis for women", volume: 100, difficulty: 0, traffic_potential: 1700, priority: "HIGH", strategy: "Long-tail variation. Add FAQ section targeting this." },
+  { keyword: "self love life coach", volume: 100, difficulty: 2, traffic_potential: 30, priority: "HIGH", strategy: "Direct service page. Amanda ranks for 'self love program' - expand." },
+  { keyword: "self love affirmations", volume: 5800, difficulty: 5, traffic_potential: 4600, priority: "MEDIUM", strategy: "Content piece with downloadable PDF. Email capture opportunity." },
+  { keyword: "reinvent yourself", volume: 1300, difficulty: 6, traffic_potential: 600, priority: "MEDIUM", strategy: "Blog post series: '7 Ways to Reinvent Yourself at 50'" },
+  { keyword: "self love books", volume: 1600, difficulty: 2, traffic_potential: 900, priority: "HIGH", strategy: "Amanda has a book! Create 'Best Self Love Books' list featuring 'Muse'." },
+];
+
+// Priority 2: Medium Difficulty with High Volume
+const mediumKeywords = [
+  { keyword: "life coach for women", volume: 400, difficulty: 22, traffic_potential: 900, priority: "MEDIUM", strategy: "Service page optimization. Add testimonials and credentials." },
+  { keyword: "women empowerment coach", volume: 150, difficulty: 6, traffic_potential: 350, priority: "MEDIUM", strategy: "Secondary service page. Internal link from main coaching page." },
+  { keyword: "self love coach", volume: 150, difficulty: 7, traffic_potential: 150, priority: "MEDIUM", strategy: "Dedicated service page with application form." },
+  { keyword: "empty nest syndrome", volume: 5900, difficulty: 15, traffic_potential: 1200, priority: "MEDIUM", strategy: "Major content opportunity. Create comprehensive guide." },
+  { keyword: "empty nester", volume: 2500, difficulty: 11, traffic_potential: 1600, priority: "MEDIUM", strategy: "Blog category for empty nest content." },
+  { keyword: "what is self love", volume: 3000, difficulty: 24, traffic_potential: 1800, priority: "LOW", strategy: "Educational content piece. Good for top-of-funnel." },
+];
+
+// Priority 3: High Volume Aspirational Targets
+const aspirationalKeywords = [
+  { keyword: "self love quotes", volume: 23000, difficulty: 13, traffic_potential: 16000, priority: "MEDIUM", strategy: "Create quote graphics. Pinterest + blog post opportunity." },
+  { keyword: "self love", volume: 21000, difficulty: 36, traffic_potential: 7900, priority: "LOW", strategy: "Very competitive. Focus on long-tail variations first." },
+  { keyword: "self love quotes for women", volume: 2100, difficulty: 18, traffic_potential: 17000, priority: "MEDIUM", strategy: "Targeted version. Pinterest-optimized content." },
+  { keyword: "how to find purpose in life", volume: 1500, difficulty: 22, traffic_potential: 19000, priority: "MEDIUM", strategy: "Align with Amanda's messaging. Video content opportunity." },
+  { keyword: "what is my purpose in life", volume: 2000, difficulty: 30, traffic_potential: 18000, priority: "LOW", strategy: "Quiz/assessment lead magnet opportunity." },
+];
+
+// CURRENT BACKLINK PROFILE - High DR Domains
+const currentBacklinks = [
+  { domain: "spotify.com", dr: 95, type: "Podcast", status: "Have" },
+  { domain: "squarespace.com", dr: 95, type: "Platform", status: "Have" },
+  { domain: "linktr.ee", dr: 94, type: "Bio Link", status: "Have" },
+  { domain: "dailymail.co.uk", dr: 91, type: "Press", status: "Have" },
+  { domain: "independent.co.uk", dr: 91, type: "Press", status: "Have" },
+  { domain: "buzzsprout.com", dr: 91, type: "Podcast", status: "Have" },
+  { domain: "iheart.com", dr: 91, type: "Podcast", status: "Have" },
+  { domain: "audible.com", dr: 91, type: "Audiobook", status: "Have" },
+  { domain: "mindvalley.com", dr: 78, type: "Partnership", status: "Have" },
+  { domain: "yourtango.com", dr: 78, type: "Media", status: "Have" },
+];
+
+// DIRECTORIES TO APPLY FOR
+const directories = [
+  { name: "Psychology Today", url: "psychologytoday.com/therapists", dr: 92, category: "Coaching", priority: "HIGH", notes: "Requires credentials verification. Amanda has PhD." },
+  { name: "International Coach Federation", url: "coachfederation.org", dr: 75, category: "Coaching", priority: "HIGH", notes: "Industry standard certification directory." },
+  { name: "Life Coach Directory", url: "lifecoach-directory.org.uk", dr: 45, category: "Coaching", priority: "MEDIUM", notes: "Free listing available." },
+  { name: "Noomii", url: "noomii.com", dr: 58, category: "Coaching", priority: "MEDIUM", notes: "Popular coach directory with client reviews." },
+  { name: "Bark", url: "bark.com", dr: 78, category: "Services", priority: "MEDIUM", notes: "Lead generation platform for coaches." },
+  { name: "Thumbtack", url: "thumbtack.com", dr: 91, category: "Services", priority: "MEDIUM", notes: "Local services marketplace." },
+  { name: "Best Self Co", url: "bestself.co", dr: 62, category: "Personal Dev", priority: "MEDIUM", notes: "Personal development community." },
+  { name: "Female Entrepreneur Association", url: "femaleentrepreneurassociation.com", dr: 54, category: "Business", priority: "MEDIUM", notes: "Women business leader directory." },
+  { name: "SheEO", url: "sheeo.world", dr: 52, category: "Business", priority: "MEDIUM", notes: "Women entrepreneur network." },
+  { name: "Podcast directories", url: "Various", dr: 0, category: "Podcast", priority: "HIGH", notes: "Apple, Spotify, Google already done. Add: Podchaser, Listen Notes." },
+];
+
+// BACKLINK STRATEGIES
+const backlinkStrategies = [
+  {
+    strategy: "Podcast Guest Appearances",
+    priority: "HIGH",
+    difficulty: "Low",
+    expectedLinks: "10-20/month",
+    description: "Amanda hosts a podcast - leverage for guest swaps. Target: Mindvalley podcasts, Women's business podcasts, Psychology/wellness shows.",
+    actionItems: ["Create podcast one-sheet", "List 50 target podcasts in niche", "Pitch 10 podcasts/week", "Offer reciprocal guest spots"]
+  },
+  {
+    strategy: "HARO (Help A Reporter Out)",
+    priority: "HIGH",
+    difficulty: "Medium",
+    expectedLinks: "3-5 high-DR/month",
+    description: "PhD credentials + 947K following = perfect HARO source. Target: Women's lifestyle, psychology, business queries.",
+    actionItems: ["Sign up for HARO", "Set up alerts for: midlife, women, coaching, psychology", "Respond within 30 mins of query", "Track wins"]
+  },
+  {
+    strategy: "Featured Expert Contributions",
+    priority: "HIGH",
+    difficulty: "Medium",
+    expectedLinks: "5-10/month",
+    description: "Contribute expert quotes to articles. Already have: Daily Mail, Independent. Target more UK/US publications.",
+    actionItems: ["Monitor Qwoted, SourceBottle", "Create expert bio + headshot kit", "Target: HuffPost, Forbes Women, Bustle", "Follow up on placements"]
+  },
+  {
+    strategy: "Resource Page Link Building",
+    priority: "MEDIUM",
+    difficulty: "Low",
+    expectedLinks: "5-10/month",
+    description: "Find 'resources for midlife women' pages and request inclusion.",
+    actionItems: ["Search: 'midlife women resources'", "Search: 'empty nest resources'", "Search: 'life coach directory'", "Personalized outreach emails"]
+  },
+  {
+    strategy: "Broken Link Building",
+    priority: "MEDIUM",
+    difficulty: "Medium",
+    expectedLinks: "3-5/month",
+    description: "Find broken links on coaching/wellness sites, offer Amanda's content as replacement.",
+    actionItems: ["Use Ahrefs broken link checker on competitor sites", "Create replacement content", "Outreach to webmasters"]
+  },
+  {
+    strategy: "Mindvalley Partnership Expansion",
+    priority: "HIGH",
+    difficulty: "Low",
+    expectedLinks: "1-3 high-value",
+    description: "Already have Mindvalley link (DR 78). Explore deeper partnership: guest teaching, joint webinars, affiliate.",
+    actionItems: ["Identify Mindvalley contact", "Propose guest masterclass", "Explore affiliate partnership", "Co-create content"]
+  },
+  {
+    strategy: "Book Promotion Backlinks",
+    priority: "MEDIUM",
+    difficulty: "Medium",
+    expectedLinks: "10-20 total",
+    description: "Leverage 'Muse' book for backlinks: book review sites, author interviews, book club features.",
+    actionItems: ["List book review blogs in self-help niche", "Submit to Goodreads Listopia", "Pitch author interviews", "Create book club guide"]
+  },
+];
+
+// DOMAINS TO CONSIDER PURCHASING
+const domainsToPurchase = [
+  { domain: "midlifemuse.com", available: "Check", priority: "HIGH", rationale: "Brand match - 'The Midlife Muse'. Protect brand and redirect." },
+  { domain: "themidlifemuse.com", available: "Check", priority: "HIGH", rationale: "Exact brand match. Essential for brand protection." },
+  { domain: "midlifemusecoaching.com", available: "Check", priority: "MEDIUM", rationale: "Service-specific. Good for SEO if primary is taken." },
+  { domain: "midlifereinvention.com", available: "Check", priority: "HIGH", rationale: "Keyword-rich. Build content hub or redirect." },
+  { domain: "midlifetransformation.com", available: "Check", priority: "MEDIUM", rationale: "High-value keyword. Content site or redirect." },
+  { domain: "womensreinvention.com", available: "Check", priority: "MEDIUM", rationale: "Broader market. Lead gen site potential." },
+  { domain: "emptynestsupport.com", available: "Check", priority: "MEDIUM", rationale: "High search volume topic. Content site." },
+  { domain: "selfloveguide.com", available: "Check", priority: "LOW", rationale: "Competitive keyword but relevant to book." },
+  { domain: "dramandashanson.com", available: "Check", priority: "HIGH", rationale: "Professional credential domain. Redirect to main." },
+  { domain: "amandahansoncoaching.com", available: "Check", priority: "HIGH", rationale: "Brand protection. Redirect to main site." },
+];
+---
+
+<BaseLayout title={`${clientName} - SEO Strategy`}>
+  <main class="strategy-main">
+    <div class="strategy-container">
+
+      <header class="strategy-header">
+        <div class="header-badge">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 20h9"></path>
+            <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path>
+          </svg>
+          SEO Attack Strategy
+        </div>
+        <h1>{clientName}</h1>
+        <p class="header-subtitle">Keyword Targets, Backlink Strategy & Domain Acquisitions</p>
+        <p class="header-date">Data from Ahrefs API | December 24, 2025</p>
+      </header>
+
+      <!-- SECTION 1: KEYWORD ATTACK PLAN -->
+      <section class="content-section">
+        <h2 class="section-title">
+          <span class="section-icon">🎯</span>
+          Keyword Attack Plan
+        </h2>
+        <p class="section-intro">Prioritized keywords to target based on difficulty, volume, and relevance to Amanda's coaching business.</p>
+
+        <div class="keyword-category">
+          <h3 class="category-title priority-high">Priority 1: Quick Wins (Difficulty 0-10)</h3>
+          <p class="category-desc">Low competition keywords Amanda can rank for quickly. Focus here first for immediate traffic gains.</p>
+          <div class="table-container">
+            <table class="keyword-table">
+              <thead>
+                <tr>
+                  <th>Keyword</th>
+                  <th>Volume</th>
+                  <th>KD</th>
+                  <th>Traffic Pot.</th>
+                  <th>Strategy</th>
+                </tr>
+              </thead>
+              <tbody>
+                {quickWinKeywords.map((kw) => (
+                  <tr>
+                    <td class="keyword-cell">{kw.keyword}</td>
+                    <td class="volume-cell">{kw.volume.toLocaleString()}</td>
+                    <td><span class="kd-badge easy">{kw.difficulty}</span></td>
+                    <td>{kw.traffic_potential.toLocaleString()}</td>
+                    <td class="strategy-cell">{kw.strategy}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="keyword-category">
+          <h3 class="category-title priority-medium">Priority 2: Medium Difficulty (KD 10-25)</h3>
+          <p class="category-desc">Competitive but achievable with quality content. Target after quick wins are secured.</p>
+          <div class="table-container">
+            <table class="keyword-table">
+              <thead>
+                <tr>
+                  <th>Keyword</th>
+                  <th>Volume</th>
+                  <th>KD</th>
+                  <th>Traffic Pot.</th>
+                  <th>Strategy</th>
+                </tr>
+              </thead>
+              <tbody>
+                {mediumKeywords.map((kw) => (
+                  <tr>
+                    <td class="keyword-cell">{kw.keyword}</td>
+                    <td class="volume-cell">{kw.volume.toLocaleString()}</td>
+                    <td><span class="kd-badge medium">{kw.difficulty}</span></td>
+                    <td>{kw.traffic_potential.toLocaleString()}</td>
+                    <td class="strategy-cell">{kw.strategy}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="keyword-category">
+          <h3 class="category-title priority-low">Priority 3: Aspirational Targets (High Volume)</h3>
+          <p class="category-desc">High volume keywords to work toward. Build authority first, then compete.</p>
+          <div class="table-container">
+            <table class="keyword-table">
+              <thead>
+                <tr>
+                  <th>Keyword</th>
+                  <th>Volume</th>
+                  <th>KD</th>
+                  <th>Traffic Pot.</th>
+                  <th>Strategy</th>
+                </tr>
+              </thead>
+              <tbody>
+                {aspirationalKeywords.map((kw) => (
+                  <tr>
+                    <td class="keyword-cell">{kw.keyword}</td>
+                    <td class="volume-cell">{kw.volume.toLocaleString()}</td>
+                    <td><span class={`kd-badge ${kw.difficulty <= 20 ? 'medium' : 'hard'}`}>{kw.difficulty}</span></td>
+                    <td>{kw.traffic_potential.toLocaleString()}</td>
+                    <td class="strategy-cell">{kw.strategy}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 2: DIRECTORIES -->
+      <section class="content-section">
+        <h2 class="section-title">
+          <span class="section-icon">📁</span>
+          Directory Submissions
+        </h2>
+        <p class="section-intro">High-authority directories to submit Amanda's profile for backlinks and visibility.</p>
+
+        <div class="table-container">
+          <table class="directory-table">
+            <thead>
+              <tr>
+                <th>Directory</th>
+                <th>DR</th>
+                <th>Category</th>
+                <th>Priority</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              {directories.map((dir) => (
+                <tr>
+                  <td class="directory-name">{dir.name}</td>
+                  <td><span class="dr-badge">{dir.dr > 0 ? dir.dr : 'Varies'}</span></td>
+                  <td>{dir.category}</td>
+                  <td><span class={`priority-badge ${dir.priority.toLowerCase()}`}>{dir.priority}</span></td>
+                  <td class="notes-cell">{dir.notes}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- SECTION 3: BACKLINK STRATEGIES -->
+      <section class="content-section">
+        <h2 class="section-title">
+          <span class="section-icon">🔗</span>
+          Backlink Acquisition Strategies
+        </h2>
+        <p class="section-intro">Proven link building tactics tailored to Amanda's coaching business and assets.</p>
+
+        <div class="strategies-grid">
+          {backlinkStrategies.map((strat) => (
+            <div class={`strategy-card priority-${strat.priority.toLowerCase()}`}>
+              <div class="strategy-header-card">
+                <h3>{strat.strategy}</h3>
+                <div class="strategy-meta">
+                  <span class={`priority-badge ${strat.priority.toLowerCase()}`}>{strat.priority}</span>
+                  <span class="difficulty-tag">{strat.difficulty} effort</span>
+                </div>
+              </div>
+              <p class="strategy-desc">{strat.description}</p>
+              <div class="expected-links">
+                <strong>Expected:</strong> {strat.expectedLinks}
+              </div>
+              <div class="action-items">
+                <strong>Action Items:</strong>
+                <ul>
+                  {strat.actionItems.map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- SECTION 4: CURRENT BACKLINKS -->
+      <section class="content-section">
+        <h2 class="section-title">
+          <span class="section-icon">✅</span>
+          Current High-DR Backlinks
+        </h2>
+        <p class="section-intro">Amanda's existing high-authority backlinks from Ahrefs data.</p>
+
+        <div class="backlinks-grid">
+          {currentBacklinks.map((link) => (
+            <div class="backlink-card">
+              <div class="backlink-domain">{link.domain}</div>
+              <div class="backlink-meta">
+                <span class="dr-badge large">{link.dr}</span>
+                <span class="type-tag">{link.type}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- SECTION 5: DOMAINS TO PURCHASE -->
+      <section class="content-section">
+        <h2 class="section-title">
+          <span class="section-icon">🌐</span>
+          Domains to Purchase
+        </h2>
+        <p class="section-intro">Strategic domain acquisitions for brand protection and traffic capture.</p>
+
+        <div class="table-container">
+          <table class="domain-table">
+            <thead>
+              <tr>
+                <th>Domain</th>
+                <th>Priority</th>
+                <th>Rationale</th>
+              </tr>
+            </thead>
+            <tbody>
+              {domainsToPurchase.map((dom) => (
+                <tr>
+                  <td class="domain-name">{dom.domain}</td>
+                  <td><span class={`priority-badge ${dom.priority.toLowerCase()}`}>{dom.priority}</span></td>
+                  <td class="rationale-cell">{dom.rationale}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div class="insight-box">
+          <strong>Domain Check Tools:</strong> Use Namecheap, GoDaddy, or Google Domains to check availability. Consider using a domain broker for expired/premium domains. Budget: $10-50/domain for standard, $100-500+ for premium.
+        </div>
+      </section>
+
+      <!-- 3-MONTH PRIORITY ROADMAP -->
+      <section class="content-section">
+        <h2 class="section-title">
+          <span class="section-icon">🗓️</span>
+          3-Month SEO Roadmap
+        </h2>
+
+        <div class="roadmap">
+          <div class="roadmap-month">
+            <div class="month-header">
+              <span class="month-num">Month 1</span>
+              <h3>Foundation</h3>
+            </div>
+            <ul class="month-tasks">
+              <li>Create "Midlife Crisis Women" pillar page (900 vol, KD 2)</li>
+              <li>Optimize "Self Love Program" page (already ranking #10)</li>
+              <li>Submit to 5 coaching directories</li>
+              <li>Secure 3 podcast guest appearances</li>
+              <li>Set up HARO account and respond to 10 queries</li>
+              <li>Purchase priority domains (midlifemuse.com, etc.)</li>
+            </ul>
+            <div class="month-target">Target: +10 keywords, +15 referring domains</div>
+          </div>
+
+          <div class="roadmap-month">
+            <div class="month-header">
+              <span class="month-num">Month 2</span>
+              <h3>Content Expansion</h3>
+            </div>
+            <ul class="month-tasks">
+              <li>Create "Empty Nest Syndrome" comprehensive guide (5,900 vol)</li>
+              <li>Publish "Self Love Affirmations" with downloadable PDF</li>
+              <li>Create "Best Self Love Books" list featuring "Muse"</li>
+              <li>Secure 2 press mentions via HARO</li>
+              <li>Guest post on 2 wellness sites</li>
+              <li>Launch Pinterest SEO strategy</li>
+            </ul>
+            <div class="month-target">Target: +25 keywords, +20 referring domains</div>
+          </div>
+
+          <div class="roadmap-month">
+            <div class="month-header">
+              <span class="month-num">Month 3</span>
+              <h3>Authority Building</h3>
+            </div>
+            <ul class="month-tasks">
+              <li>Target "Life Coach for Women" (400 vol, KD 22)</li>
+              <li>Expand Mindvalley partnership</li>
+              <li>Create "Reinvent Yourself" content series</li>
+              <li>Submit book to review sites for backlinks</li>
+              <li>Optimize for featured snippets</li>
+              <li>Implement schema markup across site</li>
+            </ul>
+            <div class="month-target">Target: +50 keywords, +20 referring domains</div>
+          </div>
+        </div>
+      </section>
+
+      <a href={`/${client}`} class="back-link">← Back to Dashboard</a>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .strategy-main {
+    min-height: 100vh;
+    padding: 2rem 1rem 4rem;
+  }
+
+  .strategy-container {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .strategy-header {
+    margin-bottom: 3rem;
+  }
+
+  .header-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(139, 92, 246, 0.1);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    border-radius: 2rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #8b5cf6;
+    margin-bottom: 1.5rem;
+  }
+
+  .strategy-header h1 {
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    font-weight: 700;
+    color: #f8fafc;
+    margin-bottom: 0.75rem;
+    line-height: 1.1;
+  }
+
+  .header-subtitle {
+    font-size: 1.25rem;
+    color: #94a3b8;
+    margin-bottom: 0.5rem;
+  }
+
+  .header-date {
+    font-size: 0.875rem;
+    color: #64748b;
+  }
+
+  .content-section {
+    margin-bottom: 3rem;
+  }
+
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #f8fafc;
+    margin-bottom: 0.75rem;
+  }
+
+  .section-icon {
+    font-size: 1.5rem;
+  }
+
+  .section-intro {
+    color: #94a3b8;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+  }
+
+  .keyword-category {
+    margin-bottom: 2rem;
+  }
+
+  .category-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+  }
+
+  .category-title.priority-high {
+    background: rgba(34, 197, 94, 0.1);
+    color: #22c55e;
+    border-left: 3px solid #22c55e;
+  }
+
+  .category-title.priority-medium {
+    background: rgba(251, 191, 36, 0.1);
+    color: #fbbf24;
+    border-left: 3px solid #fbbf24;
+  }
+
+  .category-title.priority-low {
+    background: rgba(59, 130, 246, 0.1);
+    color: #3b82f6;
+    border-left: 3px solid #3b82f6;
+  }
+
+  .category-desc {
+    color: #64748b;
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+    padding-left: 1rem;
+  }
+
+  .table-container {
+    overflow-x: auto;
+    background: #0f172a;
+    border: 1px solid #1e293b;
+    border-radius: 0.75rem;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+  }
+
+  th, td {
+    padding: 0.875rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid #1e293b;
+  }
+
+  th {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #64748b;
+    background: #0c1322;
+  }
+
+  td {
+    font-size: 0.875rem;
+    color: #94a3b8;
+  }
+
+  .keyword-cell, .directory-name, .domain-name {
+    font-weight: 600;
+    color: #f8fafc;
+  }
+
+  .volume-cell {
+    font-weight: 600;
+    color: #3b82f6;
+  }
+
+  .strategy-cell, .notes-cell, .rationale-cell {
+    font-size: 0.8rem;
+    max-width: 300px;
+  }
+
+  .kd-badge, .dr-badge, .priority-badge {
+    display: inline-block;
+    padding: 0.25rem 0.6rem;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .kd-badge.easy { background: rgba(34, 197, 94, 0.2); color: #22c55e; }
+  .kd-badge.medium { background: rgba(251, 191, 36, 0.2); color: #fbbf24; }
+  .kd-badge.hard { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+
+  .dr-badge { background: rgba(139, 92, 246, 0.2); color: #8b5cf6; }
+  .dr-badge.large { font-size: 1rem; padding: 0.5rem 0.75rem; }
+
+  .priority-badge.high { background: rgba(34, 197, 94, 0.2); color: #22c55e; }
+  .priority-badge.medium { background: rgba(251, 191, 36, 0.2); color: #fbbf24; }
+  .priority-badge.low { background: rgba(59, 130, 246, 0.2); color: #3b82f6; }
+
+  .strategies-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .strategies-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .strategy-card {
+    background: #0f172a;
+    border: 1px solid #1e293b;
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+  }
+
+  .strategy-card.priority-high { border-left: 3px solid #22c55e; }
+  .strategy-card.priority-medium { border-left: 3px solid #fbbf24; }
+
+  .strategy-header-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .strategy-header-card h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #f8fafc;
+  }
+
+  .strategy-meta {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .difficulty-tag {
+    font-size: 0.7rem;
+    color: #64748b;
+    background: #1e293b;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.25rem;
+  }
+
+  .strategy-desc {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    margin-bottom: 0.75rem;
+    line-height: 1.5;
+  }
+
+  .expected-links {
+    font-size: 0.8rem;
+    color: #22c55e;
+    margin-bottom: 0.75rem;
+  }
+
+  .action-items {
+    font-size: 0.8rem;
+    color: #64748b;
+  }
+
+  .action-items strong {
+    color: #94a3b8;
+  }
+
+  .action-items ul {
+    margin: 0.5rem 0 0 1rem;
+    padding: 0;
+  }
+
+  .action-items li {
+    margin-bottom: 0.25rem;
+    color: #94a3b8;
+  }
+
+  .backlinks-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  @media (min-width: 640px) {
+    .backlinks-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (min-width: 900px) {
+    .backlinks-grid {
+      grid-template-columns: repeat(5, 1fr);
+    }
+  }
+
+  .backlink-card {
+    background: #0f172a;
+    border: 1px solid #1e293b;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .backlink-domain {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #f8fafc;
+    margin-bottom: 0.5rem;
+    word-break: break-all;
+  }
+
+  .backlink-meta {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .type-tag {
+    font-size: 0.65rem;
+    color: #64748b;
+    background: #1e293b;
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.25rem;
+  }
+
+  .insight-box {
+    margin-top: 1rem;
+    padding: 1rem 1.25rem;
+    background: rgba(139, 92, 246, 0.1);
+    border-left: 3px solid #8b5cf6;
+    border-radius: 0 0.5rem 0.5rem 0;
+    font-size: 0.875rem;
+    color: #94a3b8;
+  }
+
+  .insight-box strong {
+    color: #8b5cf6;
+  }
+
+  .roadmap {
+    display: grid;
+    gap: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .roadmap {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .roadmap-month {
+    background: #0f172a;
+    border: 1px solid #1e293b;
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+  }
+
+  .month-header {
+    margin-bottom: 1rem;
+  }
+
+  .month-num {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #3b82f6;
+  }
+
+  .month-header h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #f8fafc;
+  }
+
+  .month-tasks {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem 0;
+  }
+
+  .month-tasks li {
+    position: relative;
+    padding-left: 1.25rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+    color: #94a3b8;
+    line-height: 1.4;
+  }
+
+  .month-tasks li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: #3b82f6;
+  }
+
+  .month-target {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #22c55e;
+    padding-top: 0.75rem;
+    border-top: 1px solid #1e293b;
+  }
+
+  .back-link {
+    display: inline-block;
+    color: #3b82f6;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 1rem 0;
+  }
+
+  .back-link:hover {
+    text-decoration: underline;
+  }
+</style>

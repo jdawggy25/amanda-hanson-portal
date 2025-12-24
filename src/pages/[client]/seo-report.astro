@@ -1140,4 +1140,160 @@ const refDomainsGrowth = Math.round(((109 - 16) / 16) * 100);
   .back-link:hover {
     text-decoration: underline;
   }
+
+  /* Mobile Optimization */
+  @media (max-width: 768px) {
+    .container {
+      padding: 1rem;
+    }
+
+    .hero {
+      padding: 1.5rem 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .page-title {
+      font-size: 1.75rem;
+      line-height: 1.2;
+    }
+
+    .page-tagline {
+      font-size: 1rem;
+    }
+
+    .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+    }
+
+    .stat-card {
+      padding: 1rem;
+    }
+
+    .stat-value {
+      font-size: 1.5rem;
+    }
+
+    .stat-label {
+      font-size: 0.625rem;
+    }
+
+    .chart-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .chart-card {
+      padding: 1rem;
+    }
+
+    .chart-header h3 {
+      font-size: 0.875rem;
+    }
+
+    .chart-area {
+      height: 180px !important;
+    }
+
+    .chart-area.tall {
+      height: 220px !important;
+    }
+
+    .section-title {
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+    }
+
+    .roadmap-section,
+    .quickwins-section,
+    .summary-section,
+    .keywords-section {
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .month-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+
+    .month-num {
+      font-size: 2rem;
+    }
+
+    .month-content {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .month-targets {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .target span {
+      font-size: 0.625rem;
+    }
+
+    .target strong {
+      font-size: 1rem;
+    }
+
+    .quickwins-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .quickwin {
+      padding: 1rem;
+    }
+
+    .keywords-table-wrapper {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .keywords-table {
+      font-size: 0.75rem;
+      min-width: 500px;
+    }
+
+    .keywords-table th,
+    .keywords-table td {
+      padding: 0.5rem;
+    }
+
+    .badge {
+      font-size: 0.625rem;
+      padding: 0.125rem 0.375rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .stats-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .stat-value {
+      font-size: 1.25rem;
+    }
+
+    .summary-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .summary-values .current {
+      font-size: 1rem;
+    }
+
+    .summary-values .target {
+      font-size: 1.25rem;
+    }
+
+    .page-title {
+      font-size: 1.5rem;
+    }
+  }
 </style>

@@ -1,5 +1,5 @@
 ---
-title: User Personas - Amanda Hanson
+title: User Personas
 description: Detailed target audience profiles for marketing and content strategy
 ---
 

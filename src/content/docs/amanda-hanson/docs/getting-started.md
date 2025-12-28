@@ -1,5 +1,5 @@
 ---
-title: Amanda Hanson Documentation
+title: Getting Started
 description: Complete website rebuild strategy, marketing plan, and technical specifications for The Midlife Muse
 ---
 

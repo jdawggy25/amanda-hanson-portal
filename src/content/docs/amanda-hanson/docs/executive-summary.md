@@ -1,5 +1,5 @@
 ---
-title: Executive Summary - Amanda Hanson
+title: Executive Summary
 description: High-level overview of website rebuild and marketing strategy
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: Funnel Architecture - Amanda Hanson
+title: Funnel Architecture
 description: Complete sales funnel strategy, conversion paths, and optimization frameworks
 ---
 

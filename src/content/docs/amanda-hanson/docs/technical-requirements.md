@@ -1,5 +1,5 @@
 ---
-title: Technical Requirements - Amanda Hanson
+title: Technical Requirements
 description: Complete technical specifications, architecture, and performance requirements
 ---
 

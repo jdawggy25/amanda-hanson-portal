@@ -1,5 +1,5 @@
 ---
-title: Competitive Analysis - Amanda Hanson
+title: Competitive Analysis
 description: Detailed competitor research, market positioning, and differentiation strategy
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: Marketing Strategy - Amanda Hanson
+title: Marketing Strategy
 description: Comprehensive marketing approach, channel strategy, and budget allocation
 ---
 

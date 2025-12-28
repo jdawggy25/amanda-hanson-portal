@@ -1,5 +1,5 @@
 ---
-title: Analytics Implementation - Amanda Hanson
+title: Analytics Implementation
 description: Comprehensive tracking setup, event configuration, and reporting dashboards
 ---
 

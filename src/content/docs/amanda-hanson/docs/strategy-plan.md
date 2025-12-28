@@ -1,5 +1,5 @@
 ---
-title: Strategy Plan - Amanda Hanson
+title: Strategy Plan
 description: Complete SEO strategy, keyword targets, and implementation roadmap
 ---
 

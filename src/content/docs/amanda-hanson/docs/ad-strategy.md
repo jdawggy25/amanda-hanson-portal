@@ -1,5 +1,5 @@
 ---
-title: Ad Strategy - Amanda Hanson
+title: Ad Strategy
 description: Paid advertising strategy across YouTube, Meta, Pinterest, and TikTok
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: Social Media Strategy - Amanda Hanson
+title: Social Media Strategy
 description: Platform-specific content strategies, posting schedules, and engagement tactics
 ---
 

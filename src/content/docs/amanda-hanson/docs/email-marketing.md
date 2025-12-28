@@ -1,5 +1,5 @@
 ---
-title: Email Marketing - Amanda Hanson
+title: Email Marketing
 description: Complete email strategy, automation sequences, and list building tactics
 ---
 
